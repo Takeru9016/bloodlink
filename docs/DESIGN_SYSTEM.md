@@ -14,6 +14,7 @@ Source: the Figma hi-fi file (link should be in the project's shared docs — as
 | `border` | `#D3CFCA` | Dividers, input borders |
 | `success` | `#298C5A` | Verified badges, positive states |
 | `amber` | `#B37A16` | Pending/warning badges |
+| `error` | `#C13515` | Form validation errors — distinct from `brand.red` so error text doesn't read as a CTA/active state |
 
 Placeholder brand values pending the client's actual brand identity (`CLAUDE.md` Section 7). Implement these as a `ThemeExtension` under `lib/core/theme/` so swapping the palette later is a one-file change, not a find-and-replace across the codebase.
 

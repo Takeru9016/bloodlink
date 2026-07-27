@@ -20,7 +20,7 @@ Task codes match `prompts/phase-*.md` exactly. Update checkboxes and the progres
 Phase 1A [ 13 / 13 tasks ] 100%
 
 ## Phase 1B — Stage 1 screens (auth, admin partner/stock, bank locator)
-- [ ] 1B-1 — Onboarding screens
+- [x] 1B-1 — Onboarding screens
 - [ ] 1B-2 — Sign up screen
 - [ ] 1B-3 — Sign in screen
 - [ ] 1B-4 — Donor profile setup screen
@@ -30,7 +30,7 @@ Phase 1A [ 13 / 13 tasks ] 100%
 - [ ] 1B-8 — Bank locator screen
 - [ ] 1B-9 — Bank profile screen
 
-Phase 1B [ 0 / 9 tasks ] 0%
+Phase 1B [ 1 / 9 tasks ] 11%
 
 ## Phase 2A — Core request flow
 - [ ] 2A-1 — bloodRequests model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 13 / 44 tasks**
+**Total: 14 / 44 tasks**

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state_stub.dart';
@@ -320,7 +321,7 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoute.signInPath,
         name: AppRoute.signInName,
-        builder: (context, state) => const _TodoScreen('Sign in'),
+        builder: (context, state) => const SignInScreen(),
       ),
       GoRoute(
         path: AppRoute.donorProfileSetupPath,

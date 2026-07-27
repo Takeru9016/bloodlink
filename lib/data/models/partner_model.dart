@@ -14,6 +14,16 @@ class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
   GeoPoint toJson(GeoPoint object) => object;
 }
 
+class TimestampConverter implements JsonConverter<Timestamp, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  Timestamp fromJson(Timestamp json) => json;
+
+  @override
+  Timestamp toJson(Timestamp object) => object;
+}
+
 enum VerificationStatus {
   @JsonValue('pending')
   pending,
@@ -29,6 +39,8 @@ abstract class PartnerModel with _$PartnerModel {
     @GeoPointConverter() required GeoPoint location,
     required String phone,
     required VerificationStatus verificationStatus,
+    required String updatedBy,
+    @TimestampConverter() required Timestamp updatedAt,
   }) = _PartnerModel;
 
   factory PartnerModel.fromJson(Map<String, dynamic> json) =>

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PartnerModel {
 
- String get name; String get address;@GeoPointConverter() GeoPoint get location; String get phone; VerificationStatus get verificationStatus;
+ String get name; String get address;@GeoPointConverter() GeoPoint get location; String get phone; VerificationStatus get verificationStatus; String get updatedBy;@TimestampConverter() Timestamp get updatedAt;
 /// Create a copy of PartnerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PartnerModelCopyWith<PartnerModel> get copyWith => _$PartnerModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PartnerModel&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PartnerModel&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,address,location,phone,verificationStatus);
+int get hashCode => Object.hash(runtimeType,name,address,location,phone,verificationStatus,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'PartnerModel(name: $name, address: $address, location: $location, phone: $phone, verificationStatus: $verificationStatus)';
+  return 'PartnerModel(name: $name, address: $address, location: $location, phone: $phone, verificationStatus: $verificationStatus, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PartnerModelCopyWith<$Res>  {
   factory $PartnerModelCopyWith(PartnerModel value, $Res Function(PartnerModel) _then) = _$PartnerModelCopyWithImpl;
 @useResult
 $Res call({
- String name, String address,@GeoPointConverter() GeoPoint location, String phone, VerificationStatus verificationStatus
+ String name, String address,@GeoPointConverter() GeoPoint location, String phone, VerificationStatus verificationStatus, String updatedBy,@TimestampConverter() Timestamp updatedAt
 });
 
 
@@ -65,14 +65,16 @@ class _$PartnerModelCopyWithImpl<$Res>
 
 /// Create a copy of PartnerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? address = null,Object? location = null,Object? phone = null,Object? verificationStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? address = null,Object? location = null,Object? phone = null,Object? verificationStatus = null,Object? updatedBy = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as GeoPoint,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String,verificationStatus: null == verificationStatus ? _self.verificationStatus : verificationStatus // ignore: cast_nullable_to_non_nullable
-as VerificationStatus,
+as VerificationStatus,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp,
   ));
 }
 
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PartnerModel() when $default != null:
-return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus);case _:
+return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus,_that.updatedBy,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.name,_that.address,_that.location,_that.phone,_that.verifi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _PartnerModel():
-return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus);case _:
+return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus,_that.updatedBy,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.name,_that.address,_that.location,_that.phone,_that.verifi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String address, @GeoPointConverter()  GeoPoint location,  String phone,  VerificationStatus verificationStatus,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _PartnerModel() when $default != null:
-return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus);case _:
+return $default(_that.name,_that.address,_that.location,_that.phone,_that.verificationStatus,_that.updatedBy,_that.updatedAt);case _:
   return null;
 
 }
@@ -213,7 +215,7 @@ return $default(_that.name,_that.address,_that.location,_that.phone,_that.verifi
 @JsonSerializable()
 
 class _PartnerModel implements PartnerModel {
-  const _PartnerModel({required this.name, required this.address, @GeoPointConverter() required this.location, required this.phone, required this.verificationStatus});
+  const _PartnerModel({required this.name, required this.address, @GeoPointConverter() required this.location, required this.phone, required this.verificationStatus, required this.updatedBy, @TimestampConverter() required this.updatedAt});
   factory _PartnerModel.fromJson(Map<String, dynamic> json) => _$PartnerModelFromJson(json);
 
 @override final  String name;
@@ -221,6 +223,8 @@ class _PartnerModel implements PartnerModel {
 @override@GeoPointConverter() final  GeoPoint location;
 @override final  String phone;
 @override final  VerificationStatus verificationStatus;
+@override final  String updatedBy;
+@override@TimestampConverter() final  Timestamp updatedAt;
 
 /// Create a copy of PartnerModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PartnerModel&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PartnerModel&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,address,location,phone,verificationStatus);
+int get hashCode => Object.hash(runtimeType,name,address,location,phone,verificationStatus,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'PartnerModel(name: $name, address: $address, location: $location, phone: $phone, verificationStatus: $verificationStatus)';
+  return 'PartnerModel(name: $name, address: $address, location: $location, phone: $phone, verificationStatus: $verificationStatus, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$PartnerModelCopyWith<$Res> implements $PartnerModelCopyWi
   factory _$PartnerModelCopyWith(_PartnerModel value, $Res Function(_PartnerModel) _then) = __$PartnerModelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String address,@GeoPointConverter() GeoPoint location, String phone, VerificationStatus verificationStatus
+ String name, String address,@GeoPointConverter() GeoPoint location, String phone, VerificationStatus verificationStatus, String updatedBy,@TimestampConverter() Timestamp updatedAt
 });
 
 
@@ -272,14 +276,16 @@ class __$PartnerModelCopyWithImpl<$Res>
 
 /// Create a copy of PartnerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? address = null,Object? location = null,Object? phone = null,Object? verificationStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? address = null,Object? location = null,Object? phone = null,Object? verificationStatus = null,Object? updatedBy = null,Object? updatedAt = null,}) {
   return _then(_PartnerModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as GeoPoint,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String,verificationStatus: null == verificationStatus ? _self.verificationStatus : verificationStatus // ignore: cast_nullable_to_non_nullable
-as VerificationStatus,
+as VerificationStatus,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
+as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp,
   ));
 }
 

@@ -27,7 +27,8 @@ service cloud.firestore {
 
     match /partners/{partnerId} {
       allow read: if true; // public-readable, no auth required to browse banks
-      allow write: if isAdmin();
+      allow write: if isAdmin() &&
+        request.resource.data.keys().hasAll(['updatedBy', 'updatedAt']);
 
       match /stock/{bloodGroup} {
         allow read: if true;

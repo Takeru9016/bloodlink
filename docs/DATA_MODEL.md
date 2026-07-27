@@ -41,6 +41,8 @@ address: string
 location: geopoint
 phone: string
 verificationStatus: "pending" | "verified"
+updatedBy: string               // ref users, admin only
+updatedAt: timestamp
 // No login of its own — see CLAUDE.md non-negotiable decisions
 ```
 

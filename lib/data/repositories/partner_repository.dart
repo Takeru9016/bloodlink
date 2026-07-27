@@ -72,7 +72,12 @@ class PartnerRepository {
 
   Future<String> createPartner(PartnerModel partner, String adminUid) async {
     await _requireAdmin(adminUid);
-    final doc = await _partners.add(partner);
+    final doc = _rawPartners.doc();
+    await doc.set({
+      ...partner.toJson(),
+      'updatedBy': adminUid,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
     return doc.id;
   }
 
@@ -82,7 +87,11 @@ class PartnerRepository {
     String adminUid,
   ) async {
     await _requireAdmin(adminUid);
-    await _partners.doc(id).set(partner);
+    await _rawPartners.doc(id).set({
+      ...partner.toJson(),
+      'updatedBy': adminUid,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
   }
 
   Future<Map<String, StockEntryModel>> getStock(String partnerId) async {

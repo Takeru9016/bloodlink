@@ -18,6 +18,10 @@ _PartnerModel _$PartnerModelFromJson(Map<String, dynamic> json) =>
         _$VerificationStatusEnumMap,
         json['verificationStatus'],
       ),
+      updatedBy: json['updatedBy'] as String,
+      updatedAt: const TimestampConverter().fromJson(
+        json['updatedAt'] as Timestamp,
+      ),
     );
 
 Map<String, dynamic> _$PartnerModelToJson(_PartnerModel instance) =>
@@ -28,6 +32,8 @@ Map<String, dynamic> _$PartnerModelToJson(_PartnerModel instance) =>
       'phone': instance.phone,
       'verificationStatus':
           _$VerificationStatusEnumMap[instance.verificationStatus]!,
+      'updatedBy': instance.updatedBy,
+      'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
     };
 
 const _$VerificationStatusEnumMap = {

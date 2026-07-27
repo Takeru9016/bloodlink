@@ -1,0 +1,33 @@
+{
+    "firestore": {
+        "rules": "firestore.rules"
+    },
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "bloodlink-dev-wt",
+                    "appId": "1:343106573066:android:ced394d51f1e3e958720f3",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "bloodlink-dev-wt",
+                    "appId": "1:343106573066:ios:c11d6d284d46055e8720f3",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "bloodlink-dev-wt",
+                    "configurations": {
+                        "android": "1:343106573066:android:ced394d51f1e3e958720f3",
+                        "ios": "1:343106573066:ios:c11d6d284d46055e8720f3"
+                    }
+                }
+            }
+        }
+    }
+}

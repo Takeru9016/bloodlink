@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAny(['admin']);
+    }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    match /donorProfiles/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    match /bloodRequests/{requestId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin(); // status transitions go through Cloud Functions in practice
+    }
+
+    match /partners/{partnerId} {
+      allow read: if true; // public-readable, no auth required to browse banks
+      allow write: if isAdmin();
+
+      match /stock/{bloodGroup} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+
+    match /bannerItems/{bannerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /educationArticles/{articleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read, update: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow write: if isAdmin(); // creation typically via Cloud Function
+    }
+
+    match /reports/{reportId} {
+      allow create: if isSignedIn();
+      allow read, update: if isAdmin();
+    }
+  }
+}

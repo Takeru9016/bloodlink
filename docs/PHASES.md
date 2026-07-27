@@ -15,9 +15,9 @@ Task codes match `prompts/phase-*.md` exactly. Update checkboxes and the progres
 - [x] 1A-10 — lib/data/repositories/user_repository.dart
 - [x] 1A-11 — lib/data/repositories/donor_profile_repository.dart
 - [x] 1A-12 — lib/data/repositories/partner_repository.dart
-- [ ] 1A-13 — firestore.rules
+- [x] 1A-13 — firestore.rules
 
-Phase 1A [ 12 / 13 tasks ] 92%
+Phase 1A [ 13 / 13 tasks ] 100%
 
 ## Phase 1B — Stage 1 screens (auth, admin partner/stock, bank locator)
 - [ ] 1B-1 — Onboarding screens
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 12 / 44 tasks**
+**Total: 13 / 44 tasks**

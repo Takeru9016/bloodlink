@@ -42,7 +42,6 @@ class AuthController extends _$AuthController {
               name: name,
               email: email,
               roles: const [],
-              location: const GeoPoint(0, 0),
               createdAt: Timestamp.now(),
             ),
           );
@@ -69,7 +68,6 @@ class AuthController extends _$AuthController {
             name: user.displayName ?? '',
             email: user.email ?? '',
             roles: const [],
-            location: const GeoPoint(0, 0),
             createdAt: Timestamp.now(),
           ),
         );

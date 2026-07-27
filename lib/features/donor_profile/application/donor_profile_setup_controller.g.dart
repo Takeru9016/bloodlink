@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_controller.dart';
+part of 'donor_profile_setup_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,33 +9,35 @@ part of 'auth_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(AuthController)
-final authControllerProvider = AuthControllerProvider._();
+@ProviderFor(DonorProfileSetupController)
+final donorProfileSetupControllerProvider =
+    DonorProfileSetupControllerProvider._();
 
-final class AuthControllerProvider
-    extends $AsyncNotifierProvider<AuthController, void> {
-  AuthControllerProvider._()
+final class DonorProfileSetupControllerProvider
+    extends $AsyncNotifierProvider<DonorProfileSetupController, void> {
+  DonorProfileSetupControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'authControllerProvider',
+        name: r'donorProfileSetupControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$authControllerHash();
+  String debugGetCreateSourceHash() => _$donorProfileSetupControllerHash();
 
   @$internal
   @override
-  AuthController create() => AuthController();
+  DonorProfileSetupController create() => DonorProfileSetupController();
 }
 
-String _$authControllerHash() => r'98e8e5f4633de374b225adaa15c721e628217e79';
+String _$donorProfileSetupControllerHash() =>
+    r'091b9adbb41fa355bf4bf466353739af039f586d';
 
-abstract class _$AuthController extends $AsyncNotifier<void> {
+abstract class _$DonorProfileSetupController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override

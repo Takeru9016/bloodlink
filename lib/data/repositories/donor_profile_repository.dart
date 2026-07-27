@@ -70,9 +70,7 @@ class DonorProfileRepository {
       final user = userDoc.data();
       if (user == null) continue;
       final location = UserModel.fromJson(user).location;
-      if (location.latitude == 0 && location.longitude == 0) {
-        continue; // placeholder/manual-entry-fallback location, not a real position
-      }
+      if (location == null) continue;
       final distanceKm =
           Geolocator.distanceBetween(
             near.latitude,

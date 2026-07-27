@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get name; String get email; String? get phone; List<String> get roles;@GeoPointConverter() GeoPoint get location;@TimestampConverter() Timestamp get createdAt; String? get fcmToken;
+ String get name; String get email; String? get phone; List<String> get roles;@GeoPointConverter() GeoPoint? get location; String? get city;@TimestampConverter() Timestamp get createdAt; String? get fcmToken;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&const DeepCollectionEquality().equals(other.roles, roles)&&(identical(other.location, location) || other.location == location)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&const DeepCollectionEquality().equals(other.roles, roles)&&(identical(other.location, location) || other.location == location)&&(identical(other.city, city) || other.city == city)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,email,phone,const DeepCollectionEquality().hash(roles),location,createdAt,fcmToken);
+int get hashCode => Object.hash(runtimeType,name,email,phone,const DeepCollectionEquality().hash(roles),location,city,createdAt,fcmToken);
 
 @override
 String toString() {
-  return 'UserModel(name: $name, email: $email, phone: $phone, roles: $roles, location: $location, createdAt: $createdAt, fcmToken: $fcmToken)';
+  return 'UserModel(name: $name, email: $email, phone: $phone, roles: $roles, location: $location, city: $city, createdAt: $createdAt, fcmToken: $fcmToken)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String name, String email, String? phone, List<String> roles,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp createdAt, String? fcmToken
+ String name, String email, String? phone, List<String> roles,@GeoPointConverter() GeoPoint? location, String? city,@TimestampConverter() Timestamp createdAt, String? fcmToken
 });
 
 
@@ -65,14 +65,15 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? phone = freezed,Object? roles = null,Object? location = null,Object? createdAt = null,Object? fcmToken = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? email = null,Object? phone = freezed,Object? roles = null,Object? location = freezed,Object? city = freezed,Object? createdAt = null,Object? fcmToken = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phone: freezed == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String?,roles: null == roles ? _self.roles : roles // ignore: cast_nullable_to_non_nullable
-as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as GeoPoint,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as Timestamp,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint? location,  String? city, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.createdAt,_that.fcmToken);case _:
+return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.city,_that.createdAt,_that.fcmToken);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint? location,  String? city, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.createdAt,_that.fcmToken);case _:
+return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.city,_that.createdAt,_that.fcmToken);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String email,  String? phone,  List<String> roles, @GeoPointConverter()  GeoPoint? location,  String? city, @TimestampConverter()  Timestamp createdAt,  String? fcmToken)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.createdAt,_that.fcmToken);case _:
+return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_that.city,_that.createdAt,_that.fcmToken);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.name,_that.email,_that.phone,_that.roles,_that.location,_t
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.name, required this.email, this.phone, required final  List<String> roles, @GeoPointConverter() required this.location, @TimestampConverter() required this.createdAt, this.fcmToken}): _roles = roles;
+  const _UserModel({required this.name, required this.email, this.phone, required final  List<String> roles, @GeoPointConverter() this.location, this.city, @TimestampConverter() required this.createdAt, this.fcmToken}): _roles = roles;
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String name;
@@ -228,7 +229,8 @@ class _UserModel implements UserModel {
   return EqualUnmodifiableListView(_roles);
 }
 
-@override@GeoPointConverter() final  GeoPoint location;
+@override@GeoPointConverter() final  GeoPoint? location;
+@override final  String? city;
 @override@TimestampConverter() final  Timestamp createdAt;
 @override final  String? fcmToken;
 
@@ -245,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&const DeepCollectionEquality().equals(other._roles, _roles)&&(identical(other.location, location) || other.location == location)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.phone, phone) || other.phone == phone)&&const DeepCollectionEquality().equals(other._roles, _roles)&&(identical(other.location, location) || other.location == location)&&(identical(other.city, city) || other.city == city)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,email,phone,const DeepCollectionEquality().hash(_roles),location,createdAt,fcmToken);
+int get hashCode => Object.hash(runtimeType,name,email,phone,const DeepCollectionEquality().hash(_roles),location,city,createdAt,fcmToken);
 
 @override
 String toString() {
-  return 'UserModel(name: $name, email: $email, phone: $phone, roles: $roles, location: $location, createdAt: $createdAt, fcmToken: $fcmToken)';
+  return 'UserModel(name: $name, email: $email, phone: $phone, roles: $roles, location: $location, city: $city, createdAt: $createdAt, fcmToken: $fcmToken)';
 }
 
 
@@ -265,7 +267,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String email, String? phone, List<String> roles,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp createdAt, String? fcmToken
+ String name, String email, String? phone, List<String> roles,@GeoPointConverter() GeoPoint? location, String? city,@TimestampConverter() Timestamp createdAt, String? fcmToken
 });
 
 
@@ -282,14 +284,15 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? phone = freezed,Object? roles = null,Object? location = null,Object? createdAt = null,Object? fcmToken = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? email = null,Object? phone = freezed,Object? roles = null,Object? location = freezed,Object? city = freezed,Object? createdAt = null,Object? fcmToken = freezed,}) {
   return _then(_UserModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phone: freezed == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String?,roles: null == roles ? _self._roles : roles // ignore: cast_nullable_to_non_nullable
-as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as GeoPoint,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as Timestamp,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

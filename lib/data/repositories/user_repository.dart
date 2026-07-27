@@ -34,6 +34,12 @@ class UserRepository {
     return _users.doc(uid).update({'fcmToken': token});
   }
 
+  /// Device-location capture and manual-entry fallback are mutually
+  /// exclusive — pass only one of [location]/[city], the other stays null.
+  Future<void> updateLocation(String uid, {GeoPoint? location, String? city}) {
+    return _users.doc(uid).update({'location': location, 'city': city});
+  }
+
   Stream<UserModel?> watchUser(String uid) {
     return _users.doc(uid).snapshots().map((snapshot) => snapshot.data());
   }

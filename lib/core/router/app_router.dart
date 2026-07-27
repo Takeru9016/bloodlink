@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
+import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state_stub.dart';
 
@@ -326,7 +327,7 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoute.donorProfileSetupPath,
         name: AppRoute.donorProfileSetupName,
-        builder: (context, state) => const _TodoScreen('Donor profile setup'),
+        builder: (context, state) => const DonorProfileSetupScreen(),
       ),
 
       GoRoute(

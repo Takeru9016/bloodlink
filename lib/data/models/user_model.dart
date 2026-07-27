@@ -31,7 +31,8 @@ abstract class UserModel with _$UserModel {
     required String email,
     String? phone,
     required List<String> roles,
-    @GeoPointConverter() required GeoPoint location,
+    @GeoPointConverter() GeoPoint? location,
+    String? city,
     @TimestampConverter() required Timestamp createdAt,
     // Reserved for Phase 2A push notification setup; not read or written until then.
     String? fcmToken,

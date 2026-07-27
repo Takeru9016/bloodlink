@@ -8,7 +8,8 @@ name: string
 email: string
 phone: string | null
 roles: array<"donor" | "requester" | "admin">
-location: geopoint
+location: geopoint | null       // null until device location is captured
+city: string | null             // manual-entry fallback when location permission is denied; mutually exclusive with location
 createdAt: timestamp
 ```
 

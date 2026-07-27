@@ -4,7 +4,7 @@ Placeholder app name. Find-and-replace "bloodlink" everywhere (package name, org
 
 Read this file in full before doing anything in this repo. It is the persistent memory across Claude Code sessions — treat it as more authoritative than your own assumptions about the project.
 
-**Active Task: 1A-7**
+**Active Task: 1A-8**
 Update this line after every completed task (see `docs/PHASES.md` for the full tracker). Prompts are run one at a time, in order, from `prompts/phase-*.md` — do not skip ahead.
 
 ---

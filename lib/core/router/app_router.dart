@@ -6,7 +6,7 @@ import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
-import 'auth_state_stub.dart';
+import 'auth_state.dart';
 
 part 'app_router.g.dart';
 
@@ -167,8 +167,12 @@ String? _redirect(Ref ref, GoRouterState state) {
   final auth = ref.read(authStateProvider);
   final path = state.matchedLocation;
 
+  // Auth stream hasn't resolved yet — stay put rather than guessing signed-out.
+  if (auth.isLoading) return null;
+
   if (path == AppRoute.rootPath) {
     if (!auth.isSignedIn) return AppRoute.onboardingPath;
+    if (auth.roles.isEmpty) return AppRoute.donorProfileSetupPath;
     return auth.isAdmin ? AppRoute.adminPartnersPath : AppRoute.homePath;
   }
 
@@ -177,7 +181,12 @@ String? _redirect(Ref ref, GoRouterState state) {
   }
 
   if (AppRoute.isPostAuthEntry(path)) {
+    if (auth.roles.isEmpty) return AppRoute.donorProfileSetupPath;
     return auth.isAdmin ? AppRoute.adminPartnersPath : AppRoute.homePath;
+  }
+
+  if (auth.roles.isEmpty && path != AppRoute.donorProfileSetupPath) {
+    return AppRoute.donorProfileSetupPath;
   }
 
   if (AppRoute.isAdminPath(path) && !auth.isAdmin) {
@@ -308,7 +317,13 @@ GoRouter appRouter(Ref ref) {
     refreshListenable: refresh,
     redirect: (context, state) => _redirect(ref, state),
     routes: [
-      GoRoute(path: AppRoute.rootPath, redirect: (context, state) => null),
+      GoRoute(
+        path: AppRoute.rootPath,
+        redirect: (context, state) => null,
+        // Only rendered while authState is still resolving (redirect above
+        // returns null) — never reached once signed-in/out is known.
+        builder: (context, state) => const SizedBox.shrink(),
+      ),
       GoRoute(
         path: AppRoute.onboardingPath,
         name: AppRoute.onboardingName,

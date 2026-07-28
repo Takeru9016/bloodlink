@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
 import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
+import '../../features/admin/update_stock/presentation/update_stock_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
@@ -518,8 +519,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.adminStockPath,
                 name: AppRoute.adminStockName,
-                builder: (context, state) =>
-                    const _TodoScreen('Admin: Update stock'),
+                builder: (context, state) => const UpdateStockScreen(),
               ),
             ],
           ),

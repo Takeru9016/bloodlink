@@ -26,11 +26,11 @@ Phase 1A [ 13 / 13 tasks ] 100%
 - [x] 1B-4 — Donor profile setup screen
 - [x] 1B-5 — Auth state provider + router wiring
 - [x] 1B-6 — Admin: Manage partners screen
-- [ ] 1B-7 — Admin: Update stock screen
+- [x] 1B-7 — Admin: Update stock screen
 - [ ] 1B-8 — Bank locator screen
 - [ ] 1B-9 — Bank profile screen
 
-Phase 1B [ 6 / 9 tasks ] 67%
+Phase 1B [ 7 / 9 tasks ] 78%
 
 ## Phase 2A — Core request flow
 - [ ] 2A-1 — bloodRequests model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 19 / 44 tasks**
+**Total: 20 / 44 tasks**

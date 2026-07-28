@@ -28,9 +28,9 @@ Phase 1A [ 13 / 13 tasks ] 100%
 - [x] 1B-6 — Admin: Manage partners screen
 - [x] 1B-7 — Admin: Update stock screen
 - [x] 1B-8 — Bank locator screen
-- [ ] 1B-9 — Bank profile screen
+- [x] 1B-9 — Bank profile screen
 
-Phase 1B [ 8 / 9 tasks ] 89%
+Phase 1B [ 9 / 9 tasks ] 100%
 
 ## Phase 2A — Core request flow
 - [ ] 2A-1 — bloodRequests model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 21 / 44 tasks**
+**Total: 22 / 44 tasks**

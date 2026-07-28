@@ -8,6 +8,7 @@ import '../../features/admin/update_stock/presentation/update_stock_screen.dart'
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/bank_locator/presentation/bank_locator_screen.dart';
+import '../../features/bank_locator/presentation/bank_profile_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
@@ -459,8 +460,8 @@ GoRouter appRouter(Ref ref) {
                     // AppRoute.bankProfilePath contract note above.
                     path: ':bankId',
                     name: AppRoute.bankProfileName,
-                    builder: (context, state) => _TodoScreen(
-                      'Bank profile ${state.pathParameters['bankId']}',
+                    builder: (context, state) => BankProfileScreen(
+                      bankId: state.pathParameters['bankId']!,
                     ),
                   ),
                 ],

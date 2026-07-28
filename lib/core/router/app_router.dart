@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
+import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
@@ -492,20 +494,18 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.adminPartnersPath,
                 name: AppRoute.adminPartnersName,
-                builder: (context, state) =>
-                    const _TodoScreen('Admin: Manage partners'),
+                builder: (context, state) => const ManagePartnersScreen(),
                 routes: [
                   GoRoute(
                     path: 'new',
                     name: AppRoute.adminPartnerNewName,
-                    builder: (context, state) =>
-                        const _TodoScreen('Admin: Add partner'),
+                    builder: (context, state) => const PartnerFormScreen(),
                   ),
                   GoRoute(
                     path: ':partnerId/edit',
                     name: AppRoute.adminPartnerEditName,
-                    builder: (context, state) => _TodoScreen(
-                      'Admin: Edit partner ${state.pathParameters['partnerId']}',
+                    builder: (context, state) => PartnerFormScreen(
+                      partnerId: state.pathParameters['partnerId'],
                     ),
                   ),
                 ],

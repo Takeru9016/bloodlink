@@ -62,12 +62,16 @@ class PartnerRepository {
     return snapshot.data();
   }
 
-  Future<List<PartnerModel>> listPartners({bool verifiedOnly = false}) async {
+  Future<List<({String id, PartnerModel partner})>> listPartners({
+    bool verifiedOnly = false,
+  }) async {
     final query = verifiedOnly
         ? _partners.where('verificationStatus', isEqualTo: 'verified')
         : _partners;
     final snapshot = await query.get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs
+        .map((doc) => (id: doc.id, partner: doc.data()))
+        .toList();
   }
 
   Future<String> createPartner(PartnerModel partner, String adminUid) async {

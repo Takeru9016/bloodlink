@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StockEntryModel {
 
- int get unitCount; String get lastUpdatedBy;@TimestampConverter() Timestamp get lastUpdatedAt;
+ int get unitCount; String get lastUpdatedBy;@TimestampConverter() Timestamp? get lastUpdatedAt;
 /// Create a copy of StockEntryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $StockEntryModelCopyWith<$Res>  {
   factory $StockEntryModelCopyWith(StockEntryModel value, $Res Function(StockEntryModel) _then) = _$StockEntryModelCopyWithImpl;
 @useResult
 $Res call({
- int unitCount, String lastUpdatedBy,@TimestampConverter() Timestamp lastUpdatedAt
+ int unitCount, String lastUpdatedBy,@TimestampConverter() Timestamp? lastUpdatedAt
 });
 
 
@@ -65,12 +65,12 @@ class _$StockEntryModelCopyWithImpl<$Res>
 
 /// Create a copy of StockEntryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? unitCount = null,Object? lastUpdatedBy = null,Object? lastUpdatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? unitCount = null,Object? lastUpdatedBy = null,Object? lastUpdatedAt = freezed,}) {
   return _then(_self.copyWith(
 unitCount: null == unitCount ? _self.unitCount : unitCount // ignore: cast_nullable_to_non_nullable
 as int,lastUpdatedBy: null == lastUpdatedBy ? _self.lastUpdatedBy : lastUpdatedBy // ignore: cast_nullable_to_non_nullable
-as String,lastUpdatedAt: null == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
-as Timestamp,
+as String,lastUpdatedAt: freezed == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp?,
   ));
 }
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp lastUpdatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp? lastUpdatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StockEntryModel() when $default != null:
 return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
@@ -176,7 +176,7 @@ return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp lastUpdatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp? lastUpdatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _StockEntryModel():
 return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
@@ -196,7 +196,7 @@ return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp lastUpdatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int unitCount,  String lastUpdatedBy, @TimestampConverter()  Timestamp? lastUpdatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _StockEntryModel() when $default != null:
 return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
@@ -211,12 +211,12 @@ return $default(_that.unitCount,_that.lastUpdatedBy,_that.lastUpdatedAt);case _:
 @JsonSerializable()
 
 class _StockEntryModel implements StockEntryModel {
-  const _StockEntryModel({required this.unitCount, required this.lastUpdatedBy, @TimestampConverter() required this.lastUpdatedAt});
+  const _StockEntryModel({required this.unitCount, required this.lastUpdatedBy, @TimestampConverter() this.lastUpdatedAt});
   factory _StockEntryModel.fromJson(Map<String, dynamic> json) => _$StockEntryModelFromJson(json);
 
 @override final  int unitCount;
 @override final  String lastUpdatedBy;
-@override@TimestampConverter() final  Timestamp lastUpdatedAt;
+@override@TimestampConverter() final  Timestamp? lastUpdatedAt;
 
 /// Create a copy of StockEntryModel
 /// with the given fields replaced by the non-null parameter values.
@@ -251,7 +251,7 @@ abstract mixin class _$StockEntryModelCopyWith<$Res> implements $StockEntryModel
   factory _$StockEntryModelCopyWith(_StockEntryModel value, $Res Function(_StockEntryModel) _then) = __$StockEntryModelCopyWithImpl;
 @override @useResult
 $Res call({
- int unitCount, String lastUpdatedBy,@TimestampConverter() Timestamp lastUpdatedAt
+ int unitCount, String lastUpdatedBy,@TimestampConverter() Timestamp? lastUpdatedAt
 });
 
 
@@ -268,12 +268,12 @@ class __$StockEntryModelCopyWithImpl<$Res>
 
 /// Create a copy of StockEntryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? unitCount = null,Object? lastUpdatedBy = null,Object? lastUpdatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? unitCount = null,Object? lastUpdatedBy = null,Object? lastUpdatedAt = freezed,}) {
   return _then(_StockEntryModel(
 unitCount: null == unitCount ? _self.unitCount : unitCount // ignore: cast_nullable_to_non_nullable
 as int,lastUpdatedBy: null == lastUpdatedBy ? _self.lastUpdatedBy : lastUpdatedBy // ignore: cast_nullable_to_non_nullable
-as String,lastUpdatedAt: null == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
-as Timestamp,
+as String,lastUpdatedAt: freezed == lastUpdatedAt ? _self.lastUpdatedAt : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp?,
   ));
 }
 

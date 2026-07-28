@@ -11,7 +11,7 @@ _StockEntryModel _$StockEntryModelFromJson(Map<String, dynamic> json) =>
       unitCount: (json['unitCount'] as num).toInt(),
       lastUpdatedBy: json['lastUpdatedBy'] as String,
       lastUpdatedAt: const TimestampConverter().fromJson(
-        json['lastUpdatedAt'] as Timestamp,
+        json['lastUpdatedAt'] as Timestamp?,
       ),
     );
 

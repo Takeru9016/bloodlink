@@ -21,8 +21,10 @@ Stream<Map<String, StockEntryModel>> bankProfileStock(
 }
 
 Timestamp? mostRecentStockUpdate(Map<String, StockEntryModel> stock) {
-  if (stock.isEmpty) return null;
-  return stock.values
+  final timestamps = stock.values
       .map((entry) => entry.lastUpdatedAt)
-      .reduce((a, b) => a.compareTo(b) >= 0 ? a : b);
+      .whereType<Timestamp>()
+      .toList();
+  if (timestamps.isEmpty) return null;
+  return timestamps.reduce((a, b) => a.compareTo(b) >= 0 ? a : b);
 }

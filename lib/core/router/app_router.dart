@@ -7,6 +7,7 @@ import '../../features/admin/manage_partners/presentation/partner_form_screen.da
 import '../../features/admin/update_stock/presentation/update_stock_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
+import '../../features/bank_locator/presentation/bank_locator_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
@@ -83,6 +84,9 @@ abstract final class AppRoute {
   static const String banksPath = '/banks';
 
   static const String bankProfileName = 'bankProfile';
+  // 'bankId' is the authoritative path-param name for this route (set in
+  // 1B-8). BankProfileScreen (1B-9) must read state.pathParameters['bankId']
+  // — do not re-decide this name independently when that task starts.
   static const String bankProfilePath = '/banks/:bankId';
 
   static const String donorsName = 'donors';
@@ -448,9 +452,11 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.banksPath,
                 name: AppRoute.banksName,
-                builder: (context, state) => const _TodoScreen('Bank locator'),
+                builder: (context, state) => const BankLocatorScreen(),
                 routes: [
                   GoRoute(
+                    // Path segment name must stay 'bankId' — see the
+                    // AppRoute.bankProfilePath contract note above.
                     path: ':bankId',
                     name: AppRoute.bankProfileName,
                     builder: (context, state) => _TodoScreen(

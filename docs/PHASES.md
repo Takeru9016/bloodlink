@@ -36,7 +36,7 @@ Phase 1B [ 9 / 9 tasks ] 100%
 - [x] 2A-1 — bloodRequests model + repository
 - [x] 2A-2 — Cloud Function: onRequestCreated
 - [x] 2A-3 — Request blood form screen
-- [ ] 2A-4 — Matched banks results screen
+- [x] 2A-4 — Matched banks results screen
 - [ ] 2A-5 — Status tracking screen + updateRequestStatus function
 - [ ] 2A-6 — FCM token setup
 - [ ] 2A-7 — Cloud Functions: match + status notifications
@@ -45,7 +45,7 @@ Phase 1B [ 9 / 9 tasks ] 100%
 - [ ] 2A-10 — educationArticles model + repository + seed content
 - [ ] 2A-11 — Education hub screens
 
-Phase 2A [ 3 / 11 tasks ] 27%
+Phase 2A [ 4 / 11 tasks ] 36%
 
 ## Phase 3A — Engagement layer
 - [ ] 3A-1 — bannerItems model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 25 / 44 tasks**
+**Total: 26 / 44 tasks**

@@ -4,7 +4,7 @@ Placeholder app name. Find-and-replace "bloodlink" everywhere (package name, org
 
 Read this file in full before doing anything in this repo. It is the persistent memory across Claude Code sessions — treat it as more authoritative than your own assumptions about the project.
 
-**Active Task: 2A-2**
+**Active Task: 2A-3**
 Update this line after every completed task (see `docs/PHASES.md` for the full tracker). Prompts are run one at a time, in order, from `prompts/phase-*.md` — do not skip ahead.
 
 ---
@@ -114,5 +114,6 @@ Slash commands available: `.claude/commands/new-screen.md`, `.claude/commands/ne
 - Google Maps API key not yet configured natively (iOS `AppDelegate`/`Info.plist`, Android `AndroidManifest.xml`). `google_maps_flutter` is a declared dependency and screens can be built/analyzed/tested against it, but any `GoogleMap` widget won't render real tiles on a device/simulator until this is set up. First hit in 1B-6 (manage partners map picker); will resurface in 1B-8/1B-9 (bank locator) and 4A-1/4A-2 (camps) — don't rediscover it each time, just note the screen is built and flag map rendering as blocked on this key.
 - `lib/features/donor_profile/application/donor_profile_setup_controller.dart` (1B-4) still has the `FirebaseAuth.instance.currentUser!.uid` force-unwrap pattern that was fixed in `partner_form_controller.dart` (1B-6) — same fix applies (null-check → throw `StateError` → let the existing `AsyncValue.guard` carry it to the screen's error handling). Not blocking, but apply it next time that file is touched rather than rediscovering the issue.
 - Android Gradle Plugin is pinned at 8.9.1 (`android/settings.gradle.kts`); Flutter's tooling warns support for it will soon be dropped and recommends moving to ≥8.11.1. Surfaced during the Phase 1B gate check's native build verification, not blocking any build today — bump it when it starts failing or the next time Android tooling is touched, rather than rediscovering the warning from scratch.
+- Cloud Functions require the Firebase project to be on the Blaze (pay-as-you-go) plan — 2nd-gen functions (`firebase-functions` v7, used here) need Cloud Build/Artifact Registry/Eventarc APIs that only enable on Blaze, even for free-tier-level usage. `bloodlink-dev-wt` was upgraded to Blaze with a budget alert for 2A-2's `onRequestCreated` deploy. `bloodlink-prod` (not yet created — see the "two Firebase projects minimum" note in `docs/FIREBASE_SETUP.md`) will need the same upgrade + budget alert before any Cloud Function can deploy there. Flag this ahead of launch rather than discovering it mid-launch-prep.
 
 If a task depends on one of these being resolved, say so explicitly rather than picking an answer and moving on.

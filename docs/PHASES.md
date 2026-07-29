@@ -33,7 +33,7 @@ Phase 1A [ 13 / 13 tasks ] 100%
 Phase 1B [ 9 / 9 tasks ] 100%
 
 ## Phase 2A — Core request flow
-- [ ] 2A-1 — bloodRequests model + repository
+- [x] 2A-1 — bloodRequests model + repository
 - [ ] 2A-2 — Cloud Function: onRequestCreated
 - [ ] 2A-3 — Request blood form screen
 - [ ] 2A-4 — Matched banks results screen
@@ -45,7 +45,7 @@ Phase 1B [ 9 / 9 tasks ] 100%
 - [ ] 2A-10 — educationArticles model + repository + seed content
 - [ ] 2A-11 — Education hub screens
 
-Phase 2A [ 0 / 11 tasks ] 0%
+Phase 2A [ 1 / 11 tasks ] 9%
 
 ## Phase 3A — Engagement layer
 - [ ] 3A-1 — bannerItems model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 22 / 44 tasks**
+**Total: 23 / 44 tasks**

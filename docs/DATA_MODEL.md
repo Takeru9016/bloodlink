@@ -29,6 +29,7 @@ patientName: string
 bloodGroup: string
 units: number
 hospital: string
+location: geopoint             // request-level location for distance-ranked matching (2A-2)
 urgencyWindow: "2h" | "6h" | "24h" | "1w"
 status: "pending" | "matched" | "fulfilled" | "expired" | "cancelled"
 matchedPartnerIds: array<string>   // written by onRequestCreated Cloud Function

@@ -9,6 +9,7 @@ import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/bank_locator/presentation/bank_locator_screen.dart';
 import '../../features/bank_locator/presentation/bank_profile_screen.dart';
+import '../../features/blood_request/presentation/request_blood_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
@@ -76,6 +77,10 @@ abstract final class AppRoute {
   static const String requestPath = '/request';
 
   static const String requestResultsName = 'requestResults';
+  // 'requestId' is the authoritative path-param name for this route (set in
+  // 2A-3). MatchedBanksScreen (2A-4) must read
+  // state.pathParameters['requestId'] — do not re-decide this name
+  // independently when that task starts. Same treatment as 'bankId' above.
   static const String requestResultsPath = '/request/results/:requestId';
 
   static const String requestStatusName = 'requestStatus';
@@ -427,9 +432,11 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.requestPath,
                 name: AppRoute.requestName,
-                builder: (context, state) => const _TodoScreen('Request blood'),
+                builder: (context, state) => const RequestBloodScreen(),
                 routes: [
                   GoRoute(
+                    // Path segment name must stay 'requestId' — see the
+                    // AppRoute.requestResultsPath contract note above.
                     path: 'results/:requestId',
                     name: AppRoute.requestResultsName,
                     builder: (context, state) => _TodoScreen(

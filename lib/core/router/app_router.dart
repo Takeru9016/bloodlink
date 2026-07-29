@@ -11,6 +11,7 @@ import '../../features/bank_locator/presentation/bank_locator_screen.dart';
 import '../../features/bank_locator/presentation/bank_profile_screen.dart';
 import '../../features/blood_request/presentation/matched_banks_screen.dart';
 import '../../features/blood_request/presentation/request_blood_screen.dart';
+import '../../features/blood_request/presentation/request_status_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
@@ -85,7 +86,11 @@ abstract final class AppRoute {
   static const String requestResultsPath = '/request/results/:requestId';
 
   static const String requestStatusName = 'requestStatus';
-  static const String requestStatusPath = '/request/status/:requestId';
+  // No :requestId param — 2A-5's screen lists all of the current user's
+  // requests, it isn't a per-request detail view. (Earlier scaffolding had
+  // this as a per-id path; nothing referenced it yet, so it was safe to
+  // correct here rather than carry the mismatch forward.)
+  static const String requestStatusPath = '/request/status';
 
   static const String banksName = 'banks';
   static const String banksPath = '/banks';
@@ -445,11 +450,9 @@ GoRouter appRouter(Ref ref) {
                     ),
                   ),
                   GoRoute(
-                    path: 'status/:requestId',
+                    path: 'status',
                     name: AppRoute.requestStatusName,
-                    builder: (context, state) => _TodoScreen(
-                      'Request status — ${state.pathParameters['requestId']}',
-                    ),
+                    builder: (context, state) => const RequestStatusScreen(),
                   ),
                 ],
               ),

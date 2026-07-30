@@ -27,7 +27,8 @@ class DonorProfileSetupController extends _$DonorProfileSetupController {
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid == null) throw StateError('No signed-in user');
       final userRepo = ref.read(userRepositoryProvider);
 
       await ref
@@ -58,7 +59,8 @@ class DonorProfileSetupController extends _$DonorProfileSetupController {
   Future<void> skip() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid == null) throw StateError('No signed-in user');
       final userRepo = ref.read(userRepositoryProvider);
       final currentUser = await userRepo.getUser(uid);
       final roles = {...?currentUser?.roles, 'requester'}.toList();

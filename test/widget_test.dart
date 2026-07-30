@@ -1,30 +1,34 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:bloodlink/core/router/auth_state.dart';
+import 'package:bloodlink/features/notifications/application/fcm_controller.dart';
+import 'package:bloodlink/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:bloodlink/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:bloodlink/main.dart';
+// FcmController's real build() talks to the Firebase Messaging plugin, which
+// isn't available in a widget test — this stand-in isolates the boot check
+// from that native dependency.
+class _NoopFcmController extends FcmController {
+  @override
+  FutureOr<void> build() {}
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('MyApp boots and reaches a real screen', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          authStateProvider.overrideWithValue(const AuthState.signedOut()),
+          fcmControllerProvider.overrideWith(_NoopFcmController.new),
+        ],
+        child: const MyApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    expect(find.byType(OnboardingScreen), findsOneWidget);
   });
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'donor_profile_setup_controller.dart';
+part of 'fcm_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,35 +9,33 @@ part of 'donor_profile_setup_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(DonorProfileSetupController)
-final donorProfileSetupControllerProvider =
-    DonorProfileSetupControllerProvider._();
+@ProviderFor(FcmController)
+final fcmControllerProvider = FcmControllerProvider._();
 
-final class DonorProfileSetupControllerProvider
-    extends $AsyncNotifierProvider<DonorProfileSetupController, void> {
-  DonorProfileSetupControllerProvider._()
+final class FcmControllerProvider
+    extends $AsyncNotifierProvider<FcmController, void> {
+  FcmControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'donorProfileSetupControllerProvider',
-        isAutoDispose: true,
+        name: r'fcmControllerProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$donorProfileSetupControllerHash();
+  String debugGetCreateSourceHash() => _$fcmControllerHash();
 
   @$internal
   @override
-  DonorProfileSetupController create() => DonorProfileSetupController();
+  FcmController create() => FcmController();
 }
 
-String _$donorProfileSetupControllerHash() =>
-    r'c2424a6936769a4e62f78f33cecf23ba58b91476';
+String _$fcmControllerHash() => r'ba964bacd78dc3bf3bd3268abba55f6157476e66';
 
-abstract class _$DonorProfileSetupController extends $AsyncNotifier<void> {
+abstract class _$FcmController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override

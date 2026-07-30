@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/donor_profile_model.dart';
+import '../../../features/notifications/application/fcm_controller.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_input.dart';
 import '../application/donor_profile_setup_controller.dart';
@@ -149,7 +150,7 @@ class _DonorProfileSetupScreenState
     if (!mounted) return;
     final state = ref.read(donorProfileSetupControllerProvider);
     if (!state.hasError) {
-      context.goNamed(AppRoute.homeName);
+      await _completeSetup();
     }
   }
 
@@ -158,8 +159,23 @@ class _DonorProfileSetupScreenState
     if (!mounted) return;
     final state = ref.read(donorProfileSetupControllerProvider);
     if (!state.hasError) {
-      context.goNamed(AppRoute.homeName);
+      await _completeSetup();
     }
+  }
+
+  // Setup is the first point the user has a concrete reason to grant
+  // notification permission, so it's requested here rather than at launch.
+  // A denial or failure shouldn't block leaving the screen.
+  Future<void> _completeSetup() async {
+    try {
+      await ref
+          .read(fcmControllerProvider.notifier)
+          .requestPermissionAndRegister();
+    } catch (_) {
+      // Permission denial or a token fetch failure isn't fatal here.
+    }
+    if (!mounted) return;
+    context.goNamed(AppRoute.homeName);
   }
 
   @override

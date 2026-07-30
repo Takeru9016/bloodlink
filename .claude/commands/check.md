@@ -3,7 +3,7 @@ Verify the current task (or phase) is actually done — the "Definition of done"
 Run, in order, and show full output for each:
 
 1. `flutter analyze` — must report **0 issues**. Per CLAUDE.md §3 this must be clean before any commit is considered done. There is no "unused import is fine" exception except during the original 1A-1 dependency-bootstrap task.
-2. `flutter test` — must pass. Trivial/placeholder tests passing is fine this early, but nothing may fail.
+2. `flutter test` — must pass. Trivial/placeholder tests passing is fine this early, but nothing may fail. This must include `test/widget_test.dart` actually running — it pumps the real `MyApp` from `lib/main.dart` and asserts the app reaches a real screen, not a widget disconnected from the entry point. If a future change makes that test trivial or drops the assertion, treat it as a regression, not a simplification.
 3. If any file touched this task uses `@freezed`, `@JsonSerializable`, or `@riverpod`/`@Riverpod`: run `flutter pub run build_runner build --delete-conflicting-outputs` and confirm it completes with no generator errors.
 4. Spot-check anything touched this task against CLAUDE.md §5 non-negotiables:
    - Every Admin write path sets both `updatedBy` (acting admin's uid) and `updatedAt`

@@ -292,7 +292,17 @@ Then manually verify and report:
 1. A real request submitted through the app gets real ranked matches from real partner
    stock, not a mocked ranking
 2. A verified donor within range and matching blood group receives an actual push
-   notification for a new nearby request
+   notification for a new nearby request. **Live push verification is partial as of
+   2A-6 — do not treat this item as fully satisfied by default; state explicitly what
+   was (re-)confirmed for this Gate Check and what's still outstanding.** Per
+   CLAUDE.md §7: Android foreground and background (backgrounded, not force-stopped)
+   delivery + tap-through were confirmed live via real FCM sends; Android true
+   cold-start/terminated delivery was not (`adb shell am force-stop` blocks FCM's
+   wake-up broadcast entirely — it's not a valid stand-in for a user swiping the app
+   away, and no working alternative was found via ADB in that session); iOS is
+   entirely unverified (no physical device, and `simctl push` doesn't exercise real
+   FCM→APNs delivery). Confirm this status is still current before signing off, and
+   don't silently report the phase as fully passing if these gaps remain unresolved.
 3. Request status transitions are restricted to the request's own owner, enforced
    server-side (test by attempting a transition as a different user — it should fail)
 4. Unverified donors never appear in donor directory queries

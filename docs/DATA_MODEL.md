@@ -11,6 +11,7 @@ roles: array<"donor" | "requester" | "admin">
 location: geopoint | null       // null until device location is captured
 city: string | null             // manual-entry fallback when location permission is denied; mutually exclusive with location
 createdAt: timestamp
+fcmToken: string | null          // current device's FCM registration token (2A-6); overwritten on refresh, never cleared on send failure (2A-7)
 ```
 
 ## `donorProfiles/{userId}`

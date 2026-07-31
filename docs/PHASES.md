@@ -39,13 +39,13 @@ Phase 1B [ 9 / 9 tasks ] 100%
 - [x] 2A-4 — Matched banks results screen
 - [x] 2A-5 — Status tracking screen + updateRequestStatus function
 - [x] 2A-6 — FCM token setup
-- [ ] 2A-7 — Cloud Functions: match + status notifications
+- [x] 2A-7 — Cloud Functions: match + status notifications
 - [ ] 2A-8 — Donor verification flow
 - [ ] 2A-9 — Report/block feature
 - [ ] 2A-10 — educationArticles model + repository + seed content
 - [ ] 2A-11 — Education hub screens
 
-Phase 2A [ 6 / 11 tasks ] 55%
+Phase 2A [ 7 / 11 tasks ] 64%
 
 ## Phase 3A — Engagement layer
 - [ ] 3A-1 — bannerItems model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 28 / 44 tasks**
+**Total: 29 / 44 tasks**

@@ -61,7 +61,7 @@ final class RequestStatusControllerProvider
         argument: null,
         retry: null,
         name: r'requestStatusControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -75,7 +75,7 @@ final class RequestStatusControllerProvider
 }
 
 String _$requestStatusControllerHash() =>
-    r'cf9d289597e1442da5ceba7775a9f994700eaa05';
+    r'1f4a5f202c7a2a4a461c209e0ea3b04a1dc494a7';
 
 abstract class _$RequestStatusController extends $AsyncNotifier<void> {
   FutureOr<void> build();

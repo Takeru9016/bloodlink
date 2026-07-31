@@ -1,5 +1,6 @@
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { getFirestore } from "firebase-admin/firestore";
+import { notifyUsers } from "../notifications/notify";
 
 const ALLOWED_NEW_STATUSES = ["fulfilled", "cancelled"] as const;
 type NewStatus = (typeof ALLOWED_NEW_STATUSES)[number];
@@ -48,6 +49,19 @@ export const updateRequestStatus = onCall<UpdateRequestStatusData>(async (reques
   }
 
   await requestRef.update({ status: newStatus });
+
+  const requesterDoc = await db.collection("users").doc(data.requesterId).get();
+  const fcmToken = (requesterDoc.data()?.fcmToken as string | undefined) ?? null;
+
+  await notifyUsers(
+    [{ userId: data.requesterId, fcmToken }],
+    "request_status",
+    { requestId, status: newStatus },
+    {
+      title: "Your blood request update",
+      body: `Your request is now ${newStatus}.`,
+    },
+  );
 
   return { status: newStatus };
 });

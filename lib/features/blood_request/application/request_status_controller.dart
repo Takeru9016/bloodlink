@@ -22,7 +22,12 @@ Future<List<RequestStatusEntry>> requestStatusList(Ref ref) async {
       .listRequestsForUser(firebaseUser.uid);
 }
 
-@riverpod
+// keepAlive: the screen never watches this provider (loading state is
+// tracked locally per-request-id instead), so with autoDispose the provider
+// had zero listeners and could be torn down while updateStatus's callable
+// await was still in flight — the next `state = ...` write then threw
+// "Ref used after being disposed". Matches FcmController's same rationale.
+@Riverpod(keepAlive: true)
 class RequestStatusController extends _$RequestStatusController {
   @override
   FutureOr<void> build() {}

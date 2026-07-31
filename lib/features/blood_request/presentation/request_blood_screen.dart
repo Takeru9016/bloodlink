@@ -107,7 +107,16 @@ class _RequestBloodScreenState extends ConsumerState<RequestBloodScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Request blood')),
+      appBar: AppBar(
+        title: const Text('Request blood'),
+        actions: [
+          IconButton(
+            tooltip: 'My requests',
+            icon: const Icon(Icons.list_alt),
+            onPressed: () => context.goNamed(AppRoute.requestStatusName),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),

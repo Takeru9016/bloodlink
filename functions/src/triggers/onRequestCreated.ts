@@ -1,6 +1,8 @@
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { getFirestore } from "firebase-admin/firestore";
 import { StockCandidate, rankMatches } from "../matching/rankMatches";
+import { DonorCandidate, filterNearbyDonors } from "../matching/filterNearbyDonors";
+import { notifyUsers } from "../notifications/notify";
 
 // Fetches every verified partner and does a per-partner get() on its
 // stock/{bloodGroup} doc (bloodGroup is only ever the doc ID, not a field, so
@@ -41,6 +43,43 @@ async function findStockCandidates(bloodGroup: string): Promise<StockCandidate[]
   return candidates;
 }
 
+// Same all-verified-donors fan-out shape as findStockCandidates above: one
+// donorProfiles query (equality-only, no composite index needed) plus a
+// per-donor users/{uid} get() for location + fcmToken (donorProfiles has
+// neither). Fine at expected donor counts; revisit if that ever changes.
+async function findDonorCandidates(
+  bloodGroup: string,
+  excludeUserId: string,
+): Promise<DonorCandidate[]> {
+  const db = getFirestore();
+
+  const donorProfilesSnapshot = await db
+    .collection("donorProfiles")
+    .where("verificationStatus", "==", "verified")
+    .where("bloodGroup", "==", bloodGroup)
+    .get();
+
+  const profileDocs = donorProfilesSnapshot.docs.filter((doc) => doc.id !== excludeUserId);
+  if (profileDocs.length === 0) return [];
+
+  const userDocs = await Promise.all(
+    profileDocs.map((doc) => db.collection("users").doc(doc.id).get()),
+  );
+
+  return profileDocs.map((profileDoc, index) => {
+    const userDoc = userDocs[index];
+    const userData = userDoc.exists ? userDoc.data() : undefined;
+    const location = userData?.location;
+
+    return {
+      userId: profileDoc.id,
+      location: location ? { latitude: location.latitude, longitude: location.longitude } : null,
+      optInRadiusKm: (profileDoc.data().optInRadiusKm as number | undefined) ?? 0,
+      fcmToken: (userData?.fcmToken as string | undefined) ?? null,
+    };
+  });
+}
+
 export const onRequestCreated = onDocumentCreated(
   "bloodRequests/{requestId}",
   async (event) => {
@@ -49,12 +88,15 @@ export const onRequestCreated = onDocumentCreated(
 
     const request = snapshot.data();
     const bloodGroup = request.bloodGroup as string;
-    const location = request.location;
+    const requestLocation = {
+      latitude: request.location.latitude,
+      longitude: request.location.longitude,
+    };
 
     const candidates = await findStockCandidates(bloodGroup);
 
     const matchedPartnerIds = rankMatches({
-      requestLocation: { latitude: location.latitude, longitude: location.longitude },
+      requestLocation,
       candidates,
     });
 
@@ -62,5 +104,23 @@ export const onRequestCreated = onDocumentCreated(
       matchedPartnerIds,
       ...(matchedPartnerIds.length > 0 ? { status: "matched" } : {}),
     });
+
+    const donorCandidates = await findDonorCandidates(bloodGroup, request.requesterId as string);
+    const nearbyDonors = filterNearbyDonors(requestLocation, donorCandidates);
+
+    await notifyUsers(
+      nearbyDonors,
+      "request_nearby",
+      {
+        requestId: event.params.requestId,
+        bloodGroup,
+        hospital: request.hospital,
+        urgencyWindow: request.urgencyWindow,
+      },
+      {
+        title: "Blood needed nearby",
+        body: `${bloodGroup} needed at ${request.hospital}`,
+      },
+    );
   },
 );

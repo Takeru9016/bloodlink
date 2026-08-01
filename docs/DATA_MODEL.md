@@ -96,6 +96,7 @@ targetType: "request" | "donor"
 targetId: string
 reason: string
 status: "open" | "reviewed" | "dismissed"
+createdAt: timestamp
 ```
 
 ## Security rules — non-negotiable, see docs/FIREBASE_SETUP.md for the actual rules file

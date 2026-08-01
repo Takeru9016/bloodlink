@@ -12,7 +12,9 @@ import '../../features/bank_locator/presentation/bank_profile_screen.dart';
 import '../../features/blood_request/presentation/matched_banks_screen.dart';
 import '../../features/blood_request/presentation/request_blood_screen.dart';
 import '../../features/blood_request/presentation/request_status_screen.dart';
+import '../../features/admin/verify_donors/presentation/verify_donors_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
+import '../../features/donor_profile/presentation/donor_verification_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
 
@@ -50,6 +52,9 @@ final _adminEducationBranchKey = GlobalKey<NavigatorState>(
 );
 final _adminModerationBranchKey = GlobalKey<NavigatorState>(
   debugLabel: 'adminModeration',
+);
+final _adminVerifyDonorsBranchKey = GlobalKey<NavigatorState>(
+  debugLabel: 'adminVerifyDonors',
 );
 
 /// Route names and paths for every screen in `docs/SPEC.md`. Screens should
@@ -132,6 +137,11 @@ abstract final class AppRoute {
   static const String bannerViewerName = 'bannerViewer';
   static const String bannerViewerPath = '/banner-viewer/:itemId';
 
+  // Not yet linked from a real menu — Profile is still a placeholder screen
+  // (2A-8). Wire an entry point to this route when Profile is built.
+  static const String donorVerificationName = 'donorVerification';
+  static const String donorVerificationPath = '/profile/verification';
+
   // Admin shell tabs — own nav shell, never merged into the consumer bottom nav.
   static const String adminPartnersName = 'adminPartners';
   static const String adminPartnersPath = '/admin/partners';
@@ -155,6 +165,11 @@ abstract final class AppRoute {
 
   static const String adminModerationName = 'adminModeration';
   static const String adminModerationPath = '/admin/moderation';
+
+  // Added in 2A-8 — see docs/SPEC.md Admin section, not part of the
+  // original Stage-4 nav list.
+  static const String adminVerifyDonorsName = 'adminVerifyDonors';
+  static const String adminVerifyDonorsPath = '/admin/verify-donors';
 
   /// Reachable without being signed in.
   static const Set<String> _publicPaths = {
@@ -319,6 +334,11 @@ class _AdminScaffold extends StatelessWidget {
             selectedIcon: Icon(Icons.shield),
             label: 'Moderation',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.verified_user_outlined),
+            selectedIcon: Icon(Icons.verified_user),
+            label: 'Donors',
+          ),
         ],
       ),
     );
@@ -416,6 +436,12 @@ GoRouter appRouter(Ref ref) {
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) =>
             _TodoScreen('Banner viewer ${state.pathParameters['itemId']}'),
+      ),
+      GoRoute(
+        path: AppRoute.donorVerificationPath,
+        name: AppRoute.donorVerificationName,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const DonorVerificationScreen(),
       ),
 
       StatefulShellRoute.indexedStack(
@@ -594,6 +620,16 @@ GoRouter appRouter(Ref ref) {
                 name: AppRoute.adminModerationName,
                 builder: (context, state) =>
                     const _TodoScreen('Admin: Moderation'),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _adminVerifyDonorsBranchKey,
+            routes: [
+              GoRoute(
+                path: AppRoute.adminVerifyDonorsPath,
+                name: AppRoute.adminVerifyDonorsName,
+                builder: (context, state) => const VerifyDonorsScreen(),
               ),
             ],
           ),

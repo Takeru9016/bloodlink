@@ -25,6 +25,9 @@ Fields: Email, Password. Plus "Continue with Google". "Forgot password" link →
 Only shown if the user opts into the `donor` role (can be skipped if they only want `requester`). Fields: Blood group (dropdown: A+, A-, B+, B-, O+, O-, AB+, AB-), Date of birth (date picker, must be 18+ — do not hardcode a different minimum without checking `CLAUDE.md` open items), City/location (uses device location permission, falls back to manual text entry), Last donation date (optional, date picker, nullable).
 Writes to `donorProfiles/{uid}`.
 
+### Donor verification
+Added in 2A-8. Not yet linked from a real menu — Profile (`docs/SPEC.md` "Profile" section below) is still a placeholder screen, so wire an entry point here when that's built. Shows the donor's current `verificationStatus` (unverified/pending/verified) with plain-language copy — per `CLAUDE.md` §5, this never implies donation eligibility, only ID-review status. "Upload ID" opens a camera/gallery picker, uploads to Cloud Storage, and sets `verificationDocUrl` + `verificationStatus: "pending"`. Re-uploading (whether currently pending, unverified after a rejection, or even already verified) always overwrites the previous submission and resets status to `"pending"` for re-review — see "Verify donors" below for the review side.
+
 ---
 
 ## Consumer app (Donor / Requester)
@@ -74,6 +77,9 @@ List of articles with an "Edit" action per row. "+ New article" → title, categ
 
 ### Moderation
 Reports queue: each row shows what was reported (request or donor), the reason, a "Review" action. Reviewing should let the admin mark the report reviewed/dismissed and, if warranted, take action on the underlying request/donor (e.g. deactivate a donor profile) — but building the actual punitive actions can wait until this screen's basic queue view works.
+
+### Verify donors
+Not in the original Admin nav list — added in 2A-8 as the review side of donor ID verification (there is no separate reviewer role in this app, per `CLAUDE.md` §2, so review lives here). List of donors with `verificationStatus == "pending"` (live query — a donor resubmitting their ID updates the row immediately, no manual refresh needed), each row: donor name, blood group, uploaded ID photo, Approve/Reject buttons. Approve writes `verificationStatus: "verified"`; Reject writes `verificationStatus: "unverified"` (there's no separate "rejected" state in the data model — a rejected donor can resubmit, which is exactly the `"unverified"` → upload → `"pending"` path). Both actions set `verifiedBy`/`verifiedAt` per `CLAUDE.md`'s admin-attribution rule.
 
 ---
 

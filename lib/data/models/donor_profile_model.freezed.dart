@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DonorProfileModel {
 
- BloodGroup get bloodGroup;@TimestampConverter() Timestamp get dob;@TimestampConverter() Timestamp? get lastDonationDate; VerificationStatus get verificationStatus; double get optInRadiusKm;
+ BloodGroup get bloodGroup;@TimestampConverter() Timestamp get dob;@TimestampConverter() Timestamp? get lastDonationDate; VerificationStatus get verificationStatus; double get optInRadiusKm; String? get verificationDocUrl; String? get verifiedBy;@TimestampConverter() Timestamp? get verifiedAt;
 /// Create a copy of DonorProfileModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DonorProfileModelCopyWith<DonorProfileModel> get copyWith => _$DonorProfileMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DonorProfileModel&&(identical(other.bloodGroup, bloodGroup) || other.bloodGroup == bloodGroup)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.lastDonationDate, lastDonationDate) || other.lastDonationDate == lastDonationDate)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.optInRadiusKm, optInRadiusKm) || other.optInRadiusKm == optInRadiusKm));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DonorProfileModel&&(identical(other.bloodGroup, bloodGroup) || other.bloodGroup == bloodGroup)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.lastDonationDate, lastDonationDate) || other.lastDonationDate == lastDonationDate)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.optInRadiusKm, optInRadiusKm) || other.optInRadiusKm == optInRadiusKm)&&(identical(other.verificationDocUrl, verificationDocUrl) || other.verificationDocUrl == verificationDocUrl)&&(identical(other.verifiedBy, verifiedBy) || other.verifiedBy == verifiedBy)&&(identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,bloodGroup,dob,lastDonationDate,verificationStatus,optInRadiusKm);
+int get hashCode => Object.hash(runtimeType,bloodGroup,dob,lastDonationDate,verificationStatus,optInRadiusKm,verificationDocUrl,verifiedBy,verifiedAt);
 
 @override
 String toString() {
-  return 'DonorProfileModel(bloodGroup: $bloodGroup, dob: $dob, lastDonationDate: $lastDonationDate, verificationStatus: $verificationStatus, optInRadiusKm: $optInRadiusKm)';
+  return 'DonorProfileModel(bloodGroup: $bloodGroup, dob: $dob, lastDonationDate: $lastDonationDate, verificationStatus: $verificationStatus, optInRadiusKm: $optInRadiusKm, verificationDocUrl: $verificationDocUrl, verifiedBy: $verifiedBy, verifiedAt: $verifiedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DonorProfileModelCopyWith<$Res>  {
   factory $DonorProfileModelCopyWith(DonorProfileModel value, $Res Function(DonorProfileModel) _then) = _$DonorProfileModelCopyWithImpl;
 @useResult
 $Res call({
- BloodGroup bloodGroup,@TimestampConverter() Timestamp dob,@TimestampConverter() Timestamp? lastDonationDate, VerificationStatus verificationStatus, double optInRadiusKm
+ BloodGroup bloodGroup,@TimestampConverter() Timestamp dob,@TimestampConverter() Timestamp? lastDonationDate, VerificationStatus verificationStatus, double optInRadiusKm, String? verificationDocUrl, String? verifiedBy,@TimestampConverter() Timestamp? verifiedAt
 });
 
 
@@ -65,14 +65,17 @@ class _$DonorProfileModelCopyWithImpl<$Res>
 
 /// Create a copy of DonorProfileModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? bloodGroup = null,Object? dob = null,Object? lastDonationDate = freezed,Object? verificationStatus = null,Object? optInRadiusKm = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? bloodGroup = null,Object? dob = null,Object? lastDonationDate = freezed,Object? verificationStatus = null,Object? optInRadiusKm = null,Object? verificationDocUrl = freezed,Object? verifiedBy = freezed,Object? verifiedAt = freezed,}) {
   return _then(_self.copyWith(
 bloodGroup: null == bloodGroup ? _self.bloodGroup : bloodGroup // ignore: cast_nullable_to_non_nullable
 as BloodGroup,dob: null == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
 as Timestamp,lastDonationDate: freezed == lastDonationDate ? _self.lastDonationDate : lastDonationDate // ignore: cast_nullable_to_non_nullable
 as Timestamp?,verificationStatus: null == verificationStatus ? _self.verificationStatus : verificationStatus // ignore: cast_nullable_to_non_nullable
 as VerificationStatus,optInRadiusKm: null == optInRadiusKm ? _self.optInRadiusKm : optInRadiusKm // ignore: cast_nullable_to_non_nullable
-as double,
+as double,verificationDocUrl: freezed == verificationDocUrl ? _self.verificationDocUrl : verificationDocUrl // ignore: cast_nullable_to_non_nullable
+as String?,verifiedBy: freezed == verifiedBy ? _self.verifiedBy : verifiedBy // ignore: cast_nullable_to_non_nullable
+as String?,verifiedAt: freezed == verifiedAt ? _self.verifiedAt : verifiedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp?,
   ));
 }
 
@@ -157,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm,  String? verificationDocUrl,  String? verifiedBy, @TimestampConverter()  Timestamp? verifiedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DonorProfileModel() when $default != null:
-return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm);case _:
+return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm,_that.verificationDocUrl,_that.verifiedBy,_that.verifiedAt);case _:
   return orElse();
 
 }
@@ -178,10 +181,10 @@ return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verifica
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm,  String? verificationDocUrl,  String? verifiedBy, @TimestampConverter()  Timestamp? verifiedAt)  $default,) {final _that = this;
 switch (_that) {
 case _DonorProfileModel():
-return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm);case _:
+return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm,_that.verificationDocUrl,_that.verifiedBy,_that.verifiedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +201,10 @@ return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verifica
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( BloodGroup bloodGroup, @TimestampConverter()  Timestamp dob, @TimestampConverter()  Timestamp? lastDonationDate,  VerificationStatus verificationStatus,  double optInRadiusKm,  String? verificationDocUrl,  String? verifiedBy, @TimestampConverter()  Timestamp? verifiedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _DonorProfileModel() when $default != null:
-return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm);case _:
+return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verificationStatus,_that.optInRadiusKm,_that.verificationDocUrl,_that.verifiedBy,_that.verifiedAt);case _:
   return null;
 
 }
@@ -213,7 +216,7 @@ return $default(_that.bloodGroup,_that.dob,_that.lastDonationDate,_that.verifica
 @JsonSerializable()
 
 class _DonorProfileModel implements DonorProfileModel {
-  const _DonorProfileModel({required this.bloodGroup, @TimestampConverter() required this.dob, @TimestampConverter() this.lastDonationDate, required this.verificationStatus, required this.optInRadiusKm});
+  const _DonorProfileModel({required this.bloodGroup, @TimestampConverter() required this.dob, @TimestampConverter() this.lastDonationDate, required this.verificationStatus, required this.optInRadiusKm, this.verificationDocUrl, this.verifiedBy, @TimestampConverter() this.verifiedAt});
   factory _DonorProfileModel.fromJson(Map<String, dynamic> json) => _$DonorProfileModelFromJson(json);
 
 @override final  BloodGroup bloodGroup;
@@ -221,6 +224,9 @@ class _DonorProfileModel implements DonorProfileModel {
 @override@TimestampConverter() final  Timestamp? lastDonationDate;
 @override final  VerificationStatus verificationStatus;
 @override final  double optInRadiusKm;
+@override final  String? verificationDocUrl;
+@override final  String? verifiedBy;
+@override@TimestampConverter() final  Timestamp? verifiedAt;
 
 /// Create a copy of DonorProfileModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DonorProfileModel&&(identical(other.bloodGroup, bloodGroup) || other.bloodGroup == bloodGroup)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.lastDonationDate, lastDonationDate) || other.lastDonationDate == lastDonationDate)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.optInRadiusKm, optInRadiusKm) || other.optInRadiusKm == optInRadiusKm));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DonorProfileModel&&(identical(other.bloodGroup, bloodGroup) || other.bloodGroup == bloodGroup)&&(identical(other.dob, dob) || other.dob == dob)&&(identical(other.lastDonationDate, lastDonationDate) || other.lastDonationDate == lastDonationDate)&&(identical(other.verificationStatus, verificationStatus) || other.verificationStatus == verificationStatus)&&(identical(other.optInRadiusKm, optInRadiusKm) || other.optInRadiusKm == optInRadiusKm)&&(identical(other.verificationDocUrl, verificationDocUrl) || other.verificationDocUrl == verificationDocUrl)&&(identical(other.verifiedBy, verifiedBy) || other.verifiedBy == verifiedBy)&&(identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,bloodGroup,dob,lastDonationDate,verificationStatus,optInRadiusKm);
+int get hashCode => Object.hash(runtimeType,bloodGroup,dob,lastDonationDate,verificationStatus,optInRadiusKm,verificationDocUrl,verifiedBy,verifiedAt);
 
 @override
 String toString() {
-  return 'DonorProfileModel(bloodGroup: $bloodGroup, dob: $dob, lastDonationDate: $lastDonationDate, verificationStatus: $verificationStatus, optInRadiusKm: $optInRadiusKm)';
+  return 'DonorProfileModel(bloodGroup: $bloodGroup, dob: $dob, lastDonationDate: $lastDonationDate, verificationStatus: $verificationStatus, optInRadiusKm: $optInRadiusKm, verificationDocUrl: $verificationDocUrl, verifiedBy: $verifiedBy, verifiedAt: $verifiedAt)';
 }
 
 
@@ -255,7 +261,7 @@ abstract mixin class _$DonorProfileModelCopyWith<$Res> implements $DonorProfileM
   factory _$DonorProfileModelCopyWith(_DonorProfileModel value, $Res Function(_DonorProfileModel) _then) = __$DonorProfileModelCopyWithImpl;
 @override @useResult
 $Res call({
- BloodGroup bloodGroup,@TimestampConverter() Timestamp dob,@TimestampConverter() Timestamp? lastDonationDate, VerificationStatus verificationStatus, double optInRadiusKm
+ BloodGroup bloodGroup,@TimestampConverter() Timestamp dob,@TimestampConverter() Timestamp? lastDonationDate, VerificationStatus verificationStatus, double optInRadiusKm, String? verificationDocUrl, String? verifiedBy,@TimestampConverter() Timestamp? verifiedAt
 });
 
 
@@ -272,14 +278,17 @@ class __$DonorProfileModelCopyWithImpl<$Res>
 
 /// Create a copy of DonorProfileModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? bloodGroup = null,Object? dob = null,Object? lastDonationDate = freezed,Object? verificationStatus = null,Object? optInRadiusKm = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? bloodGroup = null,Object? dob = null,Object? lastDonationDate = freezed,Object? verificationStatus = null,Object? optInRadiusKm = null,Object? verificationDocUrl = freezed,Object? verifiedBy = freezed,Object? verifiedAt = freezed,}) {
   return _then(_DonorProfileModel(
 bloodGroup: null == bloodGroup ? _self.bloodGroup : bloodGroup // ignore: cast_nullable_to_non_nullable
 as BloodGroup,dob: null == dob ? _self.dob : dob // ignore: cast_nullable_to_non_nullable
 as Timestamp,lastDonationDate: freezed == lastDonationDate ? _self.lastDonationDate : lastDonationDate // ignore: cast_nullable_to_non_nullable
 as Timestamp?,verificationStatus: null == verificationStatus ? _self.verificationStatus : verificationStatus // ignore: cast_nullable_to_non_nullable
 as VerificationStatus,optInRadiusKm: null == optInRadiusKm ? _self.optInRadiusKm : optInRadiusKm // ignore: cast_nullable_to_non_nullable
-as double,
+as double,verificationDocUrl: freezed == verificationDocUrl ? _self.verificationDocUrl : verificationDocUrl // ignore: cast_nullable_to_non_nullable
+as String?,verifiedBy: freezed == verifiedBy ? _self.verifiedBy : verifiedBy // ignore: cast_nullable_to_non_nullable
+as String?,verifiedAt: freezed == verifiedAt ? _self.verifiedAt : verifiedAt // ignore: cast_nullable_to_non_nullable
+as Timestamp?,
   ));
 }
 

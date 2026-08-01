@@ -73,6 +73,29 @@ service cloud.firestore {
 ```
 Deploy with `firebase deploy --only firestore:rules` after any change. Do not hand-edit rules in the Firebase console except for a genuine emergency fix — the rules file in the repo is the source of truth.
 
+## Storage rules
+Only the donor-verification path is covered so far (2A-8). Banner-carousel and education-hub image uploads (`docs/SPEC.md` "Manage home carousel" / "Manage education hub") are still unbuilt and have no rules yet — see `CLAUDE.md` §7 open items, add them when those admin upload flows land.
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() {
+      return isSignedIn() &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.roles.hasAny(['admin']);
+    }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+
+    // ID verification photos — more sensitive than blood group/history (CLAUDE.md §5),
+    // readable/writable only by the donor themself or an admin reviewing the queue.
+    match /donorVerification/{userId}/{fileName} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+  }
+}
+```
+Deploy with `firebase deploy --only storage`.
+
 ## Cloud Functions (build these in Stage 2, per prompts/stage-2-core-request-flow.md)
 - `onRequestCreated` — runs bank-matching (rank partner banks by requested blood group stock + distance), writes `matchedPartnerIds` back onto the request document
 - `onStockUpdated` — defense-in-depth timestamp/attribution check alongside security rules

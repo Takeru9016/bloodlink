@@ -19,6 +19,12 @@ _DonorProfileModel _$DonorProfileModelFromJson(Map<String, dynamic> json) =>
         json['verificationStatus'],
       ),
       optInRadiusKm: (json['optInRadiusKm'] as num).toDouble(),
+      verificationDocUrl: json['verificationDocUrl'] as String?,
+      verifiedBy: json['verifiedBy'] as String?,
+      verifiedAt: _$JsonConverterFromJson<Timestamp, Timestamp>(
+        json['verifiedAt'],
+        const TimestampConverter().fromJson,
+      ),
     );
 
 Map<String, dynamic> _$DonorProfileModelToJson(_DonorProfileModel instance) =>
@@ -32,6 +38,12 @@ Map<String, dynamic> _$DonorProfileModelToJson(_DonorProfileModel instance) =>
       'verificationStatus':
           _$VerificationStatusEnumMap[instance.verificationStatus]!,
       'optInRadiusKm': instance.optInRadiusKm,
+      'verificationDocUrl': instance.verificationDocUrl,
+      'verifiedBy': instance.verifiedBy,
+      'verifiedAt': _$JsonConverterToJson<Timestamp, Timestamp>(
+        instance.verifiedAt,
+        const TimestampConverter().toJson,
+      ),
     };
 
 const _$BloodGroupEnumMap = {

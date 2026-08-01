@@ -50,6 +50,9 @@ abstract class DonorProfileModel with _$DonorProfileModel {
     @TimestampConverter() Timestamp? lastDonationDate,
     required VerificationStatus verificationStatus,
     required double optInRadiusKm,
+    String? verificationDocUrl,
+    String? verifiedBy,
+    @TimestampConverter() Timestamp? verifiedAt,
   }) = _DonorProfileModel;
 
   factory DonorProfileModel.fromJson(Map<String, dynamic> json) =>

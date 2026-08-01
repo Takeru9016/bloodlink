@@ -21,6 +21,9 @@ dob: timestamp
 lastDonationDate: timestamp | null
 verificationStatus: "unverified" | "pending" | "verified"
 optInRadiusKm: number
+verificationDocUrl: string | null   // Cloud Storage download URL of uploaded ID (2A-8); overwritten in place on resubmission, never accumulates history
+verifiedBy: string | null           // ref users, admin only — who last approved/rejected (2A-8)
+verifiedAt: timestamp | null        // 2A-8
 ```
 
 ## `bloodRequests/{requestId}`

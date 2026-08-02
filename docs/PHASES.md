@@ -48,14 +48,14 @@ Phase 1B [ 9 / 9 tasks ] 100%
 Phase 2A [ 11 / 11 tasks ] 100%
 
 ## Phase 3A — Engagement layer
-- [ ] 3A-1 — bannerItems model + repository
+- [x] 3A-1 — bannerItems model + repository
 - [ ] 3A-2 — Admin: Manage home carousel screen
 - [ ] 3A-3 — Home screen
 - [ ] 3A-4 — Donor directory screen
 - [ ] 3A-5 — Profile screen
 - [ ] 3A-6 — In-app notification center
 
-Phase 3A [ 0 / 6 tasks ] 0%
+Phase 3A [ 1 / 6 tasks ] 17%
 
 ## Phase 4A — Extended features
 - [ ] 4A-1 — donationCamps model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 33 / 44 tasks**
+**Total: 34 / 44 tasks**

@@ -1,0 +1,28 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isSignedIn() { return request.auth != null; }
+    // Storage Rules' cross-service firestore.get() is broken on this
+    // project (root cause unknown — see CLAUDE.md §7 / FIREBASE_SETUP.md),
+    // so admin here is a custom claim, set manually via
+    // functions/scripts/setAdminClaims.js — NOT the Firestore roles array
+    // that Firestore rules' isAdmin() still uses.
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+
+    // ID verification photos — more sensitive than blood group/history (CLAUDE.md §5),
+    // readable/writable only by the donor themself or an admin reviewing the queue.
+    match /donorVerification/{userId}/{fileName} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // Home banner carousel images — public-readable like bannerItems/* in
+    // Firestore, curated only by admins (docs/SPEC.md "Manage home carousel").
+    match /bannerImages/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

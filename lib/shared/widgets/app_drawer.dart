@@ -6,11 +6,10 @@ import '../../core/router/app_router.dart';
 import '../../core/theme/app_theme.dart';
 import '../../features/auth/application/auth_controller.dart';
 
-/// First place in the app that calls `AuthController.signOut` — Profile
-/// (`docs/SPEC.md`) still doesn't exist to host a "Log out" menu item of its
-/// own. `_redirect` in `app_router.dart` reacts to the resulting
+/// `_redirect` in `app_router.dart` reacts to the resulting
 /// `authStateProvider` change and routes to sign-in on its own; this drawer
-/// doesn't navigate after signing out.
+/// doesn't navigate after signing out. ProfileScreen's own "Log out" menu
+/// item (3A-5) follows the same pattern.
 class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 

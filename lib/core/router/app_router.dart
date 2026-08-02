@@ -23,6 +23,7 @@ import '../../features/education_hub/presentation/education_hub_screen.dart';
 import '../../features/home/presentation/banner_viewer_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/profile/presentation/profile_screen.dart';
 import 'auth_state.dart';
 
 part 'app_router.g.dart';
@@ -144,8 +145,7 @@ abstract final class AppRoute {
   static const String bannerViewerName = 'bannerViewer';
   static const String bannerViewerPath = '/banner-viewer/:itemId';
 
-  // Not yet linked from a real menu — Profile is still a placeholder screen
-  // (2A-8). Wire an entry point to this route when Profile is built.
+  // Linked from ProfileScreen's blood-group/verification badge row (3A-5).
   static const String donorVerificationName = 'donorVerification';
   static const String donorVerificationPath = '/profile/verification';
 
@@ -534,7 +534,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.profilePath,
                 name: AppRoute.profileName,
-                builder: (context, state) => const _TodoScreen('Profile'),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),

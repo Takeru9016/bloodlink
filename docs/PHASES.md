@@ -52,10 +52,10 @@ Phase 2A [ 11 / 11 tasks ] 100%
 - [x] 3A-2 — Admin: Manage home carousel screen
 - [x] 3A-3 — Home screen
 - [x] 3A-4 — Donor directory screen
-- [ ] 3A-5 — Profile screen
+- [x] 3A-5 — Profile screen
 - [ ] 3A-6 — In-app notification center
 
-Phase 3A [ 4 / 6 tasks ] 67%
+Phase 3A [ 5 / 6 tasks ] 83%
 
 ## Phase 4A — Extended features
 - [ ] 4A-1 — donationCamps model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 4 / 6 tasks ] 67%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 37 / 44 tasks**
+**Total: 38 / 44 tasks**

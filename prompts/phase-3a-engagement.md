@@ -157,12 +157,13 @@ Then manually verify and report:
 3. Donor directory still excludes unverified donors (regression check against 1A-11/2A-8)
 4. Profile's stats reflect real data, not placeholders
 5. In-app notification center correctly handles every notification type the backend emits
-6. REQUIRED, live-device/emulator only — 3A-3's navigation/lifecycle fixes were written and
-   analyze/test-passed with no emulator available that session (see CLAUDE.md §7's 3A-3
-   entries) and are unverified beyond reasoning through the go_router/Flutter APIs. This is
-   exactly the class of bug (RequestStatusScreen, main.dart's unwired entry point, the lost
-   router wiring) this project has been burned by before — do not let a green /check stand
-   in for this. Check each explicitly:
+6. REQUIRED, live-device/emulator only — 3A-3's navigation/lifecycle fixes and 3A-5's
+   sign-out-race and ink-feedback fixes were written and analyze/test-passed with no
+   emulator available that session (see CLAUDE.md §7's 3A-3 and 3A-5 entries) and are
+   unverified beyond reasoning through the go_router/Flutter/Riverpod APIs. This is exactly
+   the class of bug (RequestStatusScreen, main.dart's unwired entry point, the lost router
+   wiring) this project has been burned by before — do not let a green /check stand in for
+   this. Check each explicitly:
    a. Open the banner viewer from Home, tap the close (X) button — confirm it pops back to
       Home (not a dead end, not a crash). This depends on the viewer having been `pushNamed`
       to, not `goNamed`.
@@ -178,8 +179,21 @@ Then manually verify and report:
       turn (separately, returning to Home between each) — confirm each returns to Home via
       back navigation, not a dead end. Then tap Profile from the drawer — confirm it
       switches the bottom nav to the Profile tab correctly.
-   Do not check off 3A-3 as fully verified, and do not treat this Gate Check as PASS, until
-   6a–6e have each been confirmed on a real device or emulator and reported individually.
+   f. From Profile, tap "Log out" — confirm the screen does not flash "Failed to load
+      profile" (or any other error text) before the redirect to sign-in lands. This depends
+      on ProfileController returning a never-resolving Future when authState's uid goes
+      null mid-session (the sign-out transition), instead of throwing, so the screen stays
+      on its loading state through the redirect race rather than surfacing an error frame.
+   g. From Profile, tap each menu row (Donation history, Badges, Settings, Help & support,
+      Log out) — confirm each shows visible ink/tap feedback (a ripple or highlight) on
+      press, not a silent tap. This depends on the menu list being wrapped in a `Material`
+      widget rather than `AppCard`'s plain colored `Container`, which was found in this
+      session to hide `ListTile`'s ink splash against its nearest Material ancestor
+      (Flutter's own debug assertion caught it in a widget test, but that only proves the
+      assertion doesn't fire — not that the ripple actually renders correctly on a device).
+   Do not check off 3A-3 or 3A-5 as fully verified, and do not treat this Gate Check as
+   PASS, until 6a–6g have each been confirmed on a real device or emulator and reported
+   individually.
 
 Then confirm:
 1. All 6 Phase 3A tasks are checked off in docs/PHASES.md

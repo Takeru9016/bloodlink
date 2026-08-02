@@ -22,6 +22,7 @@ import '../../features/education_hub/presentation/article_detail_screen.dart';
 import '../../features/education_hub/presentation/education_hub_screen.dart';
 import '../../features/home/presentation/banner_viewer_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/notifications/presentation/notification_center_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import 'auth_state.dart';
@@ -395,7 +396,7 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.notificationsPath,
         name: AppRoute.notificationsName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Notifications'),
+        builder: (context, state) => const NotificationCenterScreen(),
       ),
       GoRoute(
         path: AppRoute.educationHubPath,

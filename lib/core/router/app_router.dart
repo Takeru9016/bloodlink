@@ -19,6 +19,8 @@ import '../../features/donor_profile/presentation/donor_profile_setup_screen.dar
 import '../../features/donor_profile/presentation/donor_verification_screen.dart';
 import '../../features/education_hub/presentation/article_detail_screen.dart';
 import '../../features/education_hub/presentation/education_hub_screen.dart';
+import '../../features/home/presentation/banner_viewer_screen.dart';
+import '../../features/home/presentation/home_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
 
@@ -438,8 +440,14 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.bannerViewerPath,
         name: AppRoute.bannerViewerName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) =>
-            _TodoScreen('Banner viewer ${state.pathParameters['itemId']}'),
+        builder: (context, state) {
+          final extra = state.extra;
+          final preloaded = extra is BannerViewerArgs ? extra : null;
+          return BannerViewerScreen(
+            itemId: state.pathParameters['itemId']!,
+            preloaded: preloaded,
+          );
+        },
       ),
       GoRoute(
         path: AppRoute.donorVerificationPath,
@@ -458,7 +466,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.homePath,
                 name: AppRoute.homeName,
-                builder: (context, state) => const _TodoScreen('Home'),
+                builder: (context, state) => const HomeScreen(),
               ),
             ],
           ),

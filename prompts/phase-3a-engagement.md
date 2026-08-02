@@ -157,6 +157,29 @@ Then manually verify and report:
 3. Donor directory still excludes unverified donors (regression check against 1A-11/2A-8)
 4. Profile's stats reflect real data, not placeholders
 5. In-app notification center correctly handles every notification type the backend emits
+6. REQUIRED, live-device/emulator only — 3A-3's navigation/lifecycle fixes were written and
+   analyze/test-passed with no emulator available that session (see CLAUDE.md §7's 3A-3
+   entries) and are unverified beyond reasoning through the go_router/Flutter APIs. This is
+   exactly the class of bug (RequestStatusScreen, main.dart's unwired entry point, the lost
+   router wiring) this project has been burned by before — do not let a green /check stand
+   in for this. Check each explicitly:
+   a. Open the banner viewer from Home, tap the close (X) button — confirm it pops back to
+      Home (not a dead end, not a crash). This depends on the viewer having been `pushNamed`
+      to, not `goNamed`.
+   b. Open the banner viewer, wait past one auto-rotate interval (5s) with a multi-banner
+      carousel, close it — confirm the carousel is still on the page you left it on, not
+      one it silently advanced to while the viewer was on top.
+   c. Tap the notifications bell from Home, then use back navigation — confirm it returns
+      to Home with the bottom nav intact, not a dead end.
+   d. From Home, tap each quick action (Request blood / Find bank / Donor list) one at a
+      time, then tap the Home tab in the bottom nav — confirm the correct tab highights
+      each time and Home's own state (carousel position, scroll) survived.
+   e. Open the drawer (menu icon), tap Education hub, Donation history, and Settings in
+      turn (separately, returning to Home between each) — confirm each returns to Home via
+      back navigation, not a dead end. Then tap Profile from the drawer — confirm it
+      switches the bottom nav to the Profile tab correctly.
+   Do not check off 3A-3 as fully verified, and do not treat this Gate Check as PASS, until
+   6a–6e have each been confirmed on a real device or emulator and reported individually.
 
 Then confirm:
 1. All 6 Phase 3A tasks are checked off in docs/PHASES.md

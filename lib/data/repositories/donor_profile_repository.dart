@@ -67,7 +67,7 @@ class DonorProfileRepository {
         .map((snapshot) => snapshot.data());
   }
 
-  Future<List<DonorProfileModel>> queryVerifiedDonors({
+  Future<List<({String id, DonorProfileModel profile})>> queryVerifiedDonors({
     required String bloodGroup,
     GeoPoint? near,
     double? radiusKm,
@@ -84,7 +84,9 @@ class DonorProfileRepository {
         .get();
 
     if (near == null || radiusKm == null) {
-      return snapshot.docs.map((doc) => doc.data()).toList();
+      return snapshot.docs
+          .map((doc) => (id: doc.id, profile: doc.data()))
+          .toList();
     }
 
     final uids = snapshot.docs.map((doc) => doc.id).toList();
@@ -113,7 +115,7 @@ class DonorProfileRepository {
 
     return snapshot.docs
         .where((doc) => uidsWithinRadius.contains(doc.id))
-        .map((doc) => doc.data())
+        .map((doc) => (id: doc.id, profile: doc.data()))
         .toList();
   }
 

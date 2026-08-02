@@ -70,6 +70,10 @@ void main() {
     final results = await repo.queryVerifiedDonors(bloodGroup: 'O+');
 
     expect(results, hasLength(1));
-    expect(results.single.verificationStatus, VerificationStatus.verified);
+    expect(results.single.id, 'verified-1');
+    expect(
+      results.single.profile.verificationStatus,
+      VerificationStatus.verified,
+    );
   });
 }

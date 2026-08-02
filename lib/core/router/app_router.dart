@@ -15,6 +15,7 @@ import '../../features/blood_request/presentation/matched_banks_screen.dart';
 import '../../features/blood_request/presentation/request_blood_screen.dart';
 import '../../features/blood_request/presentation/request_status_screen.dart';
 import '../../features/admin/verify_donors/presentation/verify_donors_screen.dart';
+import '../../features/donor_directory/presentation/donor_directory_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/donor_profile/presentation/donor_verification_screen.dart';
 import '../../features/education_hub/presentation/article_detail_screen.dart';
@@ -523,8 +524,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.donorsPath,
                 name: AppRoute.donorsName,
-                builder: (context, state) =>
-                    const _TodoScreen('Donor directory'),
+                builder: (context, state) => const DonorDirectoryScreen(),
               ),
             ],
           ),

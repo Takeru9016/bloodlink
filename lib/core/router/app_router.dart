@@ -15,6 +15,8 @@ import '../../features/blood_request/presentation/request_status_screen.dart';
 import '../../features/admin/verify_donors/presentation/verify_donors_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/donor_profile/presentation/donor_verification_screen.dart';
+import '../../features/education_hub/presentation/article_detail_screen.dart';
+import '../../features/education_hub/presentation/education_hub_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import 'auth_state.dart';
 
@@ -394,14 +396,14 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.educationHubPath,
         name: AppRoute.educationHubName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Education hub'),
+        builder: (context, state) => const EducationHubScreen(),
         routes: [
           GoRoute(
             path: ':articleId',
             name: AppRoute.educationArticleName,
             parentNavigatorKey: _rootNavigatorKey,
-            builder: (context, state) => _TodoScreen(
-              'Education article ${state.pathParameters['articleId']}',
+            builder: (context, state) => ArticleDetailScreen(
+              articleId: state.pathParameters['articleId']!,
             ),
           ),
         ],

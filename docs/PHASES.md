@@ -43,9 +43,9 @@ Phase 1B [ 9 / 9 tasks ] 100%
 - [x] 2A-8 — Donor verification flow
 - [x] 2A-9 — Report/block feature
 - [x] 2A-10 — educationArticles model + repository + seed content
-- [ ] 2A-11 — Education hub screens
+- [x] 2A-11 — Education hub screens
 
-Phase 2A [ 10 / 11 tasks ] 91%
+Phase 2A [ 11 / 11 tasks ] 100%
 
 ## Phase 3A — Engagement layer
 - [ ] 3A-1 — bannerItems model + repository
@@ -67,4 +67,4 @@ Phase 3A [ 0 / 6 tasks ] 0%
 Phase 4A [ 0 / 5 tasks ] 0%
 
 ---
-**Total: 32 / 44 tasks**
+**Total: 33 / 44 tasks**

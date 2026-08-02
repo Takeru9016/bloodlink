@@ -110,6 +110,18 @@ class BannerItemRepository {
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
+
+  Future<void> setDisplayOrder(
+    String id,
+    int displayOrder,
+    String adminUid,
+  ) async {
+    await _requireAdmin(adminUid);
+    await _rawBanners.doc(id).update({
+      'displayOrder': displayOrder,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
 }
 
 @Riverpod(keepAlive: true)

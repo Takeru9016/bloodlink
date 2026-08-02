@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/admin/manage_carousel/presentation/manage_carousel_screen.dart';
+import '../../features/admin/manage_carousel/presentation/upload_banner_screen.dart';
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
 import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
 import '../../features/admin/update_stock/presentation/update_stock_screen.dart';
@@ -575,14 +577,12 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.adminCarouselPath,
                 name: AppRoute.adminCarouselName,
-                builder: (context, state) =>
-                    const _TodoScreen('Admin: Manage home carousel'),
+                builder: (context, state) => const ManageCarouselScreen(),
                 routes: [
                   GoRoute(
                     path: 'new',
                     name: AppRoute.adminCarouselNewName,
-                    builder: (context, state) =>
-                        const _TodoScreen('Admin: Upload banner'),
+                    builder: (context, state) => const UploadBannerScreen(),
                   ),
                 ],
               ),

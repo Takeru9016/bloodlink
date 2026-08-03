@@ -10,7 +10,14 @@ import '../../../data/repositories/user_repository.dart';
 
 part 'auth_controller.g.dart';
 
-@riverpod
+// keepAlive: createUserWithEmailAndPassword()/signInWithCredential() flip
+// authStateProvider, which the router's redirect reacts to immediately —
+// often before this method's own subsequent awaits (createUser, etc.)
+// resolve. With autoDispose, the redirect can unmount the only widget
+// watching this provider mid-call, and the next `state = ...` write then
+// throws "Ref used after being disposed". Same root cause as
+// RequestStatusController and FcmController.
+@Riverpod(keepAlive: true)
 class AuthController extends _$AuthController {
   final _googleSignIn = GoogleSignIn.instance;
   bool _googleSignInInitialized = false;

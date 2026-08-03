@@ -155,7 +155,11 @@ Then manually verify and report:
 2. Tapping a banner opens the full-screen viewer; a linked banner routes to the correct
    bank profile
 3. Donor directory still excludes unverified donors (regression check against 1A-11/2A-8)
-4. Profile's stats reflect real data, not placeholders
+4. Profile stats correctly render the documented "not tracked yet" placeholder for
+   lives-saved/donations/rating (see CLAUDE.md §7's 3A-5 entry — Decision B/C: real
+   attribution data doesn't exist yet under bank-mediated matching, and an honest
+   placeholder was deliberately chosen over a fake zero). Confirm all three tiles show
+   the muted "Not tracked yet" copy, not a bug, not a blank state, and not a bare 0.
 5. In-app notification center correctly handles every notification type the backend emits
 6. REQUIRED, live-device/emulator only — 3A-3's navigation/lifecycle fixes and 3A-5's
    sign-out-race and ink-feedback fixes were written and analyze/test-passed with no

@@ -13,6 +13,14 @@ part 'donor_profile_setup_controller.g.dart';
 // Placeholder until Profile/Settings exposes opt-in radius as an editable field.
 const _defaultOptInRadiusKm = 15.0;
 
+// NOT keepAlive, unlike AuthController/RequestStatusController/FcmController/
+// NotificationCenterController: submit()/skip() write `roles`, which flips
+// authStateProvider same as those controllers' triggers do, but
+// app_router.dart's `_redirect` explicitly exempts this screen's own path
+// from the roles-empty redirect (`auth.roles.isEmpty && path !=
+// donorProfileSetupPath`), so the roles write can never unmount this
+// screen's own watcher mid-call. If that exemption is ever removed, this
+// needs the same @Riverpod(keepAlive: true) fix as the other four.
 @riverpod
 class DonorProfileSetupController extends _$DonorProfileSetupController {
   @override

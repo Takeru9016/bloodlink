@@ -19,6 +19,8 @@ Stream<DonorProfileModel?> myDonorProfile(Ref ref) {
 
 @riverpod
 class DonorVerificationController extends _$DonorVerificationController {
+  final _imagePicker = ImagePicker();
+
   @override
   FutureOr<void> build() {}
 
@@ -29,16 +31,24 @@ class DonorVerificationController extends _$DonorVerificationController {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) throw StateError('No signed-in user');
 
-    final picked = await ImagePicker().pickImage(
-      source: source,
-      imageQuality: 85,
-    );
+    var picked = await _imagePicker.pickImage(source: source, imageQuality: 85);
+    if (picked == null) {
+      // On Android, the picker's host Activity can be recreated while the
+      // system photo picker is in front (low memory, or "Don't keep
+      // activities"), which silently drops the in-flight pickImage() result
+      // instead of returning it or throwing. retrieveLostData() recovers it
+      // — without this, the picker looks like a no-op.
+      final lost = await _imagePicker.retrieveLostData();
+      if (lost.isEmpty || lost.file == null) return;
+      picked = lost.file;
+    }
     if (picked == null) return;
 
+    final imagePath = picked.path;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(donorProfileRepositoryProvider);
-      final docUrl = await repo.uploadVerificationDoc(uid, File(picked.path));
+      final docUrl = await repo.uploadVerificationDoc(uid, File(imagePath));
       await repo.submitVerification(uid, docUrl);
     });
   }

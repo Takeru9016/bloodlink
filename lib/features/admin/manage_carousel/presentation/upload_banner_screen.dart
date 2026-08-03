@@ -22,9 +22,21 @@ class UploadBannerScreen extends ConsumerStatefulWidget {
 class _UploadBannerScreenState extends ConsumerState<UploadBannerScreen> {
   final _formKey = GlobalKey<FormState>();
   final _displayOrderController = TextEditingController(text: '0');
+  final _imagePicker = ImagePicker();
 
   File? _pickedImage;
   String? _linkedPartnerId;
+
+  @override
+  void initState() {
+    super.initState();
+    // On Android, the picker's host Activity can be recreated while the
+    // system photo picker is in front (low memory, or "Don't keep
+    // activities"), which silently drops the in-flight pickImage() result
+    // instead of returning it or throwing. retrieveLostData() recovers it
+    // on the next launch — without this, the picker looks like a no-op.
+    _recoverLostData();
+  }
 
   @override
   void dispose() {
@@ -36,6 +48,16 @@ class _UploadBannerScreenState extends ConsumerState<UploadBannerScreen> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _recoverLostData() async {
+    final response = await _imagePicker.retrieveLostData();
+    if (response.isEmpty || !mounted) return;
+    if (response.file != null) {
+      setState(() => _pickedImage = File(response.file!.path));
+    } else if (response.exception != null) {
+      _showMessage('Image pick failed: ${response.exception!.code}');
+    }
   }
 
   Future<void> _pickSource() async {
@@ -60,11 +82,14 @@ class _UploadBannerScreenState extends ConsumerState<UploadBannerScreen> {
       ),
     );
     if (source == null) return;
-    final picked = await ImagePicker().pickImage(
+    final picked = await _imagePicker.pickImage(
       source: source,
       imageQuality: 85,
     );
-    if (picked == null) return;
+    if (picked == null) {
+      await _recoverLostData();
+      return;
+    }
     setState(() => _pickedImage = File(picked.path));
   }
 

@@ -76,7 +76,7 @@ final class DonorVerificationControllerProvider
 }
 
 String _$donorVerificationControllerHash() =>
-    r'000aaa501d1de2f8ad4cd44fe527eabe13e128ec';
+    r'ff0e551fb44fded4e8a074d875993ebe0987c9d4';
 
 abstract class _$DonorVerificationController extends $AsyncNotifier<void> {
   FutureOr<void> build();

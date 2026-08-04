@@ -55,5 +55,16 @@ service cloud.firestore {
       allow create: if isSignedIn();
       allow read, update: if isAdmin();
     }
+
+    match /donationCamps/{campId} {
+      allow read: if true;
+      allow write: if isAdmin() &&
+        request.resource.data.keys().hasAll(['createdBy', 'updatedBy', 'updatedAt']);
+
+      match /rsvps/{userId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+    }
   }
 }

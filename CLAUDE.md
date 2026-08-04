@@ -4,7 +4,7 @@ Placeholder app name. Find-and-replace "bloodlink" everywhere (package name, org
 
 Read this file in full before doing anything in this repo. It is the persistent memory across Claude Code sessions — treat it as more authoritative than your own assumptions about the project.
 
-**Active Task: 4A-1**
+**Active Task: 4A-2**
 Update this line after every completed task (see `docs/PHASES.md` for the full tracker). Prompts are run one at a time, in order, from `prompts/phase-*.md` — do not skip ahead.
 
 ---
@@ -111,7 +111,7 @@ Slash commands available: `.claude/commands/new-screen.md`, `.claude/commands/ne
 
 - Final brand name / visual identity (currently placeholder red palette, not final)
 - Target country/region for compliance review — affects minimum donor age, data privacy handling
-- Direct donor-to-donor requests: in or out of scope for Stage 4 — unconfirmed
+- **Direct donor-to-donor requests: still unconfirmed by client as of 4A-0 (2026-08-03).** User explicitly decided to skip 4A-5 entirely for this phase rather than build anything speculative — 4A-1 through 4A-4 don't depend on this decision. Re-ask before ever starting 4A-5.
 - Whether home banner carousel items deep-link to a partner's bank profile or stay pure branding
 - **Google Maps API key — resolved 2A-6, but dev-scoped only.** Two restricted keys were created on `bloodlink-dev-wt` (project `343106573066`): `bloodlink-dev-maps-android` (package `in.webtactic.bloodlink.bloodlink` + the **debug keystore's** SHA-1 only) and `bloodlink-dev-maps-ios` (bundle ID `in.webtactic.bloodlink.bloodlink`). Android reads its key from `android/local.properties` (gitignored, key `mapsApiKey`) via a Gradle manifest placeholder in `android/app/build.gradle.kts` → `AndroidManifest.xml`; iOS has it hardcoded in `AppDelegate.swift` via `GMSServices.provideAPIKey(...)` (safe to commit — bundle-ID-restricted, same exposure model as the already-committed `GoogleService-Info.plist`). Verified live: Android emulator renders real tiles on the Bank locator map (previously crashed the whole app with `IllegalStateException: API key not found` when the consumer shell's Banks tab pre-built its `GoogleMap`); iOS confirmed only via a clean `flutter build ios --simulator` compile, not an actual on-device/simulator map render. **Two follow-ups before shipping a signed release build:** (1) the Android key's SHA-1 restriction is the debug keystore only — a release-signed APK/AAB will hit the same "API key not found" crash until its release SHA-1 is added to the key's restrictions or a separate key is issued; (2) both keys currently live only in `bloodlink-dev-wt` — `bloodlink-prod` will need its own pair, restricted to the release SHA-1/bundle ID, whenever that project is created (see the Blaze-plan item below for the same "two projects" pattern).
 - Android Gradle Plugin is pinned at 8.9.1 (`android/settings.gradle.kts`); Flutter's tooling warns support for it will soon be dropped and recommends moving to ≥8.11.1. Surfaced during the Phase 1B gate check's native build verification, not blocking any build today — bump it when it starts failing or the next time Android tooling is touched, rather than rediscovering the warning from scratch.

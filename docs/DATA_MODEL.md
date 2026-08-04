@@ -99,7 +99,27 @@ status: "open" | "reviewed" | "dismissed"
 createdAt: timestamp
 ```
 
+## `donationCamps/{campId}`
+```
+name: string
+description: string
+location: geopoint
+date: timestamp
+hostName: string
+createdBy: string                // ref users, admin only — set once, at creation, never overwritten
+updatedBy: string                // ref users, admin only — same uid as createdBy at creation; updated by 4A-3's edit flow thereafter
+updatedAt: timestamp
+```
+Follows `partners`' attribution pattern (CLAUDE.md §5) from the start, rather than repeating the `createdBy`-only gap already flagged for `bannerItems` in CLAUDE.md §7.
+
+## `donationCamps/{campId}/rsvps/{userId}`
+```
+joinedAt: timestamp
+```
+Subcollection so RSVPs are attributable per-user, not just a count. Writable by the RSVP'ing user themselves (not admin-gated) — `userId` (doc ID) must equal the writer's own uid.
+
 ## Security rules — non-negotiable, see docs/FIREBASE_SETUP.md for the actual rules file
-- Only `admin` may write to `partners/*`, `partners/*/stock/*`, `bannerItems/*`, `educationArticles/*`.
+- Only `admin` may write to `partners/*`, `partners/*/stock/*`, `bannerItems/*`, `educationArticles/*`, `donationCamps/*`.
 - A `donor`/`requester` may only write their own `users/{uid}` and `donorProfiles/{uid}`.
+- `donationCamps/*/rsvps/{userId}` is writable only by the user matching `{userId}` — self-RSVP, not admin-gated.
 - `bloodRequests` creatable by the `requesterId` only; status transitions beyond creation should go through a Cloud Function, not a raw client write, so state transitions can be validated server-side.

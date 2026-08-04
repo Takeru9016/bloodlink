@@ -11,6 +11,7 @@ class AppInput extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.keyboardType,
+    this.maxLines = 1,
   });
 
   final String label;
@@ -19,6 +20,7 @@ class AppInput extends StatelessWidget {
   final bool obscureText;
   final FormFieldValidator<String>? validator;
   final TextInputType? keyboardType;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class AppInput extends StatelessWidget {
           obscureText: obscureText,
           validator: validator,
           keyboardType: keyboardType,
+          maxLines: maxLines,
           style: textTheme.bodyLarge,
           decoration: InputDecoration(
             hintText: hintText,

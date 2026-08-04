@@ -63,6 +63,13 @@ class DonationCampRepository {
     return snapshot.docs.map((doc) => (id: doc.id, camp: doc.data())).toList();
   }
 
+  // Admin management needs to see/edit past camps too, unlike the consumer
+  // listing above which only shows upcoming ones.
+  Future<List<DonationCampEntry>> listAllCamps() async {
+    final snapshot = await _camps.orderBy('date', descending: true).get();
+    return snapshot.docs.map((doc) => (id: doc.id, camp: doc.data())).toList();
+  }
+
   Future<DonationCampModel?> getCamp(String id) async {
     final snapshot = await _camps.doc(id).get();
     return snapshot.data();
@@ -78,6 +85,19 @@ class DonationCampRepository {
       'updatedAt': FieldValue.serverTimestamp(),
     });
     return doc.id;
+  }
+
+  Future<void> updateCamp(
+    String id,
+    DonationCampModel camp,
+    String adminUid,
+  ) async {
+    await _requireAdmin(adminUid);
+    await _rawCamps.doc(id).set({
+      ...camp.toJson(),
+      'updatedBy': adminUid,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
   }
 
   Future<void> rsvp(String campId, String uid) async {

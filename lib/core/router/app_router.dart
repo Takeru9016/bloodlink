@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/admin/manage_camps/presentation/camp_form_screen.dart';
+import '../../features/admin/manage_camps/presentation/manage_camps_screen.dart';
 import '../../features/admin/manage_carousel/presentation/manage_carousel_screen.dart';
 import '../../features/admin/manage_carousel/presentation/upload_banner_screen.dart';
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
@@ -66,6 +68,9 @@ final _adminModerationBranchKey = GlobalKey<NavigatorState>(
 );
 final _adminVerifyDonorsBranchKey = GlobalKey<NavigatorState>(
   debugLabel: 'adminVerifyDonors',
+);
+final _adminCampsBranchKey = GlobalKey<NavigatorState>(
+  debugLabel: 'adminCamps',
 );
 
 /// Route names and paths for every screen in `docs/SPEC.md`. Screens should
@@ -190,6 +195,14 @@ abstract final class AppRoute {
   // original Stage-4 nav list.
   static const String adminVerifyDonorsName = 'adminVerifyDonors';
   static const String adminVerifyDonorsPath = '/admin/verify-donors';
+
+  // Added in 4A-3 — see docs/SPEC.md Admin section, not part of the
+  // original Stage-4 nav list (donationCamps didn't exist yet).
+  static const String adminCampsName = 'adminCamps';
+  static const String adminCampsPath = '/admin/camps';
+
+  static const String adminCampNewName = 'adminCampNew';
+  static const String adminCampEditName = 'adminCampEdit';
 
   /// Reachable without being signed in.
   static const Set<String> _publicPaths = {
@@ -358,6 +371,11 @@ class _AdminScaffold extends StatelessWidget {
             icon: Icon(Icons.verified_user_outlined),
             selectedIcon: Icon(Icons.verified_user),
             label: 'Donors',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.event_outlined),
+            selectedIcon: Icon(Icons.event),
+            label: 'Camps',
           ),
         ],
       ),
@@ -668,6 +686,29 @@ GoRouter appRouter(Ref ref) {
                 path: AppRoute.adminVerifyDonorsPath,
                 name: AppRoute.adminVerifyDonorsName,
                 builder: (context, state) => const VerifyDonorsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _adminCampsBranchKey,
+            routes: [
+              GoRoute(
+                path: AppRoute.adminCampsPath,
+                name: AppRoute.adminCampsName,
+                builder: (context, state) => const ManageCampsScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    name: AppRoute.adminCampNewName,
+                    builder: (context, state) => const CampFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':campId/edit',
+                    name: AppRoute.adminCampEditName,
+                    builder: (context, state) =>
+                        CampFormScreen(campId: state.pathParameters['campId']),
+                  ),
+                ],
               ),
             ],
           ),

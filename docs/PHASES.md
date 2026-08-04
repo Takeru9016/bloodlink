@@ -60,11 +60,11 @@ Phase 3A [ 6 / 6 tasks ] 100%
 ## Phase 4A — Extended features
 - [x] 4A-1 — donationCamps model + repository
 - [x] 4A-2 — Camp listing/detail/RSVP screens
-- [ ] 4A-3 — Admin: Manage camps screen
+- [x] 4A-3 — Admin: Manage camps screen
 - [ ] 4A-4 — Badges computation + Profile badges screen
 - [ ] 4A-5 — Direct donor-to-donor requests (conditional — confirm scope first)
 
-Phase 4A [ 2 / 5 tasks ] 40%
+Phase 4A [ 3 / 5 tasks ] 60%
 
 ---
-**Total: 41 / 44 tasks**
+**Total: 42 / 44 tasks**

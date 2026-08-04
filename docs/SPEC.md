@@ -88,6 +88,9 @@ Reports queue: each row shows what was reported (request or donor), the reason, 
 ### Verify donors
 Not in the original Admin nav list — added in 2A-8 as the review side of donor ID verification (there is no separate reviewer role in this app, per `CLAUDE.md` §2, so review lives here). List of donors with `verificationStatus == "pending"` (live query — a donor resubmitting their ID updates the row immediately, no manual refresh needed), each row: donor name, blood group, uploaded ID photo, Approve/Reject buttons. Approve writes `verificationStatus: "verified"`; Reject writes `verificationStatus: "unverified"` (there's no separate "rejected" state in the data model — a rejected donor can resubmit, which is exactly the `"unverified"` → upload → `"pending"` path). Both actions set `verifiedBy`/`verifiedAt` per `CLAUDE.md`'s admin-attribution rule.
 
+### Manage camps
+Not in the original Admin nav list — added in 4A-3 against `donationCamps` (4A-1/4A-2), same list + add/edit form pattern as Manage partners. List of all camps (not just upcoming — admin needs to see/edit past ones too), ordered by date descending, each row: name, host, date. "+ Add new camp" → form: name, description, host name, date & time (native date/time pickers), geo-location (map picker, same tap-to-pin UX as Manage partners). Edit existing → same form pre-filled. Every write sets `updatedBy`/`updatedAt` per `CLAUDE.md` §5; `createdBy` is set once at creation and carried forward untouched on edits.
+
 ---
 
 ## Explicitly out of scope until told otherwise

@@ -64,6 +64,11 @@ class AppDrawer extends ConsumerWidget {
               onTap: () => _pushOverlay(context, AppRoute.donationHistoryName),
             ),
             ListTile(
+              leading: const Icon(Icons.event_outlined),
+              title: const Text('Donation camps'),
+              onTap: () => _pushOverlay(context, AppRoute.campsName),
+            ),
+            ListTile(
               leading: const Icon(Icons.settings_outlined),
               title: const Text('Settings'),
               onTap: () => _pushOverlay(context, AppRoute.settingsName),

@@ -15,6 +15,8 @@ import '../../features/blood_request/presentation/matched_banks_screen.dart';
 import '../../features/blood_request/presentation/request_blood_screen.dart';
 import '../../features/blood_request/presentation/request_status_screen.dart';
 import '../../features/admin/verify_donors/presentation/verify_donors_screen.dart';
+import '../../features/camps/presentation/camp_detail_screen.dart';
+import '../../features/camps/presentation/camp_listing_screen.dart';
 import '../../features/donor_directory/presentation/donor_directory_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/donor_profile/presentation/donor_verification_screen.dart';
@@ -149,6 +151,16 @@ abstract final class AppRoute {
   // Linked from ProfileScreen's blood-group/verification badge row (3A-5).
   static const String donorVerificationName = 'donorVerification';
   static const String donorVerificationPath = '/profile/verification';
+
+  // Not in docs/SPEC.md's original consumer nav — added in 4A-2. Entry
+  // point is AppDrawer, same treatment as Education hub/Donation history.
+  static const String campsName = 'camps';
+  static const String campsPath = '/camps';
+
+  static const String campDetailName = 'campDetail';
+  // 'campId' is the authoritative path-param name for this route — mirrors
+  // 'bankId'/'requestId' above.
+  static const String campDetailPath = '/camps/:campId';
 
   // Admin shell tabs — own nav shell, never merged into the consumer bottom nav.
   static const String adminPartnersName = 'adminPartners';
@@ -456,6 +468,21 @@ GoRouter appRouter(Ref ref) {
         name: AppRoute.donorVerificationName,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const DonorVerificationScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.campsPath,
+        name: AppRoute.campsName,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const CampListingScreen(),
+        routes: [
+          GoRoute(
+            path: ':campId',
+            name: AppRoute.campDetailName,
+            parentNavigatorKey: _rootNavigatorKey,
+            builder: (context, state) =>
+                CampDetailScreen(campId: state.pathParameters['campId']!),
+          ),
+        ],
       ),
 
       StatefulShellRoute.indexedStack(

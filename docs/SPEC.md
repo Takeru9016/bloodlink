@@ -59,6 +59,13 @@ Grouped "Today" / "Earlier". Each row: icon/dot, title, subtitle, optional inlin
 ### Profile
 Avatar, name, blood group. Stats row: lives saved (count of fulfilled donations tied to this donor), donations count, rating (if implemented — can be a static placeholder until rating logic exists, but label it honestly, don't fake data). Menu: Donation history, Badges, Settings, Help & support, Log out.
 
+### Donation camps
+Not in the original consumer nav list — added in 4A-2 against `donationCamps` (4A-1). Entry point is the drawer (`AppDrawer`, opened from Home's menu icon), listed as "Donation camps" alongside Education hub/Donation history — the bottom-nav quick-actions row is a fixed 3-tile layout and wasn't reflowed for this.
+
+Listing: upcoming camps (`date >= now`, ordered by `date` — matches `DonationCampRepository.listUpcomingCamps`) as cards showing name, host, date, and distance from the device's current location (resolved via `geolocator`, same resolving/available/unavailable states as Bank locator; list order stays date-sorted, distance is display-only, not used to re-sort).
+
+Detail: full camp details (name, host, date, description) plus an RSVP button. RSVP count is read live (`DonationCampRepository.watchRsvpCount`, watching the `rsvps` subcollection directly rather than a one-shot aggregate count); the button's own label/state reflects the current user's RSVP status live (`watchRsvpStatus`) and toggles via `rsvp`/`cancelRsvp`.
+
 ---
 
 ## Admin (single role, in-app, gated navigation — completely separate nav shell from consumer screens)

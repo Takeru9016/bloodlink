@@ -96,6 +96,13 @@ class DonationCampRepository {
     ).doc(uid).snapshots().map((snapshot) => snapshot.exists);
   }
 
+  // Watches the rsvps subcollection directly rather than
+  // `.count().snapshots()` — fake_cloud_firestore (used in tests) doesn't
+  // implement realtime aggregate queries, only one-shot `.count().get()`.
+  Stream<int> watchRsvpCount(String campId) {
+    return _rsvpCollection(campId).snapshots().map((s) => s.docs.length);
+  }
+
   Future<int> rsvpCount(String campId) async {
     final snapshot = await _rawCamps
         .doc(campId)

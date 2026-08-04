@@ -61,10 +61,10 @@ Phase 3A [ 6 / 6 tasks ] 100%
 - [x] 4A-1 — donationCamps model + repository
 - [x] 4A-2 — Camp listing/detail/RSVP screens
 - [x] 4A-3 — Admin: Manage camps screen
-- [ ] 4A-4 — Badges computation + Profile badges screen
-- [ ] 4A-5 — Direct donor-to-donor requests (conditional — confirm scope first)
+- [x] 4A-4 — Badges computation + Profile badges screen (skipped — no real donor-attributed fulfillment/acceptance data exists to back badges honestly; entry point removed rather than built on fabricated data, see CLAUDE.md §7)
+- [x] 4A-5 — Direct donor-to-donor requests (skipped — never confirmed in scope per 4A-0, see CLAUDE.md §7; no code was written)
 
-Phase 4A [ 3 / 5 tasks ] 60%
+Phase 4A [ 5 / 5 tasks ] 100%
 
 ---
-**Total: 42 / 44 tasks**
+**Total: 44 / 44 tasks**

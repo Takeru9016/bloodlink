@@ -219,12 +219,6 @@ class _MenuList extends ConsumerWidget {
           ),
           Divider(color: colors.border, height: 1),
           _MenuTile(
-            icon: Icons.military_tech_outlined,
-            label: 'Badges',
-            onTap: () => context.pushNamed(AppRoute.badgesName),
-          ),
-          Divider(color: colors.border, height: 1),
-          _MenuTile(
             icon: Icons.settings_outlined,
             label: 'Settings',
             onTap: () => context.pushNamed(AppRoute.settingsName),

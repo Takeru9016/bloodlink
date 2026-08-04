@@ -66,7 +66,6 @@ void main() {
     expect(find.text('Donations'), findsOneWidget);
     expect(find.text('Rating'), findsOneWidget);
     expect(find.text('Donation history'), findsOneWidget);
-    expect(find.text('Badges'), findsOneWidget);
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Help & support'), findsOneWidget);
     expect(find.text('Log out'), findsOneWidget);

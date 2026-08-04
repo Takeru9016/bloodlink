@@ -141,9 +141,6 @@ abstract final class AppRoute {
   static const String donationHistoryName = 'donationHistory';
   static const String donationHistoryPath = '/profile/donation-history';
 
-  static const String badgesName = 'badges';
-  static const String badgesPath = '/profile/badges';
-
   static const String settingsName = 'settings';
   static const String settingsPath = '/profile/settings';
 
@@ -449,12 +446,6 @@ GoRouter appRouter(Ref ref) {
         name: AppRoute.donationHistoryName,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const _TodoScreen('Donation history'),
-      ),
-      GoRoute(
-        path: AppRoute.badgesPath,
-        name: AppRoute.badgesName,
-        parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Badges'),
       ),
       GoRoute(
         path: AppRoute.settingsPath,

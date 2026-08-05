@@ -13,6 +13,7 @@ _EducationArticleModel _$EducationArticleModelFromJson(
   body: json['body'] as String,
   category: $enumDecode(_$EducationArticleCategoryEnumMap, json['category']),
   displayOrder: (json['displayOrder'] as num).toInt(),
+  imageUrl: json['imageUrl'] as String?,
   updatedBy: json['updatedBy'] as String,
   updatedAt: const TimestampConverter().fromJson(
     json['updatedAt'] as Timestamp,
@@ -26,6 +27,7 @@ Map<String, dynamic> _$EducationArticleModelToJson(
   'body': instance.body,
   'category': _$EducationArticleCategoryEnumMap[instance.category]!,
   'displayOrder': instance.displayOrder,
+  'imageUrl': instance.imageUrl,
   'updatedBy': instance.updatedBy,
   'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
 };

@@ -24,6 +24,7 @@ abstract class EducationArticleModel with _$EducationArticleModel {
     required String body,
     required EducationArticleCategory category,
     required int displayOrder,
+    String? imageUrl,
     required String updatedBy,
     @TimestampConverter() required Timestamp updatedAt,
   }) = _EducationArticleModel;

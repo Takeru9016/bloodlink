@@ -3,7 +3,14 @@ import 'package:bloodlink/data/repositories/education_article_repository.dart';
 import 'package:bloodlink/data/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+class _UnusedFirebaseStorage implements FirebaseStorage {
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('this test must not touch Cloud Storage');
+}
 
 Map<String, dynamic> _userJson({required List<String> roles}) {
   return {
@@ -27,6 +34,7 @@ void main() {
         .set(_userJson(roles: ['donor']));
     final repository = EducationArticleRepository(
       firestore,
+      _UnusedFirebaseStorage(),
       UserRepository(firestore),
     );
 
@@ -55,6 +63,7 @@ void main() {
         .set(_userJson(roles: ['admin']));
     final repository = EducationArticleRepository(
       firestore,
+      _UnusedFirebaseStorage(),
       UserRepository(firestore),
     );
 
@@ -95,6 +104,7 @@ void main() {
         .set(_userJson(roles: ['admin']));
     final repository = EducationArticleRepository(
       firestore,
+      _UnusedFirebaseStorage(),
       UserRepository(firestore),
     );
 
@@ -127,5 +137,47 @@ void main() {
 
     expect(basicsOnly, hasLength(1));
     expect(basicsOnly.single.model.title, 'Basics article');
+  });
+
+  test('createArticle round-trips a null and a non-null imageUrl', () async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore
+        .collection('users')
+        .doc('admin-1')
+        .set(_userJson(roles: ['admin']));
+    final repository = EducationArticleRepository(
+      firestore,
+      _UnusedFirebaseStorage(),
+      UserRepository(firestore),
+    );
+
+    await repository.createArticle(
+      EducationArticleModel(
+        title: 'No image',
+        body: 'Body.',
+        category: EducationArticleCategory.basics,
+        displayOrder: 1,
+        updatedBy: '',
+        updatedAt: Timestamp.fromMillisecondsSinceEpoch(0),
+      ),
+      'admin-1',
+    );
+    await repository.createArticle(
+      EducationArticleModel(
+        title: 'Has image',
+        body: 'Body.',
+        category: EducationArticleCategory.basics,
+        displayOrder: 2,
+        imageUrl: 'https://example.com/article.jpg',
+        updatedBy: '',
+        updatedAt: Timestamp.fromMillisecondsSinceEpoch(0),
+      ),
+      'admin-1',
+    );
+
+    final articles = await repository.listArticles();
+
+    expect(articles[0].model.imageUrl, isNull);
+    expect(articles[1].model.imageUrl, 'https://example.com/article.jpg');
   });
 }

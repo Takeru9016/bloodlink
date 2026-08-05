@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/education_article_model.dart';
@@ -19,8 +22,10 @@ class EducationArticlePermissionDenied implements Exception {
 class EducationArticleRepository {
   EducationArticleRepository(
     FirebaseFirestore firestore,
+    FirebaseStorage storage,
     UserRepository userRepository,
-  ) : _userRepository = userRepository,
+  ) : _storage = storage,
+      _userRepository = userRepository,
       _articles = firestore
           .collection('educationArticles')
           .withConverter<EducationArticleModel>(
@@ -30,6 +35,7 @@ class EducationArticleRepository {
           ),
       _rawArticles = firestore.collection('educationArticles');
 
+  final FirebaseStorage _storage;
   final UserRepository _userRepository;
   final CollectionReference<EducationArticleModel> _articles;
   final CollectionReference<Map<String, dynamic>> _rawArticles;
@@ -63,6 +69,16 @@ class EducationArticleRepository {
       (a, b) => a.model.displayOrder.compareTo(b.model.displayOrder),
     );
     return results;
+  }
+
+  /// The path's ID is a fresh, unclaimed Firestore ID borrowed purely as a
+  /// unique filename, same decoupled-upload pattern as
+  /// BannerItemRepository.uploadBannerImage.
+  Future<String> uploadArticleImage(File image) async {
+    final id = _rawArticles.doc().id;
+    final ref = _storage.ref('educationImages/$id.jpg');
+    await ref.putFile(image, SettableMetadata(contentType: 'image/jpeg'));
+    return ref.getDownloadURL();
   }
 
   Future<String> createArticle(
@@ -102,6 +118,7 @@ class EducationArticleRepository {
 EducationArticleRepository educationArticleRepository(Ref ref) {
   return EducationArticleRepository(
     FirebaseFirestore.instance,
+    FirebaseStorage.instance,
     ref.watch(userRepositoryProvider),
   );
 }

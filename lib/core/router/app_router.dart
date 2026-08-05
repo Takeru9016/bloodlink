@@ -6,6 +6,8 @@ import '../../features/admin/manage_camps/presentation/camp_form_screen.dart';
 import '../../features/admin/manage_camps/presentation/manage_camps_screen.dart';
 import '../../features/admin/manage_carousel/presentation/manage_carousel_screen.dart';
 import '../../features/admin/manage_carousel/presentation/upload_banner_screen.dart';
+import '../../features/admin/manage_education_hub/presentation/article_form_screen.dart';
+import '../../features/admin/manage_education_hub/presentation/manage_education_hub_screen.dart';
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
 import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
 import '../../features/admin/moderation/presentation/moderation_screen.dart';
@@ -640,20 +642,18 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.adminEducationPath,
                 name: AppRoute.adminEducationName,
-                builder: (context, state) =>
-                    const _TodoScreen('Admin: Manage education hub'),
+                builder: (context, state) => const ManageEducationHubScreen(),
                 routes: [
                   GoRoute(
                     path: 'new',
                     name: AppRoute.adminEducationNewName,
-                    builder: (context, state) =>
-                        const _TodoScreen('Admin: New article'),
+                    builder: (context, state) => const ArticleFormScreen(),
                   ),
                   GoRoute(
                     path: ':articleId/edit',
                     name: AppRoute.adminEducationEditName,
-                    builder: (context, state) => _TodoScreen(
-                      'Admin: Edit article ${state.pathParameters['articleId']}',
+                    builder: (context, state) => ArticleFormScreen(
+                      articleId: state.pathParameters['articleId'],
                     ),
                   ),
                 ],

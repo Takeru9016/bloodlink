@@ -24,5 +24,13 @@ service firebase.storage {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    // Education article images — public-readable like educationArticles/*
+    // in Firestore, curated only by admins (docs/SPEC.md "Manage education
+    // hub"). Optional per article (docs/DATA_MODEL.md, 4B-3).
+    match /educationImages/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
   }
 }

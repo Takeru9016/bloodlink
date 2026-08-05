@@ -56,4 +56,4 @@ final class EducationArticleRepositoryProvider
 }
 
 String _$educationArticleRepositoryHash() =>
-    r'7d6d87fb0641464ae9b10f7ab1b3c5ff0e299a32';
+    r'2c6a96e40a9c6a14a61793525855f41f5a3e37f5';

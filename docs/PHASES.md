@@ -70,14 +70,14 @@ Phase 4A [ 5 / 5 tasks ] 100%
 - [x] 4B-1 — Wire Report/Block UI into real screens (added ReportTargetType.partner since the enum only had request/donor; donor_directory_screen.dart and bank_profile_screen.dart now each render a ReportButton; widget tests added for both screens as 4B-1a)
 - [x] 4B-1a — Widget tests for donor_directory_screen.dart + bank_profile_screen.dart (neither screen had any prior coverage; added after landing 4B-1, covers rendering plus ReportButton wiring)
 - [x] 4B-2 — Admin: Moderation screen (ReportRepository had no update path at all — added resolveReport/dismissReport with admin-gating and updatedBy/updatedAt per §5, plus the matching ReportModel fields; ModerationScreen mirrors verify_donors_screen.dart's list+per-item-action pattern)
-- [ ] 4B-3 — Admin: Manage Education Hub screens + Storage rules
+- [x] 4B-3 — Admin: Manage Education Hub screens + Storage rules (built `lib/features/admin/manage_education_hub/` list+form, mirroring manage_carousel's image-upload pattern; added optional `imageUrl` to `educationArticles` (docs/DATA_MODEL.md) and an `educationImages/*` Storage rule; live-verified end-to-end on a real Android emulator against `bloodlink-dev-wt` — create, edit-preserves-image, and updatedBy/updatedAt attribution all confirmed via direct Firestore/Storage reads, see CLAUDE.md §7)
 - [ ] 4B-4 — Donation history screen
 - [ ] 4B-5 — Settings screen
 - [ ] 4B-6 — Help & support screen
 - [ ] 4B-7 — Stale FCM token cleanup
 - [ ] 4B-8 — BannerItem admin-write attribution
 
-Phase 4B [ 3 / 9 tasks ] 33%
+Phase 4B [ 4 / 9 tasks ] 44%
 
 ---
-**Total: 47 / 53 tasks**
+**Total: 48 / 53 tasks**

@@ -76,6 +76,7 @@ title: string
 body: string
 category: "basics" | "eligibility" | "guidance" | "faq"
 displayOrder: number
+imageUrl: string | null          // Cloud Storage download URL (4B-3); optional, articles are text-primary
 updatedBy: string                // ref users, admin only
 updatedAt: timestamp
 ```

@@ -71,13 +71,13 @@ Phase 4A [ 5 / 5 tasks ] 100%
 - [x] 4B-1a — Widget tests for donor_directory_screen.dart + bank_profile_screen.dart (neither screen had any prior coverage; added after landing 4B-1, covers rendering plus ReportButton wiring)
 - [x] 4B-2 — Admin: Moderation screen (ReportRepository had no update path at all — added resolveReport/dismissReport with admin-gating and updatedBy/updatedAt per §5, plus the matching ReportModel fields; ModerationScreen mirrors verify_donors_screen.dart's list+per-item-action pattern)
 - [x] 4B-3 — Admin: Manage Education Hub screens + Storage rules (built `lib/features/admin/manage_education_hub/` list+form, mirroring manage_carousel's image-upload pattern; added optional `imageUrl` to `educationArticles` (docs/DATA_MODEL.md) and an `educationImages/*` Storage rule; live-verified end-to-end on a real Android emulator against `bloodlink-dev-wt` — create, edit-preserves-image, and updatedBy/updatedAt attribution all confirmed via direct Firestore/Storage reads, see CLAUDE.md §7)
-- [ ] 4B-4 — Donation history screen
+- [x] 4B-4 — Donation history screen (built `lib/features/donor_profile/presentation/donation_history_screen.dart` from `myDonorProfileProvider`; `donorProfiles` only carries a single nullable `lastDonationDate`, not a per-donation collection, so the screen shows blood group/verification status, last donation date (or "No donation recorded yet"), and an honest "Full history not tracked yet" note rather than fabricating a collection; live-verified against `bloodlink-dev-wt` on a Pixel 9 Pro emulator across all three real states — no donor profile, with `lastDonationDate`, without it — see CLAUDE.md §7)
 - [ ] 4B-5 — Settings screen
 - [ ] 4B-6 — Help & support screen
 - [ ] 4B-7 — Stale FCM token cleanup
 - [ ] 4B-8 — BannerItem admin-write attribution
 
-Phase 4B [ 4 / 9 tasks ] 44%
+Phase 4B [ 5 / 9 tasks ] 56%
 
 ---
-**Total: 48 / 53 tasks**
+**Total: 49 / 53 tasks**

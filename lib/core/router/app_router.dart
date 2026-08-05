@@ -23,6 +23,7 @@ import '../../features/admin/verify_donors/presentation/verify_donors_screen.dar
 import '../../features/camps/presentation/camp_detail_screen.dart';
 import '../../features/camps/presentation/camp_listing_screen.dart';
 import '../../features/donor_directory/presentation/donor_directory_screen.dart';
+import '../../features/donor_profile/presentation/donation_history_screen.dart';
 import '../../features/donor_profile/presentation/donor_profile_setup_screen.dart';
 import '../../features/donor_profile/presentation/donor_verification_screen.dart';
 import '../../features/education_hub/presentation/article_detail_screen.dart';
@@ -448,7 +449,7 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.donationHistoryPath,
         name: AppRoute.donationHistoryName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Donation history'),
+        builder: (context, state) => const DonationHistoryScreen(),
       ),
       GoRoute(
         path: AppRoute.settingsPath,

@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/donor_profile_model.dart';
+import '../../../data/models/report_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/report_button.dart';
 import '../application/donor_directory_controller.dart';
 
 const _bloodGroups = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
@@ -159,37 +161,56 @@ class _DonorDirectoryScreenState extends ConsumerState<DonorDirectoryScreen> {
                     itemBuilder: (context, index) {
                       final entry = state.entries[index];
                       return AppCard(
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            CircleAvatar(
-                              backgroundColor: colors.brandRed.withValues(
-                                alpha: 0.12,
-                              ),
-                              foregroundColor: colors.brandRed,
-                              child: Text(_initial(entry.name)),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(entry.name, style: textTheme.bodyLarge),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    _formatDistance(entry.distanceMeters),
-                                    style: textTheme.labelSmall?.copyWith(
-                                      color: colors.textSecondary,
-                                    ),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: colors.brandRed.withValues(
+                                    alpha: 0.12,
                                   ),
-                                ],
-                              ),
+                                  foregroundColor: colors.brandRed,
+                                  child: Text(_initial(entry.name)),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        entry.name,
+                                        style: textTheme.bodyLarge,
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        _formatDistance(entry.distanceMeters),
+                                        style: textTheme.labelSmall?.copyWith(
+                                          color: colors.textSecondary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                AppBadge(
+                                  label:
+                                      _bloodGroupLabels[entry
+                                          .profile
+                                          .bloodGroup] ??
+                                      '',
+                                  variant: AppBadgeVariant.off,
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 12),
-                            AppBadge(
-                              label:
-                                  _bloodGroupLabels[entry.profile.bloodGroup] ??
-                                  '',
-                              variant: AppBadgeVariant.off,
+                            const SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: ReportButton(
+                                targetType: ReportTargetType.donor,
+                                targetId: entry.id,
+                              ),
                             ),
                           ],
                         ),

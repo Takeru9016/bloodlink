@@ -5,10 +5,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/partner_model.dart';
+import '../../../data/models/report_model.dart';
 import '../../../data/models/stock_entry_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/report_button.dart';
 import '../application/bank_profile_controller.dart';
 
 const _bloodGroups = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
@@ -119,7 +121,15 @@ class _BankProfileBody extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               _InfoRow(icon: Icons.phone_outlined, label: partner.phone),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ReportButton(
+                  targetType: ReportTargetType.partner,
+                  targetId: bankId,
+                ),
+              ),
+              const SizedBox(height: 12),
               Text('Blood stock', style: textTheme.titleMedium),
               const SizedBox(height: 12),
               stockAsync.when(

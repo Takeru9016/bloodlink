@@ -4,7 +4,7 @@ Placeholder app name. Find-and-replace "bloodlink" everywhere (package name, org
 
 Read this file in full before doing anything in this repo. It is the persistent memory across Claude Code sessions — treat it as more authoritative than your own assumptions about the project.
 
-**Active Task: All phases complete**
+**Active Task: 4B-2 — Admin: Moderation screen**
 Update this line after every completed task (see `docs/PHASES.md` for the full tracker). Prompts are run one at a time, in order, from `prompts/phase-*.md` — do not skip ahead.
 
 ---
@@ -94,6 +94,7 @@ Work stage by stage using the files in `prompts/`. Each stage prompt is fully se
 - `prompts/phase-2a-request-flow.md`
 - `prompts/phase-3a-engagement.md`
 - `prompts/phase-4a-extended.md`
+- `prompts/phase-4b-gap-closure.md`
 
 Supporting reference docs (read the relevant one before building anything it covers):
 - `docs/SPEC.md` — every screen, what it does, who can see it

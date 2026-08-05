@@ -30,6 +30,7 @@ Map<String, dynamic> _$ReportModelToJson(_ReportModel instance) =>
 const _$ReportTargetTypeEnumMap = {
   ReportTargetType.request: 'request',
   ReportTargetType.donor: 'donor',
+  ReportTargetType.partner: 'partner',
 };
 
 const _$ReportStatusEnumMap = {

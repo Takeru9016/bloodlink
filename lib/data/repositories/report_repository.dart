@@ -8,6 +8,7 @@ part 'report_repository.g.dart';
 const _targetTypeJson = {
   ReportTargetType.request: 'request',
   ReportTargetType.donor: 'donor',
+  ReportTargetType.partner: 'partner',
 };
 
 class ReportRepository {

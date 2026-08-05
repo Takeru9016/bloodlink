@@ -11,6 +11,8 @@ enum ReportTargetType {
   request,
   @JsonValue('donor')
   donor,
+  @JsonValue('partner')
+  partner,
 }
 
 enum ReportStatus {

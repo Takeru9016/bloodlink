@@ -66,5 +66,18 @@ Phase 3A [ 6 / 6 tasks ] 100%
 
 Phase 4A [ 5 / 5 tasks ] 100%
 
+## Phase 4B — Gap closure (found via full-app audit, 2026-08-05)
+- [x] 4B-1 — Wire Report/Block UI into real screens (added ReportTargetType.partner since the enum only had request/donor; donor_directory_screen.dart and bank_profile_screen.dart now each render a ReportButton; widget tests added for both screens as 4B-1a)
+- [x] 4B-1a — Widget tests for donor_directory_screen.dart + bank_profile_screen.dart (neither screen had any prior coverage; added after landing 4B-1, covers rendering plus ReportButton wiring)
+- [ ] 4B-2 — Admin: Moderation screen
+- [ ] 4B-3 — Admin: Manage Education Hub screens + Storage rules
+- [ ] 4B-4 — Donation history screen
+- [ ] 4B-5 — Settings screen
+- [ ] 4B-6 — Help & support screen
+- [ ] 4B-7 — Stale FCM token cleanup
+- [ ] 4B-8 — BannerItem admin-write attribution
+
+Phase 4B [ 2 / 9 tasks ] 22%
+
 ---
-**Total: 44 / 44 tasks**
+**Total: 46 / 53 tasks**

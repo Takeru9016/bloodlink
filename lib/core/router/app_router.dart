@@ -8,6 +8,7 @@ import '../../features/admin/manage_carousel/presentation/manage_carousel_screen
 import '../../features/admin/manage_carousel/presentation/upload_banner_screen.dart';
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
 import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
+import '../../features/admin/moderation/presentation/moderation_screen.dart';
 import '../../features/admin/update_stock/presentation/update_stock_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
@@ -665,8 +666,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoute.adminModerationPath,
                 name: AppRoute.adminModerationName,
-                builder: (context, state) =>
-                    const _TodoScreen('Admin: Moderation'),
+                builder: (context, state) => const ModerationScreen(),
               ),
             ],
           ),

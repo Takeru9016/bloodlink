@@ -33,6 +33,8 @@ abstract class ReportModel with _$ReportModel {
     required String reason,
     required ReportStatus status,
     @TimestampConverter() required Timestamp createdAt,
+    String? updatedBy,
+    @TimestampConverter() Timestamp? updatedAt,
   }) = _ReportModel;
 
   factory ReportModel.fromJson(Map<String, dynamic> json) =>

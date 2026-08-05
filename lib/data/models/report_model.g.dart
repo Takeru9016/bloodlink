@@ -15,6 +15,11 @@ _ReportModel _$ReportModelFromJson(Map<String, dynamic> json) => _ReportModel(
   createdAt: const TimestampConverter().fromJson(
     json['createdAt'] as Timestamp,
   ),
+  updatedBy: json['updatedBy'] as String?,
+  updatedAt: _$JsonConverterFromJson<Timestamp, Timestamp>(
+    json['updatedAt'],
+    const TimestampConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$ReportModelToJson(_ReportModel instance) =>
@@ -25,6 +30,11 @@ Map<String, dynamic> _$ReportModelToJson(_ReportModel instance) =>
       'reason': instance.reason,
       'status': _$ReportStatusEnumMap[instance.status]!,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
+      'updatedBy': instance.updatedBy,
+      'updatedAt': _$JsonConverterToJson<Timestamp, Timestamp>(
+        instance.updatedAt,
+        const TimestampConverter().toJson,
+      ),
     };
 
 const _$ReportTargetTypeEnumMap = {
@@ -38,3 +48,13 @@ const _$ReportStatusEnumMap = {
   ReportStatus.reviewed: 'reviewed',
   ReportStatus.dismissed: 'dismissed',
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);

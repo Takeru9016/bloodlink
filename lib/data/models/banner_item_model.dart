@@ -14,6 +14,7 @@ abstract class BannerItemModel with _$BannerItemModel {
     required int displayOrder,
     required bool active,
     required String createdBy,
+    required String updatedBy,
     @TimestampConverter() required Timestamp updatedAt,
   }) = _BannerItemModel;
 

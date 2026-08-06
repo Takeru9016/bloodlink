@@ -13,6 +13,7 @@ _BannerItemModel _$BannerItemModelFromJson(Map<String, dynamic> json) =>
       displayOrder: (json['displayOrder'] as num).toInt(),
       active: json['active'] as bool,
       createdBy: json['createdBy'] as String,
+      updatedBy: json['updatedBy'] as String,
       updatedAt: const TimestampConverter().fromJson(
         json['updatedAt'] as Timestamp,
       ),
@@ -25,5 +26,6 @@ Map<String, dynamic> _$BannerItemModelToJson(_BannerItemModel instance) =>
       'displayOrder': instance.displayOrder,
       'active': instance.active,
       'createdBy': instance.createdBy,
+      'updatedBy': instance.updatedBy,
       'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
     };

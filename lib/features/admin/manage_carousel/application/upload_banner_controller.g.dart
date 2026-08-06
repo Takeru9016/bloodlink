@@ -75,7 +75,7 @@ final class UploadBannerControllerProvider
 }
 
 String _$uploadBannerControllerHash() =>
-    r'0bbe678889ce34c148eabbd7de652902228bb8a2';
+    r'122731e0442b843fb63916b2daf189ab084da304';
 
 abstract class _$UploadBannerController extends $AsyncNotifier<void> {
   FutureOr<void> build();

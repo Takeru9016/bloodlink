@@ -15,6 +15,7 @@ BannerItemModel _banner({String? linkedPartnerId}) {
     displayOrder: 0,
     active: true,
     createdBy: 'admin-uid',
+    updatedBy: 'admin-uid',
     updatedAt: Timestamp.now(),
   );
 }

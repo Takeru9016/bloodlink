@@ -66,7 +66,8 @@ imageUrl: string                // Cloud Storage download URL
 linkedPartnerId: string | null  // ref partners
 displayOrder: number
 active: boolean
-createdBy: string               // ref users, admin only
+createdBy: string               // ref users, admin only, set once at creation
+updatedBy: string                // ref users, admin only, last writer
 updatedAt: timestamp
 ```
 

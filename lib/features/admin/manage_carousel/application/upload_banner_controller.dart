@@ -47,6 +47,7 @@ class UploadBannerController extends _$UploadBannerController {
         // Overwritten by BannerItemRepository with the acting admin's
         // uid/server timestamp — this placeholder is never persisted as-is.
         createdBy: '',
+        updatedBy: '',
         updatedAt: Timestamp.now(),
       );
       await repo.createBanner(banner, adminUid);

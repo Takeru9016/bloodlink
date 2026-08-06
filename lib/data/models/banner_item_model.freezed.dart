@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BannerItemModel {
 
- String get imageUrl; String? get linkedPartnerId; int get displayOrder; bool get active; String get createdBy;@TimestampConverter() Timestamp get updatedAt;
+ String get imageUrl; String? get linkedPartnerId; int get displayOrder; bool get active; String get createdBy; String get updatedBy;@TimestampConverter() Timestamp get updatedAt;
 /// Create a copy of BannerItemModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $BannerItemModelCopyWith<BannerItemModel> get copyWith => _$BannerItemModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BannerItemModel&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkedPartnerId, linkedPartnerId) || other.linkedPartnerId == linkedPartnerId)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.active, active) || other.active == active)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BannerItemModel&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkedPartnerId, linkedPartnerId) || other.linkedPartnerId == linkedPartnerId)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.active, active) || other.active == active)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imageUrl,linkedPartnerId,displayOrder,active,createdBy,updatedAt);
+int get hashCode => Object.hash(runtimeType,imageUrl,linkedPartnerId,displayOrder,active,createdBy,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'BannerItemModel(imageUrl: $imageUrl, linkedPartnerId: $linkedPartnerId, displayOrder: $displayOrder, active: $active, createdBy: $createdBy, updatedAt: $updatedAt)';
+  return 'BannerItemModel(imageUrl: $imageUrl, linkedPartnerId: $linkedPartnerId, displayOrder: $displayOrder, active: $active, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $BannerItemModelCopyWith<$Res>  {
   factory $BannerItemModelCopyWith(BannerItemModel value, $Res Function(BannerItemModel) _then) = _$BannerItemModelCopyWithImpl;
 @useResult
 $Res call({
- String imageUrl, String? linkedPartnerId, int displayOrder, bool active, String createdBy,@TimestampConverter() Timestamp updatedAt
+ String imageUrl, String? linkedPartnerId, int displayOrder, bool active, String createdBy, String updatedBy,@TimestampConverter() Timestamp updatedAt
 });
 
 
@@ -65,13 +65,14 @@ class _$BannerItemModelCopyWithImpl<$Res>
 
 /// Create a copy of BannerItemModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? imageUrl = null,Object? linkedPartnerId = freezed,Object? displayOrder = null,Object? active = null,Object? createdBy = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? imageUrl = null,Object? linkedPartnerId = freezed,Object? displayOrder = null,Object? active = null,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,linkedPartnerId: freezed == linkedPartnerId ? _self.linkedPartnerId : linkedPartnerId // ignore: cast_nullable_to_non_nullable
 as String?,displayOrder: null == displayOrder ? _self.displayOrder : displayOrder // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as Timestamp,
   ));
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy, @TimestampConverter()  Timestamp updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BannerItemModel() when $default != null:
-return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedAt);case _:
+return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.ac
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy, @TimestampConverter()  Timestamp updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _BannerItemModel():
-return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedAt);case _:
+return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.ac
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy, @TimestampConverter()  Timestamp updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String imageUrl,  String? linkedPartnerId,  int displayOrder,  bool active,  String createdBy,  String updatedBy, @TimestampConverter()  Timestamp updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _BannerItemModel() when $default != null:
-return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedAt);case _:
+return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.active,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   return null;
 
 }
@@ -214,7 +215,7 @@ return $default(_that.imageUrl,_that.linkedPartnerId,_that.displayOrder,_that.ac
 @JsonSerializable()
 
 class _BannerItemModel implements BannerItemModel {
-  const _BannerItemModel({required this.imageUrl, required this.linkedPartnerId, required this.displayOrder, required this.active, required this.createdBy, @TimestampConverter() required this.updatedAt});
+  const _BannerItemModel({required this.imageUrl, required this.linkedPartnerId, required this.displayOrder, required this.active, required this.createdBy, required this.updatedBy, @TimestampConverter() required this.updatedAt});
   factory _BannerItemModel.fromJson(Map<String, dynamic> json) => _$BannerItemModelFromJson(json);
 
 @override final  String imageUrl;
@@ -222,6 +223,7 @@ class _BannerItemModel implements BannerItemModel {
 @override final  int displayOrder;
 @override final  bool active;
 @override final  String createdBy;
+@override final  String updatedBy;
 @override@TimestampConverter() final  Timestamp updatedAt;
 
 /// Create a copy of BannerItemModel
@@ -237,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BannerItemModel&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkedPartnerId, linkedPartnerId) || other.linkedPartnerId == linkedPartnerId)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.active, active) || other.active == active)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BannerItemModel&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.linkedPartnerId, linkedPartnerId) || other.linkedPartnerId == linkedPartnerId)&&(identical(other.displayOrder, displayOrder) || other.displayOrder == displayOrder)&&(identical(other.active, active) || other.active == active)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imageUrl,linkedPartnerId,displayOrder,active,createdBy,updatedAt);
+int get hashCode => Object.hash(runtimeType,imageUrl,linkedPartnerId,displayOrder,active,createdBy,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'BannerItemModel(imageUrl: $imageUrl, linkedPartnerId: $linkedPartnerId, displayOrder: $displayOrder, active: $active, createdBy: $createdBy, updatedAt: $updatedAt)';
+  return 'BannerItemModel(imageUrl: $imageUrl, linkedPartnerId: $linkedPartnerId, displayOrder: $displayOrder, active: $active, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$BannerItemModelCopyWith<$Res> implements $BannerItemModel
   factory _$BannerItemModelCopyWith(_BannerItemModel value, $Res Function(_BannerItemModel) _then) = __$BannerItemModelCopyWithImpl;
 @override @useResult
 $Res call({
- String imageUrl, String? linkedPartnerId, int displayOrder, bool active, String createdBy,@TimestampConverter() Timestamp updatedAt
+ String imageUrl, String? linkedPartnerId, int displayOrder, bool active, String createdBy, String updatedBy,@TimestampConverter() Timestamp updatedAt
 });
 
 
@@ -274,13 +276,14 @@ class __$BannerItemModelCopyWithImpl<$Res>
 
 /// Create a copy of BannerItemModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? imageUrl = null,Object? linkedPartnerId = freezed,Object? displayOrder = null,Object? active = null,Object? createdBy = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? imageUrl = null,Object? linkedPartnerId = freezed,Object? displayOrder = null,Object? active = null,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = null,}) {
   return _then(_BannerItemModel(
 imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,linkedPartnerId: freezed == linkedPartnerId ? _self.linkedPartnerId : linkedPartnerId // ignore: cast_nullable_to_non_nullable
 as String?,displayOrder: null == displayOrder ? _self.displayOrder : displayOrder // ignore: cast_nullable_to_non_nullable
 as int,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
 as bool,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as Timestamp,
   ));

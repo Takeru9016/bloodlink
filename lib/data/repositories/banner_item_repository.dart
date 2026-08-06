@@ -86,6 +86,7 @@ class BannerItemRepository {
     await doc.set({
       ...banner.toJson(),
       'createdBy': adminUid,
+      'updatedBy': adminUid,
       'updatedAt': FieldValue.serverTimestamp(),
     });
     return doc.id;
@@ -99,6 +100,7 @@ class BannerItemRepository {
     await _requireAdmin(adminUid);
     await _rawBanners.doc(id).set({
       ...banner.toJson(),
+      'updatedBy': adminUid,
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
@@ -107,6 +109,7 @@ class BannerItemRepository {
     await _requireAdmin(adminUid);
     await _rawBanners.doc(id).update({
       'active': active,
+      'updatedBy': adminUid,
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
@@ -119,6 +122,7 @@ class BannerItemRepository {
     await _requireAdmin(adminUid);
     await _rawBanners.doc(id).update({
       'displayOrder': displayOrder,
+      'updatedBy': adminUid,
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }

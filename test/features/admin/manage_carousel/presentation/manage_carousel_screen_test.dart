@@ -14,6 +14,7 @@ BannerItemModel _banner({required int displayOrder, required bool active}) {
     displayOrder: displayOrder,
     active: active,
     createdBy: 'admin-uid',
+    updatedBy: 'admin-uid',
     updatedAt: Timestamp.now(),
   );
 }

@@ -33,6 +33,7 @@ import '../../features/home/presentation/home_screen.dart';
 import '../../features/notifications/presentation/notification_center_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/profile/presentation/settings_screen.dart';
 import 'auth_state.dart';
 
 part 'app_router.g.dart';
@@ -455,7 +456,7 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.settingsPath,
         name: AppRoute.settingsName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Settings'),
+        builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: AppRoute.helpSupportPath,

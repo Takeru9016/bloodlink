@@ -98,6 +98,13 @@ class _FakeUserRepository implements UserRepository {
 
   @override
   Stream<UserModel?> watchUser(String uid) => const Stream.empty();
+
+  @override
+  Future<void> updateProfile(
+    String uid, {
+    required String name,
+    String? phone,
+  }) async {}
 }
 
 void main() {

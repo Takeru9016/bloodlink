@@ -67,6 +67,13 @@ class DonorProfileRepository {
         .map((snapshot) => snapshot.data());
   }
 
+  /// Gates `request_nearby` push eligibility in `filterNearbyDonors`
+  /// (functions/src/matching/filterNearbyDonors.ts) — 0 opts a donor out
+  /// entirely, matching that function's `optInRadiusKm > 0` check.
+  Future<void> updateOptInRadius(String uid, double radiusKm) {
+    return _donorProfiles.doc(uid).update({'optInRadiusKm': radiusKm});
+  }
+
   Future<List<({String id, DonorProfileModel profile})>> queryVerifiedDonors({
     required String bloodGroup,
     GeoPoint? near,

@@ -76,4 +76,27 @@ void main() {
       VerificationStatus.verified,
     );
   });
+
+  test(
+    '4B-5: updateOptInRadius writes optInRadiusKm without touching other fields',
+    () async {
+      final firestore = FakeFirebaseFirestore();
+      await firestore
+          .collection('donorProfiles')
+          .doc('donor-1')
+          .set(_profileJson(bloodGroup: 'O+', verificationStatus: 'verified'));
+
+      final repo = DonorProfileRepository(
+        firestore,
+        _UnusedFirebaseStorage(),
+        UserRepository(firestore),
+      );
+
+      await repo.updateOptInRadius('donor-1', 0);
+
+      final profile = await repo.getProfile('donor-1');
+      expect(profile!.optInRadiusKm, 0);
+      expect(profile.bloodGroup, BloodGroup.oPositive);
+    },
+  );
 }

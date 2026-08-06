@@ -34,6 +34,14 @@ class UserRepository {
     return _users.doc(uid).update({'fcmToken': token});
   }
 
+  Future<void> updateProfile(
+    String uid, {
+    required String name,
+    String? phone,
+  }) {
+    return _users.doc(uid).update({'name': name, 'phone': phone});
+  }
+
   /// Device-location capture and manual-entry fallback are mutually
   /// exclusive — pass only one of [location]/[city], the other stays null.
   Future<void> updateLocation(String uid, {GeoPoint? location, String? city}) {

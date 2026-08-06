@@ -13,8 +13,8 @@ export interface PushContent {
 }
 
 // Distinguishes "this device is gone for good" from a transient send failure
-// (rate limit, backend hiccup) so logs don't cry wolf on retryable errors.
-// Not wired up to clear `users/{uid}.fcmToken` yet — see CLAUDE.md §7.
+// (rate limit, backend hiccup) so logs don't cry wolf on retryable errors,
+// and so a dead result also clears `users/{uid}.fcmToken` below.
 const DEAD_TOKEN_ERROR_CODES = new Set([
   "messaging/registration-token-not-registered",
   "messaging/invalid-registration-token",
@@ -76,14 +76,41 @@ export async function notifyUsers(
     ),
   );
 
+  const deadTokens: { userId: string; fcmToken: string }[] = [];
   results.forEach((result, index) => {
     if (result.status === "fulfilled") return;
-    const { userId } = pushable[index];
+    const { userId, fcmToken } = pushable[index];
     const code = (result.reason as { code?: string } | undefined)?.code;
     if (code && DEAD_TOKEN_ERROR_CODES.has(code)) {
       logger.warn("FCM push failed: dead token", { userId, code });
+      deadTokens.push({ userId, fcmToken });
     } else {
       logger.warn("FCM push failed: transient error", { userId, code });
     }
   });
+
+  if (deadTokens.length === 0) return;
+
+  // Best-effort cleanup: a failure here must not fail notifyUsers, since the
+  // notifications batch and pushes above already succeeded — propagating
+  // would make onRequestCreated retry and re-send both. Each clear is
+  // transactional and only fires if the stored token still matches the one
+  // that just died, so a token the client already refreshed (the exact
+  // reinstall/new-device case this is meant to handle) never gets clobbered.
+  const usersRef = db.collection("users");
+  await Promise.all(
+    deadTokens.map(async ({ userId, fcmToken }) => {
+      try {
+        await db.runTransaction(async (tx) => {
+          const userRef = usersRef.doc(userId);
+          const snap = await tx.get(userRef);
+          if (snap.exists && snap.get("fcmToken") === fcmToken) {
+            tx.update(userRef, { fcmToken: null });
+          }
+        });
+      } catch (err) {
+        logger.warn("Failed to clear dead fcmToken", { userId, err });
+      }
+    }),
+  );
 }

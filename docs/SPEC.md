@@ -59,6 +59,9 @@ Grouped "Today" / "Earlier". Each row: icon/dot, title, subtitle, optional inlin
 ### Profile
 Avatar, name, blood group. Stats row: lives saved (count of fulfilled donations tied to this donor), donations count, rating (if implemented — can be a static placeholder until rating logic exists, but label it honestly, don't fake data). Menu: Donation history, Badges, Settings, Help & support, Log out.
 
+### Help & support
+Added in 4B-6. FAQ list (`helpFaqs`, ordered by `displayOrder`) as expandable question/answer tiles, plus a "Contact us" card with a support email that opens the device's mail app (`mailto:`). Both are admin-editable (see "Manage help & support" below) rather than hardcoded — if no FAQs exist yet, show an honest empty state instead of placeholder copy; if no support contact has been set, show "not set up yet" rather than a hardcoded fallback address. Deliberately separate content from Education Hub's `"faq"`-category articles: this screen's FAQs are about using the app (matching, verification, notifications), not donation/health information.
+
 ### Donation camps
 Not in the original consumer nav list — added in 4A-2 against `donationCamps` (4A-1). Entry point is the drawer (`AppDrawer`, opened from Home's menu icon), listed as "Donation camps" alongside Education hub/Donation history — the bottom-nav quick-actions row is a fixed 3-tile layout and wasn't reflowed for this.
 
@@ -90,6 +93,9 @@ Not in the original Admin nav list — added in 2A-8 as the review side of donor
 
 ### Manage camps
 Not in the original Admin nav list — added in 4A-3 against `donationCamps` (4A-1/4A-2), same list + add/edit form pattern as Manage partners. List of all camps (not just upcoming — admin needs to see/edit past ones too), ordered by date descending, each row: name, host, date. "+ Add new camp" → form: name, description, host name, date & time (native date/time pickers), geo-location (map picker, same tap-to-pin UX as Manage partners). Edit existing → same form pre-filled. Every write sets `updatedBy`/`updatedAt` per `CLAUDE.md` §5; `createdBy` is set once at creation and carried forward untouched on edits.
+
+### Manage help & support
+Not in the original Admin nav list — added in 4B-6 against `helpFaqs`/`appConfig/support`, own admin bottom-nav tab. A "Support contact" card at the top (single editable email field, save button) plus a list of FAQs below it, each row showing the question + display order with an "Edit" action, same list+form pattern as Manage education hub. "+ New FAQ" → form: question, answer (plain text, no rich formatting), display order. Every write sets `updatedBy`/`updatedAt` per `CLAUDE.md` §5.
 
 ---
 

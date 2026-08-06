@@ -8,6 +8,8 @@ import '../../features/admin/manage_carousel/presentation/manage_carousel_screen
 import '../../features/admin/manage_carousel/presentation/upload_banner_screen.dart';
 import '../../features/admin/manage_education_hub/presentation/article_form_screen.dart';
 import '../../features/admin/manage_education_hub/presentation/manage_education_hub_screen.dart';
+import '../../features/admin/manage_help_support/presentation/faq_form_screen.dart';
+import '../../features/admin/manage_help_support/presentation/manage_help_support_screen.dart';
 import '../../features/admin/manage_partners/presentation/manage_partners_screen.dart';
 import '../../features/admin/manage_partners/presentation/partner_form_screen.dart';
 import '../../features/admin/moderation/presentation/moderation_screen.dart';
@@ -32,6 +34,7 @@ import '../../features/home/presentation/banner_viewer_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/notifications/presentation/notification_center_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/profile/presentation/help_support_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/profile/presentation/settings_screen.dart';
 import 'auth_state.dart';
@@ -76,6 +79,9 @@ final _adminVerifyDonorsBranchKey = GlobalKey<NavigatorState>(
 );
 final _adminCampsBranchKey = GlobalKey<NavigatorState>(
   debugLabel: 'adminCamps',
+);
+final _adminHelpSupportBranchKey = GlobalKey<NavigatorState>(
+  debugLabel: 'adminHelpSupport',
 );
 
 /// Route names and paths for every screen in `docs/SPEC.md`. Screens should
@@ -206,6 +212,14 @@ abstract final class AppRoute {
   static const String adminCampNewName = 'adminCampNew';
   static const String adminCampEditName = 'adminCampEdit';
 
+  // Added in 4B-6 — see docs/SPEC.md Admin section, not part of the
+  // original Stage-4 nav list.
+  static const String adminHelpSupportName = 'adminHelpSupport';
+  static const String adminHelpSupportPath = '/admin/help-support';
+
+  static const String adminHelpFaqNewName = 'adminHelpFaqNew';
+  static const String adminHelpFaqEditName = 'adminHelpFaqEdit';
+
   /// Reachable without being signed in.
   static const Set<String> _publicPaths = {
     onboardingPath,
@@ -263,22 +277,6 @@ String? _redirect(Ref ref, GoRouterState state) {
   }
 
   return null;
-}
-
-/// Placeholder for every screen not yet built. Swapped out screen-by-screen
-/// as `prompts/phase-*` tasks land — do not add per-screen stub files.
-class _TodoScreen extends StatelessWidget {
-  const _TodoScreen(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(label)),
-      body: Center(child: Text('TODO: $label')),
-    );
-  }
 }
 
 class _ConsumerScaffold extends StatelessWidget {
@@ -379,6 +377,11 @@ class _AdminScaffold extends StatelessWidget {
             selectedIcon: Icon(Icons.event),
             label: 'Camps',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.help_outline),
+            selectedIcon: Icon(Icons.help),
+            label: 'Help',
+          ),
         ],
       ),
     );
@@ -462,7 +465,7 @@ GoRouter appRouter(Ref ref) {
         path: AppRoute.helpSupportPath,
         name: AppRoute.helpSupportName,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const _TodoScreen('Help & support'),
+        builder: (context, state) => const HelpSupportScreen(),
       ),
       GoRoute(
         path: AppRoute.bannerViewerPath,
@@ -700,6 +703,29 @@ GoRouter appRouter(Ref ref) {
                     name: AppRoute.adminCampEditName,
                     builder: (context, state) =>
                         CampFormScreen(campId: state.pathParameters['campId']),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _adminHelpSupportBranchKey,
+            routes: [
+              GoRoute(
+                path: AppRoute.adminHelpSupportPath,
+                name: AppRoute.adminHelpSupportName,
+                builder: (context, state) => const ManageHelpSupportScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    name: AppRoute.adminHelpFaqNewName,
+                    builder: (context, state) => const FaqFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':faqId/edit',
+                    name: AppRoute.adminHelpFaqEditName,
+                    builder: (context, state) =>
+                        FaqFormScreen(faqId: state.pathParameters['faqId']),
                   ),
                 ],
               ),

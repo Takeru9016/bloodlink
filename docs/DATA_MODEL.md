@@ -81,6 +81,24 @@ updatedBy: string                // ref users, admin only
 updatedAt: timestamp
 ```
 
+## `helpFaqs/{faqId}`
+```
+question: string
+answer: string
+displayOrder: number
+updatedBy: string                // ref users, admin only
+updatedAt: timestamp
+```
+Backs the consumer Help & support screen (4B-6). Deliberately separate from `educationArticles`' `"faq"` category — that category is donation/health FAQ content shown in Education Hub, this is app-usage FAQ content (how matching works, verification, notifications) shown in Help & support. Admin-managed via a dedicated "Manage help & support" screen, same list+form pattern as Manage education hub minus the image/category fields.
+
+## `appConfig/support`
+```
+email: string
+updatedBy: string                // ref users, admin only
+updatedAt: timestamp
+```
+Singleton doc (not a collection — there's only ever one support contact for the app), also backing Help & support (4B-6). Editable from the same "Manage help & support" admin screen as `helpFaqs`. If this doc doesn't exist yet, the consumer screen shows an honest "not set up yet" state rather than falling back to a hardcoded email — see `CLAUDE.md` line 3 on not baking a placeholder brand identity into generated copy.
+
 ## `notifications/{notificationId}`
 ```
 userId: string                   // ref users
@@ -120,7 +138,7 @@ joinedAt: timestamp
 Subcollection so RSVPs are attributable per-user, not just a count. Writable by the RSVP'ing user themselves (not admin-gated) — `userId` (doc ID) must equal the writer's own uid.
 
 ## Security rules — non-negotiable, see docs/FIREBASE_SETUP.md for the actual rules file
-- Only `admin` may write to `partners/*`, `partners/*/stock/*`, `bannerItems/*`, `educationArticles/*`, `donationCamps/*`.
+- Only `admin` may write to `partners/*`, `partners/*/stock/*`, `bannerItems/*`, `educationArticles/*`, `donationCamps/*`, `helpFaqs/*`, `appConfig/*`.
 - A `donor`/`requester` may only write their own `users/{uid}` and `donorProfiles/{uid}`.
 - `donationCamps/*/rsvps/{userId}` is writable only by the user matching `{userId}` — self-RSVP, not admin-gated.
 - `bloodRequests` creatable by the `requesterId` only; status transitions beyond creation should go through a Cloud Function, not a raw client write, so state transitions can be validated server-side.

@@ -46,6 +46,16 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /helpFaqs/{faqId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /appConfig/{configId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /notifications/{notificationId} {
       allow read, update: if isSignedIn() && resource.data.userId == request.auth.uid;
       allow write: if isAdmin(); // creation typically via Cloud Function

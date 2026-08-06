@@ -4,7 +4,8 @@ Placeholder app name. Find-and-replace "bloodlink" everywhere (package name, org
 
 Read this file in full before doing anything in this repo. It is the persistent memory across Claude Code sessions — treat it as more authoritative than your own assumptions about the project.
 
-**Active Task: All phases complete**
+**Active Task: All coding phases complete (53/53) — nothing left to build without a user decision first.**
+See `prompts/phase-4b-gap-closure.md`'s "Not in this phase" list and §7 below: donor-to-request-attribution schema (blocks Profile stats/badges/donor-to-donor requests/`request_nearby`'s notification target), the pre-launch checklist (release-signed Maps keys, `bloodlink-prod` Firebase project, live-device verification for iOS FCM/Android cold-start FCM/camp RSVP), and final brand name + target compliance region.
 Update this line after every completed task (see `docs/PHASES.md` for the full tracker). Prompts are run one at a time, in order, from `prompts/phase-*.md` — do not skip ahead.
 
 ---

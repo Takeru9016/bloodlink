@@ -17,6 +17,17 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.inputStream().use { localProperties.load(it) }
 }
 
+// Release keystore — never committed (android/.gitignore: key.properties, *.jks).
+// Falls back to null (and debug signing below) when key.properties doesn't
+// exist, so a fresh checkout without the keystore can still `flutter run
+// --release` locally.
+val keyProperties = Properties()
+val keyPropertiesFile = rootProject.file("key.properties")
+val hasReleaseSigning = keyPropertiesFile.exists()
+if (hasReleaseSigning) {
+    keyPropertiesFile.inputStream().use { keyProperties.load(it) }
+}
+
 android {
     namespace = "in.webtactic.bloodlink.bloodlink"
     compileSdk = flutter.compileSdkVersion
@@ -47,11 +58,27 @@ android {
             localProperties.getProperty("mapsApiKey", "")
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(keyProperties.getProperty("storeFile"))
+                storePassword = keyProperties.getProperty("storePassword")
+                keyAlias = keyProperties.getProperty("keyAlias")
+                keyPassword = keyProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Falls back to debug signing only when key.properties is absent
+            // (see above) — CI/local checkouts without the release keystore
+            // can still build, but a real release build is properly signed.
+            signingConfig = if (hasReleaseSigning) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

@@ -11,66 +11,12 @@
 Two Firebase projects minimum: `bloodlink-dev` and `bloodlink-prod`. Never develop or test against prod data. `flutterfire configure` should point local dev at `bloodlink-dev`.
 
 ## Security rules
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
+This section used to embed a copy of `firestore.rules` inline, which had already drifted out of sync with the real file (missing `helpFaqs`, `appConfig`, `donationCamps`, the `partners` `updatedBy`/`updatedAt` requirement). Rather than maintain two copies that can silently disagree, read `firestore.rules` at the repo root directly — it's the single source of truth.
 
-    function isSignedIn() { return request.auth != null; }
-    function isAdmin() {
-      return isSignedIn() &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.hasAny(['admin']);
-    }
-    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+**Privilege-escalation fix (production-readiness audit, 2026-08-11):** `users/{userId}` and `donorProfiles/{userId}` used to grant the doc owner unrestricted `write`, which meant a self-service account could set its own `roles` to include `"admin"` (passing every Firestore-side `isAdmin()` check in the app), or set its own `donorProfiles.verificationStatus` to `"verified"` directly, bypassing the admin verify-donors review flow entirely. Both are now field-scoped: owners can create/update their own docs, but `users` writes are rejected if they'd add `"admin"` to `roles`. `donorProfiles`: `create` must start as `"unverified"` with no admin attribution (matches `donor_profile_setup_controller.dart`); `update` can never touch `verifiedBy`/`verifiedAt` at all (those stay exactly as an admin last set them — `submitVerification()` never writes them either, it only flips `verificationStatus`), and `verificationStatus` may only stay unchanged (e.g. `updateOptInRadius` on an already-verified donor) or move to `"pending"` (a fresh/resubmitted ID) — never to `"verified"`. Only `isAdmin()` (i.e. `setVerificationStatus`) can write `"verified"`, `verifiedBy`, or `verifiedAt`, or grant `"admin"` on `users`. `bloodRequests` and `reports` `create` are now also scoped to `request.auth.uid` matching `requesterId`/`reporterId`, closing an identity-spoofing gap (any signed-in account could previously create a request or report attributed to a different user).
 
-    match /users/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isAdmin();
-    }
+**Known accepted trade-off, not fixed:** `bloodRequests`, `donorProfiles`, and `users` `read` all remain `isSignedIn()` (any authenticated account, not just the owner/admin) rather than being scoped further. This is structural, not an oversight: `BloodRequestRepository.countPendingNear` (Home's "local demand" stat) needs to read every pending request's `location` across all users to compute a client-side radius filter, and `DonorProfileRepository.queryVerifiedDonors` (donor directory / matching) needs to read other users' `location` off their `users` doc the same way — neither has a geo-indexed query to fall back to (see the geohashing note already in `blood_request_repository.dart`). Tightening `read` further without breaking those two shipped features needs a real data-model change — e.g. a denormalized public-safe projection doc — which wasn't made unilaterally here. Until then, any signed-in account can read full `bloodRequests`/`users`/`donorProfiles` documents (patient name/hospital, email/phone, blood group) via a direct SDK/REST call, not just through the app's own screens. Flag this to the user before treating it as resolved.
 
-    match /donorProfiles/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isAdmin();
-    }
-
-    match /bloodRequests/{requestId} {
-      allow read: if isSignedIn();
-      allow create: if isSignedIn();
-      allow update, delete: if isAdmin(); // status transitions go through Cloud Functions in practice
-    }
-
-    match /partners/{partnerId} {
-      allow read: if true; // public-readable, no auth required to browse banks
-      allow write: if isAdmin();
-
-      match /stock/{bloodGroup} {
-        allow read: if true;
-        allow write: if isAdmin();
-      }
-    }
-
-    match /bannerItems/{bannerId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    match /educationArticles/{articleId} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    match /notifications/{notificationId} {
-      allow read, update: if isSignedIn() && resource.data.userId == request.auth.uid;
-      allow write: if isAdmin(); // creation typically via Cloud Function
-    }
-
-    match /reports/{reportId} {
-      allow create: if isSignedIn();
-      allow read, update: if isAdmin();
-    }
-  }
-}
-```
 Deploy with `firebase deploy --only firestore:rules` after any change. Do not hand-edit rules in the Firebase console except for a genuine emergency fix — the rules file in the repo is the source of truth.
 
 ## Storage rules

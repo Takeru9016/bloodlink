@@ -11,17 +11,45 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      // Self-service accounts may create/update their own doc (name, phone,
+      // location, fcmToken, and adding "donor"/"requester" to roles — see
+      // donor_profile_setup_controller.dart), but can never grant themselves
+      // "admin" this way — admin is provisioned internally only (see §2).
+      allow create, update: if isOwner(userId) &&
+        !('admin' in request.resource.data.roles);
     }
 
     match /donorProfiles/{userId} {
       allow read: if isSignedIn();
-      allow write: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      // Initial setup always creates as "unverified" with no admin
+      // attribution yet (donor_profile_setup_controller.dart).
+      allow create: if isOwner(userId) &&
+        request.resource.data.verificationStatus == 'unverified' &&
+        request.resource.data.verifiedBy == null &&
+        request.resource.data.verifiedAt == null;
+      // verifiedBy/verifiedAt are admin-only — a donor can never change
+      // them (submitVerification() itself never touches them, it only
+      // resets verificationStatus, leaving whatever an admin last wrote
+      // from a prior review cycle in place). verificationStatus may stay
+      // as-is (e.g. updateOptInRadius, which shouldn't be blocked just
+      // because the donor already happens to be verified) or move to
+      // "pending" (a fresh/resubmitted ID, per
+      // donor_profile_repository.dart) — but a donor can never write
+      // "verified" themselves; only setVerificationStatus (admin-gated)
+      // does that.
+      allow update: if isOwner(userId) &&
+        request.resource.data.verifiedBy == resource.data.verifiedBy &&
+        request.resource.data.verifiedAt == resource.data.verifiedAt &&
+        (request.resource.data.verificationStatus == resource.data.verificationStatus ||
+          request.resource.data.verificationStatus == 'pending');
     }
 
     match /bloodRequests/{requestId} {
       allow read: if isSignedIn();
-      allow create: if isSignedIn();
+      allow create: if isSignedIn() &&
+        request.resource.data.requesterId == request.auth.uid;
       allow update, delete: if isAdmin(); // status transitions go through Cloud Functions in practice
     }
 
@@ -62,7 +90,8 @@ service cloud.firestore {
     }
 
     match /reports/{reportId} {
-      allow create: if isSignedIn();
+      allow create: if isSignedIn() &&
+        request.resource.data.reporterId == request.auth.uid;
       allow read, update: if isAdmin();
     }
 

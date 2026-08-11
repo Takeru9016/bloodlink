@@ -30,6 +30,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Bloodlink uses your location to show nearby blood banks, match blood requests to donors near you, and alert you to urgent requests in your area.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Bloodlink uses your camera to capture a photo of your ID for donor verification.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

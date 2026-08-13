@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../data/models/stock_entry_model.dart';
+import '../../../../shared/widgets/admin_drawer.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/update_stock_controller.dart';
 
@@ -93,7 +95,15 @@ class _UpdateStockScreenState extends ConsumerState<UpdateStockScreen> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Update stock')),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => AdminShellScope.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Update stock'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -118,7 +128,8 @@ class _UpdateStockScreenState extends ConsumerState<UpdateStockScreen> {
                       setState(() => _selectedPartnerId = value),
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Text('Failed to load partners: $error'),
+                error: (error, _) =>
+                    const AppErrorView(message: "Couldn't load partners."),
               ),
               if (_selectedPartnerId != null) ...[
                 const SizedBox(height: 24),
@@ -181,7 +192,8 @@ class _UpdateStockScreenState extends ConsumerState<UpdateStockScreen> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _) => Text('Failed to load stock: $error'),
+      error: (error, _) =>
+          const AppErrorView(message: "Couldn't load blood stock."),
     );
   }
 }

@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/banner_item_model.dart';
+import '../../../../shared/widgets/admin_drawer.dart';
 import '../../../../shared/widgets/app_badge.dart';
 import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../application/manage_carousel_controller.dart';
 
 class ManageCarouselScreen extends ConsumerWidget {
@@ -28,7 +30,15 @@ class ManageCarouselScreen extends ConsumerWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Manage home carousel')),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => AdminShellScope.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Manage home carousel'),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.goNamed(AppRoute.adminCarouselNewName),
         icon: const Icon(Icons.add),
@@ -69,7 +79,7 @@ class ManageCarouselScreen extends ConsumerWidget {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              Center(child: Text('Failed to load banners: $error')),
+              const AppErrorView(message: "Couldn't load banners."),
         ),
       ),
     );

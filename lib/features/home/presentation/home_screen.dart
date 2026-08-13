@@ -10,6 +10,7 @@ import '../../../data/models/partner_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_card.dart';
 import '../../../shared/widgets/app_drawer.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/home_controller.dart';
 import 'banner_viewer_screen.dart';
 
@@ -159,12 +160,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load home: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load the home screen."),
         ),
       ),
     );
@@ -327,8 +324,17 @@ class _QuickActionTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       child: Column(
         children: [
-          Icon(icon, color: colors.brandRed),
-          const SizedBox(height: 8),
+          Container(
+            width: 44,
+            height: 44,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colors.brandRed.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: colors.brandRed, size: 22),
+          ),
+          const SizedBox(height: 10),
           Text(
             label,
             textAlign: TextAlign.center,

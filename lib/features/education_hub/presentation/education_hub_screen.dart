@@ -6,6 +6,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/education_article_model.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/education_hub_controller.dart';
 
 const _categoryLabels = {
@@ -34,8 +35,6 @@ class _EducationHubScreenState extends ConsumerState<EducationHubScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colors = Theme.of(context).extension<AppColors>()!;
     final articlesAsync = ref.watch(educationHubControllerProvider);
 
     return Scaffold(
@@ -78,14 +77,8 @@ class _EducationHubScreenState extends ConsumerState<EducationHubScreen> {
                   onTapArticle: _openArticle,
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Center(
-                  child: Text(
-                    'Failed to load articles: $error',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colors.textSecondary,
-                    ),
-                  ),
-                ),
+                error: (error, _) =>
+                    const AppErrorView(message: "Couldn't load articles."),
               ),
             ),
           ],

@@ -10,6 +10,7 @@ import '../../../data/models/stock_entry_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../../shared/widgets/report_button.dart';
 import '../application/bank_profile_controller.dart';
 
@@ -55,7 +56,7 @@ class BankProfileScreen extends ConsumerWidget {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) =>
-            _CenteredMessage(message: 'Failed to load bank: $error'),
+            const AppErrorView(message: "Couldn't load this bank."),
       ),
       bottomNavigationBar: partnerAsync.maybeWhen(
         data: (partner) => partner == null
@@ -147,7 +148,8 @@ class _BankProfileBody extends ConsumerWidget {
                   ],
                 ),
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Text('Failed to load stock: $error'),
+                error: (error, _) =>
+                    const AppErrorView(message: "Couldn't load blood stock."),
               ),
             ]),
           ),

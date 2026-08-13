@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../shared/widgets/admin_drawer.dart';
 import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../application/manage_camps_controller.dart';
 
 String _formatDate(Timestamp timestamp) {
@@ -29,7 +31,15 @@ class ManageCampsScreen extends ConsumerWidget {
     final campsAsync = ref.watch(manageCampsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Manage camps')),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => AdminShellScope.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Manage camps'),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.goNamed(AppRoute.adminCampNewName),
         icon: const Icon(Icons.add),
@@ -88,7 +98,7 @@ class ManageCampsScreen extends ConsumerWidget {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              Center(child: Text('Failed to load camps: $error')),
+              const AppErrorView(message: "Couldn't load donation camps."),
         ),
       ),
     );

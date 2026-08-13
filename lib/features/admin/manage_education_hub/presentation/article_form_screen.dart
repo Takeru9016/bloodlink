@@ -10,6 +10,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/education_article_model.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/article_form_controller.dart';
 import '../application/manage_education_hub_controller.dart';
@@ -319,7 +320,7 @@ class _ArticleFormScreenState extends ConsumerState<ArticleFormScreen> {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (error, _) => Scaffold(
           appBar: AppBar(title: const Text('Edit article')),
-          body: Center(child: Text('Failed to load article: $error')),
+          body: const AppErrorView(message: "Couldn't load this article."),
         ),
       );
     }

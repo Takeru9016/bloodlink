@@ -7,6 +7,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../data/models/user_model.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../../shared/widgets/app_input.dart';
 import '../application/settings_controller.dart';
 
@@ -19,7 +20,6 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = Theme.of(context).extension<AppColors>()!;
     final textTheme = Theme.of(context).textTheme;
     final settingsAsync = ref.watch(settingsControllerProvider);
 
@@ -47,12 +47,8 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load settings: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load settings."),
         ),
       ),
     );

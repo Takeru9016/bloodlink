@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/help_faq_model.dart';
+import '../../../../shared/widgets/admin_drawer.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/manage_help_faqs_controller.dart';
 import '../application/support_contact_admin_controller.dart';
@@ -21,7 +23,15 @@ class ManageHelpSupportScreen extends ConsumerWidget {
     final faqsAsync = ref.watch(manageHelpFaqsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Manage help & support')),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => AdminShellScope.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Manage help & support'),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.goNamed(AppRoute.adminHelpFaqNewName),
         icon: const Icon(Icons.add),
@@ -60,7 +70,8 @@ class ManageHelpSupportScreen extends ConsumerWidget {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Text('Failed to load FAQs: $error'),
+                error: (error, _) =>
+                    const AppErrorView(message: "Couldn't load FAQs."),
               ),
             ],
           ),
@@ -147,7 +158,8 @@ class _SupportContactSectionState
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _) => Text('Failed to load support contact: $error'),
+      error: (error, _) =>
+          const AppErrorView(message: "Couldn't load support contact."),
     );
   }
 }

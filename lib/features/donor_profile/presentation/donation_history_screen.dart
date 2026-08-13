@@ -8,6 +8,7 @@ import '../../../data/models/donor_profile_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/donor_verification_controller.dart';
 
 const _bloodGroupLabels = {
@@ -156,7 +157,7 @@ class DonationHistoryScreen extends ConsumerWidget {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              Center(child: Text('Failed to load profile: $error')),
+              const AppErrorView(message: "Couldn't load your profile."),
         ),
       ),
     );

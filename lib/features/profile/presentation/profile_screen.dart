@@ -7,6 +7,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../data/models/donor_profile_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../auth/application/auth_controller.dart';
 import '../application/profile_controller.dart';
 
@@ -34,8 +35,6 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = Theme.of(context).extension<AppColors>()!;
-    final textTheme = Theme.of(context).textTheme;
     final profileAsync = ref.watch(profileControllerProvider);
 
     return Scaffold(
@@ -57,12 +56,8 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ),
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load profile: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load your profile."),
         ),
       ),
     );

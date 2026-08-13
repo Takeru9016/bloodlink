@@ -47,7 +47,7 @@ class RequestStatusController extends _$RequestStatusController {
       final callable = FirebaseFunctions.instance.httpsCallable(
         'updateRequestStatus',
       );
-      await callable.call({
+      await callable.call<dynamic>({
         'requestId': requestId,
         'newStatus': newStatus.name,
       });

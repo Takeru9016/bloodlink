@@ -68,7 +68,11 @@ void main() {
       tester,
       const AuthState.signedIn(uid: 'u4', roles: ['admin']),
     );
-    expect(find.text('Partners'), findsOneWidget);
+    // Admin's bottom nav was replaced by a drawer (DESIGN_SYSTEM.md
+    // §Navigation) — "landed on the admin shell, on the Partners branch" is
+    // now asserted via the branch-root screen's own AppBar title, not a
+    // NavigationDestination label.
+    expect(find.text('Manage partners'), findsOneWidget);
     expect(find.text('Request'), findsNothing);
   });
 
@@ -79,7 +83,7 @@ void main() {
         tester,
         const AuthState.signedIn(uid: 'u5', roles: ['donor', 'admin']),
       );
-      expect(find.text('Partners'), findsOneWidget);
+      expect(find.text('Manage partners'), findsOneWidget);
       expect(find.text('Request'), findsNothing);
     },
   );

@@ -8,6 +8,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/partner_model.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/manage_partners_controller.dart';
 import '../application/partner_form_controller.dart';
@@ -231,7 +232,7 @@ class _PartnerFormScreenState extends ConsumerState<PartnerFormScreen> {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (error, _) => Scaffold(
           appBar: AppBar(title: const Text('Edit partner')),
-          body: Center(child: Text('Failed to load partner: $error')),
+          body: const AppErrorView(message: "Couldn't load this partner."),
         ),
       );
     }

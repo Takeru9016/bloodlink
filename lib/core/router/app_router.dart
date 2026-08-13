@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../shared/widgets/admin_drawer.dart';
+import '../theme/app_theme.dart';
 import '../../features/admin/manage_camps/presentation/camp_form_screen.dart';
 import '../../features/admin/manage_camps/presentation/manage_camps_screen.dart';
 import '../../features/admin/manage_carousel/presentation/manage_carousel_screen.dart';
@@ -286,103 +288,137 @@ class _ConsumerScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: colors.surface,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(24),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: colors.textPrimary.withValues(alpha: 0.08),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+            ),
+          ],
         ),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+        clipBehavior: Clip.antiAlias,
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            backgroundColor: colors.surface,
+            elevation: 0,
+            height: 68,
+            indicatorColor: colors.brandRed.withValues(alpha: 0.12),
+            indicatorShape: const StadiumBorder(),
+            iconTheme: WidgetStateProperty.resolveWith(
+              (states) => IconThemeData(
+                color: states.contains(WidgetState.selected)
+                    ? colors.brandRed
+                    : colors.textSecondary,
+              ),
+            ),
+            labelTextStyle: WidgetStateProperty.resolveWith(
+              (states) => TextStyle(
+                fontSize: 11,
+                fontWeight: states.contains(WidgetState.selected)
+                    ? FontWeight.w600
+                    : FontWeight.w400,
+                color: states.contains(WidgetState.selected)
+                    ? colors.brandRed
+                    : colors.textSecondary,
+              ),
+            ),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.bloodtype_outlined),
-            selectedIcon: Icon(Icons.bloodtype),
-            label: 'Request',
+          child: NavigationBar(
+            selectedIndex: navigationShell.currentIndex,
+            onDestinationSelected: (index) => navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            ),
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.bloodtype_outlined),
+                selectedIcon: Icon(Icons.bloodtype),
+                label: 'Request',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.local_hospital_outlined),
+                selectedIcon: Icon(Icons.local_hospital),
+                label: 'Banks',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.people_outline),
+                selectedIcon: Icon(Icons.people),
+                label: 'Donors',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.person_outline),
+                selectedIcon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.local_hospital_outlined),
-            selectedIcon: Icon(Icons.local_hospital),
-            label: 'Banks',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.people_outline),
-            selectedIcon: Icon(Icons.people),
-            label: 'Donors',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _AdminScaffold extends StatelessWidget {
+const _adminDrawerItems = [
+  AdminDrawerItem(icon: Icons.store_outlined, label: 'Partners'),
+  AdminDrawerItem(icon: Icons.inventory_2_outlined, label: 'Stock'),
+  AdminDrawerItem(icon: Icons.view_carousel_outlined, label: 'Carousel'),
+  AdminDrawerItem(icon: Icons.school_outlined, label: 'Education'),
+  AdminDrawerItem(icon: Icons.shield_outlined, label: 'Moderation'),
+  AdminDrawerItem(icon: Icons.verified_user_outlined, label: 'Donors'),
+  AdminDrawerItem(icon: Icons.event_outlined, label: 'Camps'),
+  AdminDrawerItem(icon: Icons.help_outline, label: 'Help'),
+];
+
+/// Was an 8-item bottom `NavigationBar` — replaced with a drawer (see
+/// `AdminDrawer`) since 8 items never fits a bottom bar cleanly regardless
+/// of styling. No `appBar` here — each branch-root screen already owns its
+/// own `Scaffold`/`AppBar` (title, FAB); this shell only owns the drawer,
+/// and exposes opening it via `AdminShellScope` since a nested `Scaffold`
+/// can't reach an ancestor's drawer through `Scaffold.of(context)`.
+class _AdminScaffold extends StatefulWidget {
   const _AdminScaffold({required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
+  State<_AdminScaffold> createState() => _AdminScaffoldState();
+}
+
+class _AdminScaffoldState extends State<_AdminScaffold> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _onSelect(int index) => widget.navigationShell.goBranch(
+    index,
+    initialLocation: index == widget.navigationShell.currentIndex,
+  );
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.store_outlined),
-            selectedIcon: Icon(Icons.store),
-            label: 'Partners',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.inventory_2_outlined),
-            selectedIcon: Icon(Icons.inventory_2),
-            label: 'Stock',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.view_carousel_outlined),
-            selectedIcon: Icon(Icons.view_carousel),
-            label: 'Carousel',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.school_outlined),
-            selectedIcon: Icon(Icons.school),
-            label: 'Education',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shield_outlined),
-            selectedIcon: Icon(Icons.shield),
-            label: 'Moderation',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.verified_user_outlined),
-            selectedIcon: Icon(Icons.verified_user),
-            label: 'Donors',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.event_outlined),
-            selectedIcon: Icon(Icons.event),
-            label: 'Camps',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.help_outline),
-            selectedIcon: Icon(Icons.help),
-            label: 'Help',
-          ),
-        ],
+      key: _scaffoldKey,
+      drawer: AdminDrawer(
+        items: _adminDrawerItems,
+        currentIndex: widget.navigationShell.currentIndex,
+        onSelect: _onSelect,
+      ),
+      body: AdminShellScope(
+        openDrawer: () => _scaffoldKey.currentState?.openDrawer(),
+        child: widget.navigationShell,
       ),
     );
   }

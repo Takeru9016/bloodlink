@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
+import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/education_hub_controller.dart';
 
 class ArticleDetailScreen extends ConsumerWidget {
@@ -32,23 +34,21 @@ class ArticleDetailScreen extends ConsumerWidget {
             }
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(article.title, style: textTheme.headlineSmall),
-                  const SizedBox(height: 16),
-                  Text(article.body, style: textTheme.bodyLarge),
-                ],
+              child: AppCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(article.title, style: textTheme.headlineSmall),
+                    const SizedBox(height: 16),
+                    Text(article.body, style: textTheme.bodyLarge),
+                  ],
+                ),
               ),
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load article: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load this article."),
         ),
       ),
     );

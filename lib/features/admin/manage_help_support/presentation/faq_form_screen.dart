@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../data/models/help_faq_model.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/faq_form_controller.dart';
 import '../application/manage_help_faqs_controller.dart';
@@ -157,7 +158,7 @@ class _FaqFormScreenState extends ConsumerState<FaqFormScreen> {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (error, _) => Scaffold(
           appBar: AppBar(title: const Text('Edit FAQ')),
-          body: Center(child: Text('Failed to load FAQ: $error')),
+          body: const AppErrorView(message: "Couldn't load this FAQ."),
         ),
       );
     }

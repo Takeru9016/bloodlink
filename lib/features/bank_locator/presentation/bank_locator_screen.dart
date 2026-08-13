@@ -7,6 +7,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../../shared/widgets/app_input.dart';
 import '../application/bank_locator_controller.dart';
 
@@ -67,7 +68,7 @@ class _BankLocatorScreenState extends ConsumerState<BankLocatorScreen> {
   }
 
   void _showPinSheet(BankLocatorEntry entry) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (sheetContext) {
         final textTheme = Theme.of(sheetContext).textTheme;
@@ -178,7 +179,6 @@ class _BankLocatorScreenState extends ConsumerState<BankLocatorScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final colors = Theme.of(context).extension<AppColors>()!;
     final stateAsync = ref.watch(bankLocatorControllerProvider);
 
     return Scaffold(
@@ -242,12 +242,8 @@ class _BankLocatorScreenState extends ConsumerState<BankLocatorScreen> {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load bank locations: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load bank locations."),
         ),
       ),
     );

@@ -4,12 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 /// Corner radius tokens from DESIGN_SYSTEM.md §Components/§Layout.
 /// Change values here, not at call sites, when the design system updates.
 abstract final class AppRadius {
-  static const double button = 8;
-  static const double input = 8;
-  static const double cardMin = 10;
-  static const double cardMax = 14;
-  static const double card = 12;
-  static const double badge = 6;
+  static const double button = 28;
+  static const double input = 16;
+  static const double card = 18;
+  static const double badge = 12;
 }
 
 /// Color tokens from DESIGN_SYSTEM.md §Colors, exposed via [ThemeExtension]
@@ -42,16 +40,16 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color error;
 
   static const light = AppColors(
-    brandRed: Color(0xFFA31B1B),
-    brandRedDark: Color(0xFF712222),
-    textPrimary: Color(0xFF0F0F0E),
-    textSecondary: Color(0xFF665F5F),
+    brandRed: Color(0xFFE63950),
+    brandRedDark: Color(0xFFA61E38),
+    textPrimary: Color(0xFF1B1B1F),
+    textSecondary: Color(0xFF8B8B93),
     surface: Color(0xFFFFFFFF),
-    surfaceMuted: Color(0xFFF5F2EF),
-    border: Color(0xFFD3CFCA),
-    success: Color(0xFF298C5A),
-    amber: Color(0xFFB37A16),
-    error: Color(0xFFC13515),
+    surfaceMuted: Color(0xFFF4F5FA),
+    border: Color(0xFFE8E8EE),
+    success: Color(0xFF2E9E5B),
+    amber: Color(0xFFC98A1D),
+    error: Color(0xFFE2703A),
   );
 
   @override
@@ -156,12 +154,12 @@ abstract final class AppTheme {
             ElevatedButton.styleFrom(
               backgroundColor: colors.brandRed,
               foregroundColor: colors.surface,
-              minimumSize: const Size.fromHeight(44),
+              minimumSize: const Size.fromHeight(54),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.button),
               ),
               textStyle: GoogleFonts.inter(
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),
             ).copyWith(
@@ -176,31 +174,35 @@ abstract final class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: colors.textPrimary,
           side: BorderSide(color: colors.border),
-          minimumSize: const Size.fromHeight(44),
+          minimumSize: const Size.fromHeight(54),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.button),
           ),
           textStyle: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colors.surface,
-        constraints: const BoxConstraints(minHeight: 44),
+        fillColor: colors.surfaceMuted,
+        constraints: const BoxConstraints(minHeight: 52),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.input),
-          borderSide: BorderSide(color: colors.border),
+          borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.input),
-          borderSide: BorderSide(color: colors.border),
+          borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.input),
-          borderSide: BorderSide(color: colors.brandRed),
+          borderSide: BorderSide(color: colors.brandRed, width: 1.5),
         ),
         labelStyle: GoogleFonts.inter(
           fontSize: 12,
@@ -209,7 +211,7 @@ abstract final class AppTheme {
         ),
       ),
       cardTheme: CardThemeData(
-        color: colors.surfaceMuted,
+        color: colors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadius.card),

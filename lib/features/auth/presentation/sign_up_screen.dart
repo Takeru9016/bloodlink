@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/app_router.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_input.dart';
 import '../application/auth_controller.dart';
@@ -89,8 +90,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       }
     });
 
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign up')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -99,6 +102,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 8),
+                Icon(Icons.water_drop, color: colors.brandRed, size: 40),
+                const SizedBox(height: 20),
+                Text('Create Your Account', style: textTheme.headlineSmall),
+                const SizedBox(height: 4),
+                Text(
+                  'Sign up to start saving lives',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 32),
                 AppInput(
                   label: 'Full name',
                   controller: _nameController,

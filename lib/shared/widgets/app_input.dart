@@ -27,10 +27,13 @@ class AppInput extends StatelessWidget {
     final colors = Theme.of(context).extension<AppColors>()!;
     final textTheme = Theme.of(context).textTheme;
 
-    OutlineInputBorder border(Color color) => OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppRadius.input),
-      borderSide: BorderSide(color: color),
-    );
+    OutlineInputBorder border(Color color, {double width = 1}) =>
+        OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadius.input),
+          borderSide: color == Colors.transparent
+              ? BorderSide.none
+              : BorderSide(color: color, width: width),
+        );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,17 +50,17 @@ class AppInput extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             filled: true,
-            fillColor: colors.surface,
-            constraints: const BoxConstraints(minHeight: 44),
+            fillColor: colors.surfaceMuted,
+            constraints: const BoxConstraints(minHeight: 52),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 10,
+              horizontal: 18,
+              vertical: 14,
             ),
-            border: border(colors.border),
-            enabledBorder: border(colors.border),
-            focusedBorder: border(colors.brandRed),
-            errorBorder: border(colors.error),
-            focusedErrorBorder: border(colors.error),
+            border: border(Colors.transparent),
+            enabledBorder: border(Colors.transparent),
+            focusedBorder: border(colors.brandRed, width: 1.5),
+            errorBorder: border(colors.error, width: 1.5),
+            focusedErrorBorder: border(colors.error, width: 1.5),
             errorStyle: TextStyle(color: colors.error, fontSize: 12),
           ),
         ),

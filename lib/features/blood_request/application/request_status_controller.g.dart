@@ -75,7 +75,7 @@ final class RequestStatusControllerProvider
 }
 
 String _$requestStatusControllerHash() =>
-    r'1f4a5f202c7a2a4a461c209e0ea3b04a1dc494a7';
+    r'713649bcc8a09bdad6b5046945a052765abacadf';
 
 abstract class _$RequestStatusController extends $AsyncNotifier<void> {
   FutureOr<void> build();

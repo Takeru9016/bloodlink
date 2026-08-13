@@ -6,6 +6,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/repositories/notification_repository.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/notification_center_controller.dart';
 
 const _monthAbbreviations = [
@@ -112,18 +113,8 @@ class NotificationCenterScreen extends ConsumerWidget {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                'Failed to load notifications: $error',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colors.textSecondary,
-                ),
-              ),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load notifications."),
         ),
       ),
     );

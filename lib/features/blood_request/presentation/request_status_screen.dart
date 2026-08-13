@@ -6,6 +6,7 @@ import '../../../data/models/blood_request_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/request_status_controller.dart';
 
 class RequestStatusScreen extends ConsumerStatefulWidget {
@@ -98,7 +99,7 @@ class _RequestStatusScreenState extends ConsumerState<RequestStatusScreen> {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              _CenteredMessage(message: 'Failed to load requests: $error'),
+              const AppErrorView(message: "Couldn't load your requests."),
         ),
       ),
     );

@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/report_model.dart';
+import '../../../../shared/widgets/admin_drawer.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/app_card.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../application/moderation_controller.dart';
 
 const _targetTypeLabels = {
@@ -32,7 +34,15 @@ class ModerationScreen extends ConsumerWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Moderation')),
+      appBar: AppBar(
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => AdminShellScope.of(context).openDrawer(),
+          ),
+        ),
+        title: const Text('Moderation'),
+      ),
       body: SafeArea(
         child: reportsAsync.when(
           data: (reports) {
@@ -58,7 +68,7 @@ class ModerationScreen extends ConsumerWidget {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              Center(child: Text('Failed to load reports: $error')),
+              const AppErrorView(message: "Couldn't load reports."),
         ),
       ),
     );

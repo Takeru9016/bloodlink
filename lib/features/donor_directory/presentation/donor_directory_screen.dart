@@ -6,6 +6,7 @@ import '../../../data/models/donor_profile_model.dart';
 import '../../../data/models/report_model.dart';
 import '../../../shared/widgets/app_badge.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../../../shared/widgets/report_button.dart';
 import '../application/donor_directory_controller.dart';
 
@@ -219,14 +220,8 @@ class _DonorDirectoryScreenState extends ConsumerState<DonorDirectoryScreen> {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) => Center(
-                  child: Text(
-                    'Failed to load donors: $error',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colors.textSecondary,
-                    ),
-                  ),
-                ),
+                error: (error, _) =>
+                    const AppErrorView(message: "Couldn't load donors."),
               ),
             ),
           ],

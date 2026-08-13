@@ -9,6 +9,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../data/models/donation_camp_model.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/camp_form_controller.dart';
 import '../application/manage_camps_controller.dart';
@@ -270,7 +271,7 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
             const Scaffold(body: Center(child: CircularProgressIndicator())),
         error: (error, _) => Scaffold(
           appBar: AppBar(title: const Text('Edit camp')),
-          body: Center(child: Text('Failed to load camp: $error')),
+          body: const AppErrorView(message: "Couldn't load this camp."),
         ),
       );
     }

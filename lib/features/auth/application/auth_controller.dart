@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/auth/firebase_auth_provider.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/repositories/user_repository.dart';
 
@@ -38,7 +39,8 @@ class AuthController extends _$AuthController {
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final credential = await FirebaseAuth.instance
+      final credential = await ref
+          .read(firebaseAuthProvider)
           .createUserWithEmailAndPassword(email: email, password: password);
       final uid = credential.user!.uid;
       await ref
@@ -62,9 +64,9 @@ class AuthController extends _$AuthController {
       final account = await _googleSignIn.authenticate();
       final idToken = account.authentication.idToken;
       final credential = GoogleAuthProvider.credential(idToken: idToken);
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        credential,
-      );
+      final userCredential = await ref
+          .read(firebaseAuthProvider)
+          .signInWithCredential(credential);
       final user = userCredential.user!;
 
       final repo = ref.read(userRepositoryProvider);
@@ -94,17 +96,16 @@ class AuthController extends _$AuthController {
   Future<void> signIn({required String email, required String password}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await ref
+          .read(firebaseAuthProvider)
+          .signInWithEmailAndPassword(email: email, password: password);
     });
   }
 
   Future<void> signOut() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      await FirebaseAuth.instance.signOut();
+      await ref.read(firebaseAuthProvider).signOut();
       await _googleSignIn.signOut();
     });
   }

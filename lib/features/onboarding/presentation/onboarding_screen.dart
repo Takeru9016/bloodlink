@@ -89,19 +89,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 160,
-                          height: 160,
+                          width: 220,
+                          height: 220,
                           decoration: BoxDecoration(
-                            color: colors.surfaceMuted,
+                            color: colors.brandRed.withValues(alpha: 0.08),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             page.icon,
-                            size: 72,
+                            size: 96,
                             color: colors.brandRed,
                           ),
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 40),
                         Text(
                           page.title,
                           textAlign: TextAlign.center,

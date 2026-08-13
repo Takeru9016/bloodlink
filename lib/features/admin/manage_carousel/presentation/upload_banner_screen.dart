@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/widgets/app_button.dart';
+import '../../../../shared/widgets/app_error_view.dart';
 import '../../../../shared/widgets/app_input.dart';
 import '../application/manage_carousel_controller.dart';
 import '../application/upload_banner_controller.dart';
@@ -187,7 +188,8 @@ class _UploadBannerScreenState extends ConsumerState<UploadBannerScreen> {
                   ),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
-                  error: (error, _) => Text('Failed to load partners: $error'),
+                  error: (error, _) =>
+                      const AppErrorView(message: "Couldn't load partners."),
                 ),
                 const SizedBox(height: 16),
                 AppInput(

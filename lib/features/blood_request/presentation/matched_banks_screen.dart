@@ -8,6 +8,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/blood_request_model.dart';
 import '../../../shared/widgets/app_card.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/matched_banks_controller.dart';
 
 // onRequestCreated (2A-2) resolves within a couple of seconds of the doc
@@ -111,7 +112,7 @@ class _MatchedBanksScreenState extends ConsumerState<MatchedBanksScreen> {
           },
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, _) =>
-              _CenteredMessage(message: 'Failed to load request: $error'),
+              const AppErrorView(message: "Couldn't load this request."),
         ),
       ),
     );
@@ -182,7 +183,7 @@ class _MatchedList extends ConsumerWidget {
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _) =>
-          _CenteredMessage(message: 'Failed to load banks: $error'),
+          const AppErrorView(message: "Couldn't load matched banks."),
     );
   }
 }

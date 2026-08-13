@@ -47,10 +47,23 @@ Widget _wrap(SettingsState state) {
   );
 }
 
+// SettingsScreen's redesigned (taller capsule buttons/filled inputs) content
+// exceeds the test binding's default viewport, and ListView's Sliver
+// machinery only builds children within the viewport + cache extent — even
+// for the non-`.builder` constructor. A real device just scrolls; the test
+// needs a tall enough surface for _NearbyAlertsSection to be built at all.
+void _useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(400, 2000);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
 void main() {
   testWidgets('renders account info and nearby-alert radius for a donor', (
     tester,
   ) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(
       _wrap((
         profile: (
@@ -92,6 +105,7 @@ void main() {
   testWidgets(
     'prompts a donor-role user with no donor profile to finish setup',
     (tester) async {
+      _useTallSurface(tester);
       await tester.pumpWidget(
         _wrap((
           profile: (user: _user(), isDonor: true, donorProfile: null),

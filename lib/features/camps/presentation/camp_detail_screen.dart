@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/donation_camp_model.dart';
 import '../../../shared/widgets/app_button.dart';
+import '../../../shared/widgets/app_error_view.dart';
 import '../application/camp_detail_controller.dart';
 
 String _formatDate(Timestamp timestamp) {
@@ -47,12 +48,8 @@ class CampDetailScreen extends ConsumerWidget {
             return _CampDetailBody(campId: campId, camp: camp);
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => Center(
-            child: Text(
-              'Failed to load camp: $error',
-              style: textTheme.bodyLarge?.copyWith(color: colors.textSecondary),
-            ),
-          ),
+          error: (error, _) =>
+              const AppErrorView(message: "Couldn't load this camp."),
         ),
       ),
     );

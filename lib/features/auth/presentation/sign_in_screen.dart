@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/router/app_router.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../data/repositories/user_repository.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../shared/widgets/app_input.dart';
@@ -113,8 +114,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       }
     });
 
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign in')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -123,6 +126,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 8),
+                Icon(Icons.water_drop, color: colors.brandRed, size: 40),
+                const SizedBox(height: 20),
+                Text('Hello! Welcome Back', style: textTheme.headlineSmall),
+                const SizedBox(height: 4),
+                Text(
+                  'Sign in to your account',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 32),
                 AppInput(
                   label: 'Email',
                   controller: _emailController,

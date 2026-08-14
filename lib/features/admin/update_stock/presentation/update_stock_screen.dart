@@ -166,13 +166,15 @@ class _UpdateStockScreenState extends ConsumerState<UpdateStockScreen> {
 
         return Form(
           key: _formKey,
-          child: GridView.count(
-            crossAxisCount: 2,
+          child: GridView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 2.4,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              mainAxisExtent: 82,
+            ),
             children: [
               for (final group in _bloodGroups)
                 AppInput(

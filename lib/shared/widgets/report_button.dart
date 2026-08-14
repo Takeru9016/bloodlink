@@ -100,6 +100,7 @@ class _ReportDialogState extends ConsumerState<_ReportDialog> {
           label: 'Submit',
           isLoading: _isSubmitting,
           onPressed: _submit,
+          expand: false,
         ),
       ],
     );

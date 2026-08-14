@@ -415,8 +415,18 @@ class _TrustedPartnersGrid extends StatelessWidget {
         childAspectRatio: 1.6,
       ),
       itemBuilder: (context, index) {
-        final partner = partners[index].partner;
+        final record = partners[index];
+        final partner = record.partner;
         return AppCard(
+          // Same-shell branch-nested route (Banks branch's `:bankId` child) —
+          // `goNamed` switches to the Banks tab and pushes the profile on
+          // top, same mechanism as tapping the tab itself. Not a
+          // root-navigator sibling route, so this doesn't drop Home from
+          // the stack the way the banner/notifications overlays would.
+          onTap: () => context.goNamed(
+            AppRoute.bankProfileName,
+            pathParameters: {'bankId': record.id},
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

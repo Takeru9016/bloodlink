@@ -88,7 +88,12 @@ class AdminDrawer extends StatelessWidget {
                     selected: isSelected,
                     selectedTileColor: colors.brandRed.withValues(alpha: 0.06),
                     onTap: () {
-                      Navigator.of(context).pop();
+                      // Scaffold.of(context).closeDrawer(), not
+                      // Navigator.pop() — see AppDrawer's doc comment
+                      // (app_drawer.dart) for why: on some devices/timings
+                      // Navigator.pop() can fall through and pop the real
+                      // page underneath instead of just closing the drawer.
+                      Scaffold.of(context).closeDrawer();
                       onSelect(index);
                     },
                   );

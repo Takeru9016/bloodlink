@@ -3,18 +3,27 @@ import 'package:bloodlink/data/repositories/donation_camp_repository.dart';
 import 'package:bloodlink/data/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+class _UnusedFirebaseStorage implements FirebaseStorage {
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('this test must not touch Cloud Storage');
+}
 
 void main() {
   test('watchRsvpCount emits the live count of rsvps as they change', () async {
     final firestore = FakeFirebaseFirestore();
     final repository = DonationCampRepository(
       firestore,
+      _UnusedFirebaseStorage(),
       UserRepository(firestore),
     );
     await firestore.collection('donationCamps').doc('camp-1').set({
       'name': 'Test Camp',
       'description': 'Description',
+      'address': '123 Test Street',
       'location': const GeoPoint(0, 0),
       'date': Timestamp.fromDate(DateTime(2026, 12, 1)),
       'hostName': 'Test Host',
@@ -49,6 +58,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     final repository = DonationCampRepository(
       firestore,
+      _UnusedFirebaseStorage(),
       UserRepository(firestore),
     );
     await firestore.collection('users').doc('admin-1').set({
@@ -68,6 +78,7 @@ void main() {
       DonationCampModel(
         name: 'Past Camp',
         description: 'Description',
+        address: '123 Test Street',
         location: const GeoPoint(0, 0),
         date: Timestamp.fromDate(DateTime(2020, 1, 1)),
         hostName: 'Test Host',

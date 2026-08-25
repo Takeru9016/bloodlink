@@ -15,6 +15,7 @@ DonationCampModel _camp() {
   return DonationCampModel(
     name: 'Camp Alpha',
     description: 'A great camp',
+    address: '123 Test Street',
     location: const GeoPoint(0, 0),
     date: Timestamp.fromDate(DateTime(2026, 9, 1, 10)),
     hostName: 'Test Host',
@@ -37,6 +38,19 @@ class _FakeCampRsvpController extends CampRsvpController {
     onToggle(isRsvped);
     return true;
   }
+}
+
+// CampDetailScreen's revamped body (SliverAppBar image + info rows + map +
+// RSVP) exceeds the test binding's default viewport, and CustomScrollView's
+// Sliver machinery only builds children within the viewport + cache extent.
+// A real device just scrolls; the test needs a tall enough surface for the
+// RSVP button/count text to be built at all. Same fix as
+// settings_screen_test.dart's _useTallSurface.
+void _useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(400, 2000);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
 }
 
 Future<void> _pump(
@@ -70,6 +84,7 @@ Future<void> _pump(
 
 void main() {
   testWidgets('shows camp details and live rsvp count', (tester) async {
+    _useTallSurface(tester);
     await _pump(tester, isRsvped: false, rsvpCount: 3);
 
     expect(find.text('Camp Alpha'), findsOneWidget);
@@ -82,6 +97,7 @@ void main() {
   testWidgets('shows "Cancel RSVP" when the user has already rsvped', (
     tester,
   ) async {
+    _useTallSurface(tester);
     await _pump(tester, isRsvped: true, rsvpCount: 1);
 
     expect(find.text("1 person has RSVP'd"), findsOneWidget);
@@ -92,6 +108,7 @@ void main() {
   testWidgets('tapping RSVP calls the controller with the current state', (
     tester,
   ) async {
+    _useTallSurface(tester);
     bool? toggledWith;
     await _pump(
       tester,

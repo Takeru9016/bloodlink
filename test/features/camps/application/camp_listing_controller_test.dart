@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloodlink/data/models/donation_camp_model.dart';
 import 'package:bloodlink/data/repositories/donation_camp_repository.dart';
 import 'package:bloodlink/features/camps/application/camp_listing_controller.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 DonationCampModel _camp(String name) => DonationCampModel(
   name: name,
   description: 'Community drive',
+  address: '123 Test Street',
   location: const GeoPoint(0, 0),
   date: Timestamp.fromDate(DateTime(2026, 9, 1)),
   hostName: 'City Hospital',
@@ -32,6 +35,9 @@ class _FakeDonationCampRepository implements DonationCampRepository {
 
   @override
   Future<String> createCamp(DonationCampModel camp, String adminUid) async => '';
+
+  @override
+  Future<String> uploadCampImage(File image) async => '';
 
   @override
   Future<void> updateCamp(

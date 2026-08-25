@@ -10,11 +10,13 @@ _DonationCampModel _$DonationCampModelFromJson(Map<String, dynamic> json) =>
     _DonationCampModel(
       name: json['name'] as String,
       description: json['description'] as String,
+      address: json['address'] as String,
       location: const GeoPointConverter().fromJson(
         json['location'] as GeoPoint,
       ),
       date: const TimestampConverter().fromJson(json['date'] as Timestamp),
       hostName: json['hostName'] as String,
+      imageUrl: json['imageUrl'] as String?,
       createdBy: json['createdBy'] as String,
       updatedBy: json['updatedBy'] as String,
       updatedAt: const NullableTimestampConverter().fromJson(
@@ -27,9 +29,11 @@ Map<String, dynamic> _$DonationCampModelToJson(
 ) => <String, dynamic>{
   'name': instance.name,
   'description': instance.description,
+  'address': instance.address,
   'location': const GeoPointConverter().toJson(instance.location),
   'date': const TimestampConverter().toJson(instance.date),
   'hostName': instance.hostName,
+  'imageUrl': instance.imageUrl,
   'createdBy': instance.createdBy,
   'updatedBy': instance.updatedBy,
   'updatedAt': const NullableTimestampConverter().toJson(instance.updatedAt),

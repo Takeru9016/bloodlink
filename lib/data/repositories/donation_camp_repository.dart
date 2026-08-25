@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/donation_camp_model.dart';
@@ -21,8 +24,10 @@ class DonationCampPermissionDenied implements Exception {
 class DonationCampRepository {
   DonationCampRepository(
     FirebaseFirestore firestore,
+    FirebaseStorage storage,
     UserRepository userRepository,
-  ) : _userRepository = userRepository,
+  ) : _storage = storage,
+      _userRepository = userRepository,
       _camps = firestore
           .collection('donationCamps')
           .withConverter<DonationCampModel>(
@@ -32,6 +37,7 @@ class DonationCampRepository {
           ),
       _rawCamps = firestore.collection('donationCamps');
 
+  final FirebaseStorage _storage;
   final UserRepository _userRepository;
   final CollectionReference<DonationCampModel> _camps;
   final CollectionReference<Map<String, dynamic>> _rawCamps;
@@ -73,6 +79,16 @@ class DonationCampRepository {
   Future<DonationCampModel?> getCamp(String id) async {
     final snapshot = await _camps.doc(id).get();
     return snapshot.data();
+  }
+
+  /// The path's ID is a fresh, unclaimed Firestore ID borrowed purely as a
+  /// unique filename, same decoupled-upload pattern as
+  /// EducationArticleRepository.uploadArticleImage.
+  Future<String> uploadCampImage(File image) async {
+    final id = _rawCamps.doc().id;
+    final ref = _storage.ref('campImages/$id.jpg');
+    await ref.putFile(image, SettableMetadata(contentType: 'image/jpeg'));
+    return ref.getDownloadURL();
   }
 
   Future<String> createCamp(DonationCampModel camp, String adminUid) async {
@@ -137,6 +153,7 @@ class DonationCampRepository {
 DonationCampRepository donationCampRepository(Ref ref) {
   return DonationCampRepository(
     FirebaseFirestore.instance,
+    FirebaseStorage.instance,
     ref.watch(userRepositoryProvider),
   );
 }

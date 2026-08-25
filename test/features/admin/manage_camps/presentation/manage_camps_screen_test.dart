@@ -12,6 +12,7 @@ DonationCampModel _camp(String name, String hostName) {
   return DonationCampModel(
     name: name,
     description: 'Description',
+    address: '123 Test Street',
     location: const GeoPoint(0, 0),
     date: Timestamp.fromDate(DateTime(2026, 12, 1)),
     hostName: hostName,

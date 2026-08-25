@@ -32,5 +32,12 @@ service firebase.storage {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    // Donation camp images — public-readable like donationCamps/* in
+    // Firestore, curated only by admins. Optional per camp.
+    match /campImages/{fileName} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
   }
 }

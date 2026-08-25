@@ -11,6 +11,7 @@ DonationCampModel _camp({required String name, required DateTime date}) {
   return DonationCampModel(
     name: name,
     description: 'Description for $name',
+    address: '123 Test Street',
     location: const GeoPoint(0, 0),
     date: Timestamp.fromDate(date),
     hostName: 'Host of $name',
@@ -68,7 +69,7 @@ void main() {
 
     expect(find.text('Camp Alpha'), findsOneWidget);
     expect(find.text('Camp Beta'), findsOneWidget);
-    expect(find.text('Hosted by Host of Camp Alpha'), findsOneWidget);
+    expect(find.text('123 Test Street'), findsNWidgets(2));
     expect(find.text('1.2 km away'), findsOneWidget);
     expect(find.text('Distance unavailable'), findsOneWidget);
   });

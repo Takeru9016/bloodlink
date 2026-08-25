@@ -55,4 +55,4 @@ final class DonationCampRepositoryProvider
 }
 
 String _$donationCampRepositoryHash() =>
-    r'da971d3df156f1c80f720145ae82430ae9382782';
+    r'298d69cfade0ccef5c9c98f8990c5bf1a8b2d2fe';

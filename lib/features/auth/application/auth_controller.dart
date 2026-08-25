@@ -35,6 +35,7 @@ class AuthController extends _$AuthController {
   Future<void> signUp({
     required String name,
     required String email,
+    String? phone,
     required String password,
   }) async {
     state = const AsyncLoading();
@@ -50,6 +51,7 @@ class AuthController extends _$AuthController {
             UserModel(
               name: name,
               email: email,
+              phone: phone,
               roles: const [],
               createdAt: Timestamp.now(),
             ),

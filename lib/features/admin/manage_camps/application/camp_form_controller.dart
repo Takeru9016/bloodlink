@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,6 +24,7 @@ class CampFormController extends _$CampFormController {
   Future<String?> submit({
     required String? campId,
     required DonationCampModel camp,
+    required File? image,
   }) async {
     state = const AsyncLoading();
     String? resultId = campId;
@@ -35,10 +37,17 @@ class CampFormController extends _$CampFormController {
       }
       final adminUid = firebaseUser.uid;
       final repo = ref.read(donationCampRepositoryProvider);
+
+      var imageUrl = camp.imageUrl;
+      if (image != null) {
+        imageUrl = await repo.uploadCampImage(image);
+      }
+      final withImage = camp.copyWith(imageUrl: imageUrl);
+
       if (campId == null) {
-        resultId = await repo.createCamp(camp, adminUid);
+        resultId = await repo.createCamp(withImage, adminUid);
       } else {
-        await repo.updateCamp(campId, camp, adminUid);
+        await repo.updateCamp(campId, withImage, adminUid);
       }
     });
     return state.hasError ? null : resultId;

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -44,17 +47,31 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _hostNameController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _imagePicker = ImagePicker();
 
   LatLng? _pinnedLocation;
   DateTime? _date;
   String? _createdBy;
+  File? _pickedImage;
+  String? _existingImageUrl;
   bool _prefilled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // See article_form_screen.dart's identical call for why this is needed
+    // — Android can recreate the picker's host Activity while the system
+    // photo picker is in front, silently dropping the in-flight result.
+    _recoverLostData();
+  }
 
   @override
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
     _hostNameController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -62,15 +79,60 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
     _nameController.text = camp.name;
     _descriptionController.text = camp.description;
     _hostNameController.text = camp.hostName;
+    _addressController.text = camp.address;
     _pinnedLocation = LatLng(camp.location.latitude, camp.location.longitude);
     _date = camp.date.toDate();
     _createdBy = camp.createdBy;
+    _existingImageUrl = camp.imageUrl;
   }
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _recoverLostData() async {
+    final response = await _imagePicker.retrieveLostData();
+    if (response.isEmpty || !mounted) return;
+    if (response.file != null) {
+      setState(() => _pickedImage = File(response.file!.path));
+    } else if (response.exception != null) {
+      _showMessage('Image pick failed: ${response.exception!.code}');
+    }
+  }
+
+  Future<void> _pickSource() async {
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_camera_outlined),
+              title: const Text('Take a photo'),
+              onTap: () => Navigator.pop(sheetContext, ImageSource.camera),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Choose from gallery'),
+              onTap: () => Navigator.pop(sheetContext, ImageSource.gallery),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (source == null) return;
+    final picked = await _imagePicker.pickImage(
+      source: source,
+      imageQuality: 85,
+    );
+    if (picked == null) {
+      await _recoverLostData();
+      return;
+    }
+    setState(() => _pickedImage = File(picked.path));
   }
 
   Future<void> _pickDate() async {
@@ -114,9 +176,11 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
     final camp = DonationCampModel(
       name: _nameController.text.trim(),
       description: _descriptionController.text.trim(),
+      address: _addressController.text.trim(),
       location: GeoPoint(_pinnedLocation!.latitude, _pinnedLocation!.longitude),
       date: Timestamp.fromDate(_date!),
       hostName: _hostNameController.text.trim(),
+      imageUrl: _existingImageUrl,
       // createdBy is set once at creation and never overwritten; on edit,
       // carry forward the value loaded from the existing doc.
       createdBy: widget.isEditMode
@@ -130,7 +194,7 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
 
     final resultId = await ref
         .read(campFormControllerProvider.notifier)
-        .submit(campId: widget.campId, camp: camp);
+        .submit(campId: widget.campId, camp: camp, image: _pickedImage);
 
     if (!mounted || resultId == null) return;
     ref.invalidate(manageCampsControllerProvider);
@@ -138,6 +202,7 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
   }
 
   Widget _buildForm(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
     final textTheme = Theme.of(context).textTheme;
     final formState = ref.watch(campFormControllerProvider);
 
@@ -187,6 +252,70 @@ class _CampFormScreenState extends ConsumerState<CampFormScreen> {
                       ? 'Host name is required'
                       : null,
                 ),
+                const SizedBox(height: 16),
+                AppInput(
+                  label: 'Address',
+                  controller: _addressController,
+                  hintText: 'e.g. 12 MG Road, near City Hospital',
+                  validator: (value) => (value == null || value.trim().isEmpty)
+                      ? 'Address is required'
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                Text('Image (optional)', style: textTheme.labelSmall),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: _pickSource,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(AppRadius.card),
+                    child: _pickedImage != null
+                        ? Image.file(
+                            _pickedImage!,
+                            height: 160,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : _existingImageUrl != null
+                        ? Image.network(
+                            _existingImageUrl!,
+                            height: 160,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                                  height: 160,
+                                  width: double.infinity,
+                                  color: colors.surfaceMuted,
+                                  child: const Icon(
+                                    Icons.broken_image_outlined,
+                                  ),
+                                ),
+                          )
+                        : Container(
+                            height: 160,
+                            width: double.infinity,
+                            color: colors.surfaceMuted,
+                            alignment: Alignment.center,
+                            child: const Icon(
+                              Icons.add_photo_alternate_outlined,
+                              size: 32,
+                            ),
+                          ),
+                  ),
+                ),
+                if (_pickedImage != null || _existingImageUrl != null) ...[
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () => setState(() {
+                        _pickedImage = null;
+                        _existingImageUrl = null;
+                      }),
+                      child: const Text('Remove image'),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 Text('Date & time', style: textTheme.labelSmall),
                 const SizedBox(height: 6),

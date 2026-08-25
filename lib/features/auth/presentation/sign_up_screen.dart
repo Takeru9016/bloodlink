@@ -22,12 +22,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -42,11 +44,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
+    final phone = _phoneController.text.trim();
     await ref
         .read(authControllerProvider.notifier)
         .signUp(
           name: _nameController.text.trim(),
           email: _emailController.text.trim(),
+          phone: phone.isEmpty ? null : phone,
           password: _passwordController.text,
         );
     _goToDonorProfileSetupIfSucceeded();
@@ -125,6 +129,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   validator: _validateEmail,
+                ),
+                const SizedBox(height: 16),
+                AppInput(
+                  label: 'Phone number (optional)',
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
                 ),
                 const SizedBox(height: 16),
                 AppInput(

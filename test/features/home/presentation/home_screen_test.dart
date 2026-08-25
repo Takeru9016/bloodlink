@@ -51,10 +51,23 @@ Widget _wrap(Widget child, {required HomeState state}) {
   );
 }
 
+// The 2x2 quick-actions grid (added for the "Donation camps" tile) pushes
+// Trusted partners further down than the test binding's default viewport,
+// and ListView's Sliver machinery only builds children within the viewport
+// + cache extent. A real device just scrolls. Same fix as
+// settings_screen_test.dart's _useTallSurface.
+void _useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(400, 2000);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
 void main() {
   testWidgets('renders carousel, quick actions, and trusted partners', (
     tester,
   ) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(
       _wrap(
         const HomeScreen(),
@@ -73,6 +86,7 @@ void main() {
     expect(find.text('Request blood'), findsOneWidget);
     expect(find.text('Find bank'), findsOneWidget);
     expect(find.text('Donor list'), findsOneWidget);
+    expect(find.text('Donation camps'), findsOneWidget);
     expect(find.text('City Blood Bank'), findsOneWidget);
     expect(find.text('3 pending blood requests near you'), findsOneWidget);
   });
@@ -80,6 +94,7 @@ void main() {
   testWidgets('shows empty states for banners and trusted partners', (
     tester,
   ) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(
       _wrap(
         const HomeScreen(),

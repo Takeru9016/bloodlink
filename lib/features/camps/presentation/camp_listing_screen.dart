@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../data/models/donation_camp_model.dart';
 import '../../../shared/widgets/app_card.dart';
 import '../../../shared/widgets/app_error_view.dart';
 import '../application/camp_listing_controller.dart';
@@ -85,26 +86,43 @@ class CampListingScreen extends ConsumerWidget {
                         final entry = state.entries[index];
                         return AppCard(
                           onTap: () => _openCamp(context, entry.id),
-                          child: Column(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(entry.camp.name, style: textTheme.bodyLarge),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Hosted by ${entry.camp.hostName}',
-                                style: textTheme.bodyMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _formatDate(entry.camp.date),
-                                style: textTheme.bodyMedium?.copyWith(
-                                  color: colors.textSecondary,
+                              _CampThumbnail(camp: entry.camp),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      entry.camp.name,
+                                      style: textTheme.bodyLarge,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      entry.camp.address,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: colors.textSecondary,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      _formatDate(entry.camp.date),
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: colors.textSecondary,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      _formatDistance(entry.distanceMeters),
+                                      style: textTheme.labelSmall,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _formatDistance(entry.distanceMeters),
-                                style: textTheme.labelSmall,
                               ),
                             ],
                           ),
@@ -120,6 +138,42 @@ class CampListingScreen extends ConsumerWidget {
           error: (error, _) =>
               const AppErrorView(message: "Couldn't load donation camps."),
         ),
+      ),
+    );
+  }
+}
+
+class _CampThumbnail extends StatelessWidget {
+  const _CampThumbnail({required this.camp});
+
+  final DonationCampModel camp;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      child: SizedBox(
+        width: 64,
+        height: 64,
+        child: camp.imageUrl != null
+            ? Image.network(
+                camp.imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  color: colors.surfaceMuted,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.event_outlined,
+                    color: colors.textSecondary,
+                  ),
+                ),
+              )
+            : Container(
+                color: colors.surfaceMuted,
+                alignment: Alignment.center,
+                child: Icon(Icons.event_outlined, color: colors.textSecondary),
+              ),
       ),
     );
   }

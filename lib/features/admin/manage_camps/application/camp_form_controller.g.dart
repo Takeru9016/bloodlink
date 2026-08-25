@@ -111,7 +111,7 @@ final class CampFormControllerProvider
 }
 
 String _$campFormControllerHash() =>
-    r'605318914171c7d1cb327769ed96b35a6e9cb370';
+    r'f228f25aa9453418f593b54aa068ffa693667442';
 
 abstract class _$CampFormController extends $AsyncNotifier<void> {
   FutureOr<void> build();

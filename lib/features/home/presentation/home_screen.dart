@@ -141,10 +141,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     onTapBanner: (index) => _openBanner(state.banners, index),
                   ),
                   const SizedBox(height: 24),
-                  _QuickActionsRow(
+                  _QuickActionsGrid(
                     onRequestBlood: () => context.goNamed(AppRoute.requestName),
                     onFindBank: () => context.goNamed(AppRoute.banksName),
                     onDonorList: () => context.goNamed(AppRoute.donorsName),
+                    // pushNamed, not goNamed — campsPath is a root-navigator
+                    // sibling route (same reason as the bell/banner above),
+                    // so `go` would drop Home from the stack.
+                    onCamps: () => context.pushNamed(AppRoute.campsName),
                   ),
                   const SizedBox(height: 24),
                   _DemandSnapshotCard(
@@ -260,43 +264,61 @@ class _BannerCarousel extends StatelessWidget {
   }
 }
 
-class _QuickActionsRow extends StatelessWidget {
-  const _QuickActionsRow({
+class _QuickActionsGrid extends StatelessWidget {
+  const _QuickActionsGrid({
     required this.onRequestBlood,
     required this.onFindBank,
     required this.onDonorList,
+    required this.onCamps,
   });
 
   final VoidCallback onRequestBlood;
   final VoidCallback onFindBank;
   final VoidCallback onDonorList;
+  final VoidCallback onCamps;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: _QuickActionTile(
-            icon: Icons.bloodtype_outlined,
-            label: 'Request blood',
-            onTap: onRequestBlood,
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.bloodtype_outlined,
+                label: 'Request blood',
+                onTap: onRequestBlood,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.local_hospital_outlined,
+                label: 'Find bank',
+                onTap: onFindBank,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _QuickActionTile(
-            icon: Icons.local_hospital_outlined,
-            label: 'Find bank',
-            onTap: onFindBank,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _QuickActionTile(
-            icon: Icons.people_outline,
-            label: 'Donor list',
-            onTap: onDonorList,
-          ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.people_outline,
+                label: 'Donor list',
+                onTap: onDonorList,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.event_outlined,
+                label: 'Donation camps',
+                onTap: onCamps,
+              ),
+            ),
+          ],
         ),
       ],
     );

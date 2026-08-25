@@ -16,6 +16,11 @@ import '../application/bank_profile_controller.dart';
 
 const _bloodGroups = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 
+// Client asked to hide this section for now (not a data/backend removal —
+// stock is still tracked and admin-editable, just not shown to consumers).
+// Flip back to true to restore it.
+const _showStockSection = false;
+
 String _formatTimestamp(Timestamp timestamp) {
   final date = timestamp.toDate().toLocal();
   final datePart =
@@ -130,27 +135,30 @@ class _BankProfileBody extends ConsumerWidget {
                   targetId: bankId,
                 ),
               ),
-              const SizedBox(height: 12),
-              Text('Blood stock', style: textTheme.titleMedium),
-              const SizedBox(height: 12),
-              stockAsync.when(
-                data: (stock) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _StockGrid(stock: stock),
-                    const SizedBox(height: 12),
-                    Text(
-                      _lastUpdatedLabel(stock),
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colors.textSecondary,
+              if (_showStockSection) ...[
+                const SizedBox(height: 12),
+                Text('Blood stock', style: textTheme.titleMedium),
+                const SizedBox(height: 12),
+                stockAsync.when(
+                  data: (stock) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _StockGrid(stock: stock),
+                      const SizedBox(height: 12),
+                      Text(
+                        _lastUpdatedLabel(stock),
+                        style: textTheme.labelSmall?.copyWith(
+                          color: colors.textSecondary,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, _) =>
+                      const AppErrorView(message: "Couldn't load blood stock."),
                 ),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, _) =>
-                    const AppErrorView(message: "Couldn't load blood stock."),
-              ),
+              ],
             ]),
           ),
         ),

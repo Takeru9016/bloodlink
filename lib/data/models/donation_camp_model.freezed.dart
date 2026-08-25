@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DonationCampModel {
 
- String get name; String get description;@GeoPointConverter() GeoPoint get location;@TimestampConverter() Timestamp get date; String get hostName; String get createdBy; String get updatedBy;@NullableTimestampConverter() Timestamp? get updatedAt;
+ String get name; String get description; String get address;@GeoPointConverter() GeoPoint get location;@TimestampConverter() Timestamp get date; String get hostName; String? get imageUrl; String get createdBy; String get updatedBy;@NullableTimestampConverter() Timestamp? get updatedAt;
 /// Create a copy of DonationCampModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DonationCampModelCopyWith<DonationCampModel> get copyWith => _$DonationCampMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DonationCampModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.location, location) || other.location == location)&&(identical(other.date, date) || other.date == date)&&(identical(other.hostName, hostName) || other.hostName == hostName)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DonationCampModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.date, date) || other.date == date)&&(identical(other.hostName, hostName) || other.hostName == hostName)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,description,location,date,hostName,createdBy,updatedBy,updatedAt);
+int get hashCode => Object.hash(runtimeType,name,description,address,location,date,hostName,imageUrl,createdBy,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'DonationCampModel(name: $name, description: $description, location: $location, date: $date, hostName: $hostName, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
+  return 'DonationCampModel(name: $name, description: $description, address: $address, location: $location, date: $date, hostName: $hostName, imageUrl: $imageUrl, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DonationCampModelCopyWith<$Res>  {
   factory $DonationCampModelCopyWith(DonationCampModel value, $Res Function(DonationCampModel) _then) = _$DonationCampModelCopyWithImpl;
 @useResult
 $Res call({
- String name, String description,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp date, String hostName, String createdBy, String updatedBy,@NullableTimestampConverter() Timestamp? updatedAt
+ String name, String description, String address,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp date, String hostName, String? imageUrl, String createdBy, String updatedBy,@NullableTimestampConverter() Timestamp? updatedAt
 });
 
 
@@ -65,14 +65,16 @@ class _$DonationCampModelCopyWithImpl<$Res>
 
 /// Create a copy of DonationCampModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? location = null,Object? date = null,Object? hostName = null,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? address = null,Object? location = null,Object? date = null,Object? hostName = null,Object? imageUrl = freezed,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as GeoPoint,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as Timestamp,hostName: null == hostName ? _self.hostName : hostName // ignore: cast_nullable_to_non_nullable
-as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as Timestamp?,
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String description, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String description,  String address, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String? imageUrl,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DonationCampModel() when $default != null:
-return $default(_that.name,_that.description,_that.location,_that.date,_that.hostName,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
+return $default(_that.name,_that.description,_that.address,_that.location,_that.date,_that.hostName,_that.imageUrl,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.name,_that.description,_that.location,_that.date,_that.hos
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String description, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String description,  String address, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String? imageUrl,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _DonationCampModel():
-return $default(_that.name,_that.description,_that.location,_that.date,_that.hostName,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
+return $default(_that.name,_that.description,_that.address,_that.location,_that.date,_that.hostName,_that.imageUrl,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return $default(_that.name,_that.description,_that.location,_that.date,_that.hos
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String description, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String description,  String address, @GeoPointConverter()  GeoPoint location, @TimestampConverter()  Timestamp date,  String hostName,  String? imageUrl,  String createdBy,  String updatedBy, @NullableTimestampConverter()  Timestamp? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _DonationCampModel() when $default != null:
-return $default(_that.name,_that.description,_that.location,_that.date,_that.hostName,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
+return $default(_that.name,_that.description,_that.address,_that.location,_that.date,_that.hostName,_that.imageUrl,_that.createdBy,_that.updatedBy,_that.updatedAt);case _:
   return null;
 
 }
@@ -216,14 +218,16 @@ return $default(_that.name,_that.description,_that.location,_that.date,_that.hos
 @JsonSerializable()
 
 class _DonationCampModel implements DonationCampModel {
-  const _DonationCampModel({required this.name, required this.description, @GeoPointConverter() required this.location, @TimestampConverter() required this.date, required this.hostName, required this.createdBy, required this.updatedBy, @NullableTimestampConverter() this.updatedAt});
+  const _DonationCampModel({required this.name, required this.description, required this.address, @GeoPointConverter() required this.location, @TimestampConverter() required this.date, required this.hostName, this.imageUrl, required this.createdBy, required this.updatedBy, @NullableTimestampConverter() this.updatedAt});
   factory _DonationCampModel.fromJson(Map<String, dynamic> json) => _$DonationCampModelFromJson(json);
 
 @override final  String name;
 @override final  String description;
+@override final  String address;
 @override@GeoPointConverter() final  GeoPoint location;
 @override@TimestampConverter() final  Timestamp date;
 @override final  String hostName;
+@override final  String? imageUrl;
 @override final  String createdBy;
 @override final  String updatedBy;
 @override@NullableTimestampConverter() final  Timestamp? updatedAt;
@@ -241,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DonationCampModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.location, location) || other.location == location)&&(identical(other.date, date) || other.date == date)&&(identical(other.hostName, hostName) || other.hostName == hostName)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DonationCampModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.address, address) || other.address == address)&&(identical(other.location, location) || other.location == location)&&(identical(other.date, date) || other.date == date)&&(identical(other.hostName, hostName) || other.hostName == hostName)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.updatedBy, updatedBy) || other.updatedBy == updatedBy)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,description,location,date,hostName,createdBy,updatedBy,updatedAt);
+int get hashCode => Object.hash(runtimeType,name,description,address,location,date,hostName,imageUrl,createdBy,updatedBy,updatedAt);
 
 @override
 String toString() {
-  return 'DonationCampModel(name: $name, description: $description, location: $location, date: $date, hostName: $hostName, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
+  return 'DonationCampModel(name: $name, description: $description, address: $address, location: $location, date: $date, hostName: $hostName, imageUrl: $imageUrl, createdBy: $createdBy, updatedBy: $updatedBy, updatedAt: $updatedAt)';
 }
 
 
@@ -261,7 +265,7 @@ abstract mixin class _$DonationCampModelCopyWith<$Res> implements $DonationCampM
   factory _$DonationCampModelCopyWith(_DonationCampModel value, $Res Function(_DonationCampModel) _then) = __$DonationCampModelCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String description,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp date, String hostName, String createdBy, String updatedBy,@NullableTimestampConverter() Timestamp? updatedAt
+ String name, String description, String address,@GeoPointConverter() GeoPoint location,@TimestampConverter() Timestamp date, String hostName, String? imageUrl, String createdBy, String updatedBy,@NullableTimestampConverter() Timestamp? updatedAt
 });
 
 
@@ -278,14 +282,16 @@ class __$DonationCampModelCopyWithImpl<$Res>
 
 /// Create a copy of DonationCampModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? location = null,Object? date = null,Object? hostName = null,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? address = null,Object? location = null,Object? date = null,Object? hostName = null,Object? imageUrl = freezed,Object? createdBy = null,Object? updatedBy = null,Object? updatedAt = freezed,}) {
   return _then(_DonationCampModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as GeoPoint,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as Timestamp,hostName: null == hostName ? _self.hostName : hostName // ignore: cast_nullable_to_non_nullable
-as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String?,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
 as String,updatedBy: null == updatedBy ? _self.updatedBy : updatedBy // ignore: cast_nullable_to_non_nullable
 as String,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as Timestamp?,

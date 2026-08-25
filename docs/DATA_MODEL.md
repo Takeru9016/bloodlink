@@ -123,9 +123,11 @@ createdAt: timestamp
 ```
 name: string
 description: string
+address: string                  // admin-typed, same pattern as partners.address — not reverse-geocoded from location
 location: geopoint
 date: timestamp
 hostName: string
+imageUrl: string | null          // optional, Storage campImages/* — same decoupled-upload pattern as educationArticles.imageUrl
 createdBy: string                // ref users, admin only — set once, at creation, never overwritten
 updatedBy: string                // ref users, admin only — same uid as createdBy at creation; updated by 4A-3's edit flow thereafter
 updatedAt: timestamp

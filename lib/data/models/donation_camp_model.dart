@@ -40,9 +40,11 @@ abstract class DonationCampModel with _$DonationCampModel {
   const factory DonationCampModel({
     required String name,
     required String description,
+    required String address,
     @GeoPointConverter() required GeoPoint location,
     @TimestampConverter() required Timestamp date,
     required String hostName,
+    String? imageUrl,
     required String createdBy,
     // Set to the same uid as createdBy on creation, and to the acting admin
     // on every subsequent write (4A-3's edit flow) — CLAUDE.md §5 requires
